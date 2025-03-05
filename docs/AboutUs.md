@@ -19,15 +19,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Ashe Low
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/itsvari.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[homepage](https://itsvari.com)]
+[[github](https://github.com/itsvari)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Team Lead, Developer
+* Responsibilities: Storage
 
 ### Johnny Doe
 
