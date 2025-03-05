@@ -57,3 +57,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
+### keyansheng
+
+<img src="images/keyansheng.png" width="200px">
+
+[[github](http://github.com/keyansheng)]
+[[portfolio](team/keyansheng.md)]
+
+* Role: Developer, Documentation
+* Responsibilities: Model
