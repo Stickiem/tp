@@ -57,3 +57,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
+### Thum Kei Kuan
+<img src="images/stickiem.png" width="200px">
+[[github](https://github.com/Stickiem)]
+
+* Role: Developer, Testing
+* Responsibilities: ui
