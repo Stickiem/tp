@@ -19,5 +19,9 @@ You can reach us at the email `e1129932@u.nus.edu`
 
 * Role: Deliverables and deadlines
 
+### Thum Kei Kuan
+<img src="images/stickiem.png" width="200px">
+[[github](https://github.com/Stickiem)]
 
-
+* Role: Developer, Testing
+* Responsibilities: ui
