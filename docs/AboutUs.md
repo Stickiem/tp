@@ -18,6 +18,7 @@ You can reach us at the email `e1129932@u.nus.edu`
 [[portfolio](https://trknguyen-portfolio.vercel.app/)]
 
 * Role: Deliverables and deadlines
+* Responsibilities: logic
 
 ### Thum Kei Kuan
 <img src="images/stickiem.png" width="200px">
@@ -25,3 +26,14 @@ You can reach us at the email `e1129932@u.nus.edu`
 
 * Role: Developer, Testing
 * Responsibilities: ui
+
+### keyansheng
+
+<img src="images/keyansheng.png" width="200px">
+
+[[github](http://github.com/keyansheng)]
+[[portfolio](team/keyansheng.md)]
+
+* Role: Developer, Documentation
+* Responsibilities: Model
+
