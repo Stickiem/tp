@@ -11,9 +11,8 @@ You can reach us at the email `e1129973@u.nus.edu`
 
 ### Chau Le
 
-<img src="images/chau.png" width="200px">
+<img src="images/chauuule.png" width="200px">
 
-[[homepage](https://github.com/ChauuuLe)]
 [[github](https://github.com/ChauuuLe)]
 [[portfolio](https://www.linkedin.com/in/le-chau-51148726b)]
 
