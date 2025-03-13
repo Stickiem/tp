@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
 
 /**
  * The API of the Model component.
@@ -84,4 +86,35 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns the person with the given ID, or null if not found.
+     */
+    Person getPersonById(String id);
+
+    /**
+     * Returns true if a relationship with the same identity fields as {@code relationship} exists in the address book.
+     */
+    boolean hasRelationship(Relationship relationship);
+
+    /**
+     * Returns true if a relationship with the given user IDs and name exists in the address book.
+     */
+    boolean hasRelationship(String userId1, String userId2, String relationshipName);
+
+    /**
+     * Adds a relationship to the address book.
+     * The relationship must not already exist in the address book.
+     */
+    void addRelationship(Relationship relationship);
+
+    /**
+     * Deletes the relationship with the given user IDs and name.
+     * The relationship must exist in the address book.
+     */
+    void deleteRelationship(String userId1, String userId2, String relationshipName)
+            throws RelationshipNotFoundException;
+
+    /** Returns an unmodifiable view of the filtered relationship list */
+    ObservableList<Relationship> getFilteredRelationshipList();
 }

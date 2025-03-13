@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -20,15 +20,22 @@ import seedu.address.model.person.Person;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_RELATIONSHIP = "Relationships list contains duplicate relationship(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedRelationship> relationships = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableAddressBook(
+            @JsonProperty("persons") List<JsonAdaptedPerson> persons,
+            @JsonProperty("relationships") List<JsonAdaptedRelationship> relationships) {
         this.persons.addAll(persons);
+        if (relationships != null) {
+            this.relationships.addAll(relationships);
+        }
     }
 
     /**
@@ -37,7 +44,9 @@ class JsonSerializableAddressBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).toList());
+        relationships.addAll(source.getRelationshipList().stream()
+                .map(JsonAdaptedRelationship::new).toList());
     }
 
     /**
@@ -47,6 +56,8 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+
+        // Convert persons
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Person person = jsonAdaptedPerson.toModelType();
             if (addressBook.hasPerson(person)) {
@@ -54,7 +65,16 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+
+        // Convert relationships
+        for (JsonAdaptedRelationship jsonAdaptedRelationship : relationships) {
+            Relationship relationship = jsonAdaptedRelationship.toModelType();
+            if (addressBook.hasRelationship(relationship)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_RELATIONSHIP);
+            }
+            addressBook.addRelationship(relationship);
+        }
+
         return addressBook;
     }
-
 }

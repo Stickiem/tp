@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -22,6 +24,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Relationship> filteredRelationships;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -34,6 +37,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredRelationships = new FilteredList<>(this.addressBook.getRelationshipList());
     }
 
     public ModelManager() {
@@ -135,14 +139,49 @@ public class ModelManager implements Model {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ModelManager)) {
+        if (!(other instanceof ModelManager otherModelManager)) {
             return false;
         }
 
-        ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredRelationships.equals(otherModelManager.filteredRelationships);
+    }
+
+    //=========== Relationship ================================================================================
+    @Override
+    public Person getPersonById(String id) {
+        requireNonNull(id);
+        return addressBook.getPersonById(id);
+    }
+
+    @Override
+    public boolean hasRelationship(Relationship relationship) {
+        requireNonNull(relationship);
+        return addressBook.hasRelationship(relationship);
+    }
+
+    @Override
+    public boolean hasRelationship(String userId1, String userId2, String relationshipName) {
+        requireAllNonNull(userId1, userId2, relationshipName);
+        return addressBook.hasRelationship(userId1, userId2, relationshipName);
+    }
+
+    @Override
+    public void addRelationship(Relationship relationship) {
+        addressBook.addRelationship(relationship);
+    }
+
+    @Override
+    public void deleteRelationship(String userId1, String userId2, String relationshipName)
+            throws RelationshipNotFoundException {
+        addressBook.removeRelationship(userId1, userId2, relationshipName);
+    }
+
+    @Override
+    public ObservableList<Relationship> getFilteredRelationshipList() {
+        return filteredRelationships;
     }
 
 }
