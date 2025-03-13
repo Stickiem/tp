@@ -23,6 +23,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -156,6 +158,36 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Person getPersonById(String id) {
+            return null;
+        }
+
+        @Override
+        public boolean hasRelationship(Relationship relationship) {
+            return false;
+        }
+
+        @Override
+        public boolean hasRelationship(String userId1, String userId2, String relationshipName) {
+            return false;
+        }
+
+        @Override
+        public void addRelationship(Relationship relationship) {
+
+        }
+
+        @Override
+        public void deleteRelationship(String userId1, String userId2, String relationshipName) throws RelationshipNotFoundException {
+
+        }
+
+        @Override
+        public ObservableList<Relationship> getFilteredRelationshipList() {
+            return null;
         }
     }
 

@@ -20,6 +20,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final String id;
 
     // Data fields
     private final Address address;
@@ -37,6 +38,7 @@ public class Person {
         this.address = address;
         this.social = social;
         this.tags.addAll(tags);
+        this.id = generateId(name, phone);
     }
 
     public Name getName() {
@@ -91,11 +93,10 @@ public class Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Person)) {
+        if (!(other instanceof Person otherPerson)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
@@ -121,4 +122,23 @@ public class Person {
                 .toString();
     }
 
+    /**
+     * Generates an ID for this person based on their name and phone number.
+     *
+     * @param name The name of the person.
+     * @param phone The phone number of the person.
+     * @return The generated ID.
+     */
+    private String generateId(Name name, Phone phone) {
+        return (name.toString() + phone.toString()).hashCode() + "";
+    }
+
+    /**
+     * Returns the ID of this person.
+     *
+     * @return The ID of this person.
+     */
+    public String getId() {
+        return id;
+    }
 }
