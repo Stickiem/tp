@@ -276,16 +276,19 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a ...        | I want to ...            | So that I can ...                                          |
-| -------- | --------------- | ------------------------ | ---------------------------------------------------------- |
-| `* * *`  | startup founder | add contacts             | view contact information later                             |
-| `* * *`  | startup founder | list contacts            | view contact information                                   |
-| `* * *`  | startup founder | delete contacts          | remove contacts I no longer need                           |
-| `* *`    | startup founder | edit contacts            | change contact information                                 |
-| `* *`    | startup founder | add tags to contact      | view contact categories later                              |
-| `* *`    | startup founder | delete tags from contact | remove tags I no longer need                               |
-| `*`      | startup founder | search contacts by name  | find contacts by name without looking through all contacts |
-| `*`      | startup founder | search contacts by tag   | find contacts by tag without looking through all contacts  |
+| Priority | As a ...        | I want to ...            | So that I can ...                                           |
+| -------- | --------------- | ------------------------ | ----------------------------------------------------------- |
+| `* * *`  | startup founder | add contacts             | view contact information later                              |
+| `* * *`  | startup founder | list contacts            | view contact information                                    |
+| `* * *`  | startup founder | delete contacts          | remove contacts I no longer need                            |
+| `* *`    | startup founder | edit contacts            | change contact information                                  |
+| `* *`    | startup founder | add tags to contact      | view contact categories later                               |
+| `* *`    | startup founder | delete tags from contact | remove tags I no longer need                                |
+| `* *`    | startup founder | add events               | view event attendances later                                |
+| `* *`    | startup founder | delete events            | remove events I no longer need                              |
+| `*`      | startup founder | search contacts by name  | find contacts by name without looking through all contacts  |
+| `*`      | startup founder | search contacts by tag   | find contacts by tag without looking through all contacts   |
+| `*`      | startup founder | search contacts by event | find contacts by event without looking through all contacts |
 
 ### Use cases
 
