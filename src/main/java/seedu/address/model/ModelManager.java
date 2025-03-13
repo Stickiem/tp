@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
+import seedu.address.model.event.Event;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +26,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Relationship> filteredRelationships;
+    private final FilteredList<Event> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -38,6 +40,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredRelationships = new FilteredList<>(this.addressBook.getRelationshipList());
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList()); // Initialize event list
     }
 
     public ModelManager() {
@@ -132,23 +135,6 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof ModelManager otherModelManager)) {
-            return false;
-        }
-
-        return addressBook.equals(otherModelManager.addressBook)
-                && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons)
-                && filteredRelationships.equals(otherModelManager.filteredRelationships);
-    }
-
     //=========== Relationship ================================================================================
     @Override
     public Person getPersonById(String id) {
@@ -184,4 +170,60 @@ public class ModelManager implements Model {
         return filteredRelationships;
     }
 
+    @Override
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return addressBook.hasEvent(event);
+    }
+
+    @Override
+    public void addEvent(Event event) {
+        addressBook.addEvent(event);
+        updateFilteredEventList(Model.PREDICATE_SHOW_ALL_EVENTS);
+    }
+
+    @Override
+    public void deleteEvent(Event event) {
+        addressBook.deleteEvent(event);
+    }
+
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return filteredEvents;
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public Event getEventById(String id) {
+        requireNonNull(id);
+        for (Event event : filteredEvents) {
+            if (event.getId().equals(id)) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ModelManager otherModelManager)) {
+            return false;
+        }
+
+        return addressBook.equals(otherModelManager.addressBook)
+                && userPrefs.equals(otherModelManager.userPrefs)
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredRelationships.equals(otherModelManager.filteredRelationships)
+                && filteredEvents.equals(otherModelManager.filteredEvents);
+    }
 }

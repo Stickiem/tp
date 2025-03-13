@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
@@ -13,6 +14,7 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.UniqueRelationshipList;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
+import seedu.address.model.event.Event;
 
 /**
  * Wraps all data at the address-book level
@@ -22,17 +24,17 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueRelationshipList relationships;
+    // Changed events field to use a standard ObservableList instead of UniqueEventList.
+    private final ObservableList<Event> events;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * between constructors.
      */
     {
         persons = new UniquePersonList();
         relationships = new UniqueRelationshipList();
+        events = FXCollections.observableArrayList();
     }
 
     public AddressBook() {}
@@ -56,15 +58,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the events list with {@code events}.
+     * {@code events} must not contain duplicate events.
+     */
+    public void setEvents(List<Event> events) {
+        this.events.setAll(events);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
-
         setPersons(newData.getPersonList());
+        setEvents(newData.getEventList());
     }
 
-    //// person-level operations
+    //// Person-level operations
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -89,7 +99,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
-
         persons.setPerson(target, editedPerson);
     }
 
@@ -100,6 +109,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removePerson(Person key) {
         persons.remove(key);
     }
+
+    //// Relationship-level operations
 
     /**
      * Returns true if a relationship with the same identity fields as {@code relationship} exists in the address book.
@@ -152,12 +163,48 @@ public class AddressBook implements ReadOnlyAddressBook {
         return relationships.asUnmodifiableObservableList();
     }
 
-    //// util methods
+    //// Event-level operations
+
+    /**
+     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     */
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return events.stream().anyMatch(event::equals);
+    }
+
+    /**
+     * Adds an event to the address book.
+     * The event must not already exist in the address book.
+     */
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    /**
+     * Removes the given event from the address book.
+     * The event must exist in the address book.
+     */
+    public void deleteEvent(Event event) {
+        events.remove(event);
+    }
+
+    /**
+     * Returns an unmodifiable view of the events list.
+     */
+    @Override
+    public ObservableList<Event> getEventList() {
+        return FXCollections.unmodifiableObservableList(events);
+    }
+
+    //// Util methods
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("persons", persons)
+                .add("relationships", relationships)
+                .add("events", events)
                 .toString();
     }
 
@@ -168,21 +215,20 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public boolean equals(Object other) {
-        // Update equals method to include relationships
+        // Update equals method to include relationships and events
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
         if (!(other instanceof AddressBook otherAddressBook)) {
             return false;
         }
-
         return persons.equals(otherAddressBook.persons)
-                && relationships.equals(otherAddressBook.relationships);
+                && relationships.equals(otherAddressBook.relationships)
+                && events.equals(otherAddressBook.events);
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(persons, relationships);
+        return Objects.hash(persons, relationships, events);
     }
 }

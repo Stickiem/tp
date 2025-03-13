@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
+import seedu.address.model.event.Event;
 
 /**
  * Container for user visible messages.
@@ -50,4 +51,24 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code event} for display to the user.
+     */
+    public static String format(Event event) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Event Name: ")
+                .append(event.getName())
+                .append("; Date: ")
+                .append(event.getDate())
+                .append("; Location: ")
+                .append(event.getLocation())
+                .append("; Description: ")
+                .append(event.getDescription());
+        if (!event.getTags().isEmpty()) {
+            builder.append("; Tags: ");
+            event.getTags().forEach(builder::append);
+        }
+        builder.append("; ID: ").append(event.getId());
+        return builder.toString();
+    }
 }
