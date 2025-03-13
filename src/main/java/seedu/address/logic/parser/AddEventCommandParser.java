@@ -9,7 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
