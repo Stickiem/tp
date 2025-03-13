@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -20,7 +21,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.RelationshipBuilder;
 
 public class AddressBookTest {
 
@@ -89,6 +93,95 @@ public class AddressBookTest {
         assertEquals(expected, addressBook.toString());
     }
 
+    @Test
+    public void hasRelationship_nullRelationship_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.hasRelationship((Relationship) null));
+    }
+
+    @Test
+    public void hasRelationship_relationshipNotInAddressBook_returnsFalse() {
+        Relationship relationship = new RelationshipBuilder().build();
+        assertFalse(addressBook.hasRelationship(relationship));
+    }
+
+    @Test
+    public void hasRelationship_relationshipInAddressBook_returnsTrue() {
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
+        addressBook.addPerson(alice);
+        addressBook.addPerson(bob);
+
+        Relationship relationship = new RelationshipBuilder()
+                .withUser1Id(alice.getId())
+                .withUser2Id(bob.getId())
+                .build();
+        addressBook.addRelationship(relationship);
+        assertTrue(addressBook.hasRelationship(relationship));
+    }
+
+    @Test
+    public void hasRelationshipByIds_nullParameters_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.hasRelationship(null, "2", "Friend"));
+        assertThrows(NullPointerException.class, () -> addressBook.hasRelationship("1", null, "Friend"));
+        assertThrows(NullPointerException.class, () -> addressBook.hasRelationship("1", "2", null));
+    }
+
+    @Test
+    public void hasRelationshipByIds_relationshipNotInAddressBook_returnsFalse() {
+        assertFalse(addressBook.hasRelationship("1", "2", "Friend"));
+    }
+
+    @Test
+    public void hasRelationshipByIds_relationshipInAddressBook_returnsTrue() {
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
+        addressBook.addPerson(alice);
+        addressBook.addPerson(bob);
+
+        Relationship relationship = new RelationshipBuilder()
+                .withUser1Id(alice.getId())
+                .withUser2Id(bob.getId())
+                .build();
+        addressBook.addRelationship(relationship);
+        assertTrue(addressBook.hasRelationship(alice.getId(), bob.getId(), "Friend"));
+    }
+
+    @Test
+    public void removeRelationship_existingRelationship_removesRelationship() {
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
+        addressBook.addPerson(alice);
+        addressBook.addPerson(bob);
+
+        Relationship relationship = new RelationshipBuilder()
+                .withUser1Id(alice.getId())
+                .withUser2Id(bob.getId())
+                .build();
+        addressBook.addRelationship(relationship);
+
+        addressBook.removeRelationship(alice.getId(), bob.getId(), "Friend");
+        assertFalse(addressBook.hasRelationship(relationship));
+    }
+
+    @Test
+    public void removeRelationship_nonExistingRelationship_throwsRelationshipNotFoundException() {
+        assertThrows(RelationshipNotFoundException.class,
+                () -> addressBook.removeRelationship("1", "2", "Friend"));
+    }
+
+    @Test
+    public void getPersonById_existingId_returnsPerson() {
+        Person alice = new PersonBuilder().withName("Alice").build();
+        addressBook.addPerson(alice);
+
+        assertEquals(alice, addressBook.getPersonById(alice.getId()));
+    }
+
+    @Test
+    public void getPersonById_nonExistingId_returnsNull() {
+        assertNull(addressBook.getPersonById("nonexistent"));
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
      */
@@ -102,6 +195,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<Relationship> getRelationshipList() {
+            return null;
         }
     }
 
