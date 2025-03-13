@@ -262,6 +262,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
+* early-stage startup founders
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
