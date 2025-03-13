@@ -13,6 +13,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Social;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -96,6 +97,17 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String social} into a {@code Social}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     */
+    public static Social parseSocial(String social) throws ParseException {
+        String trimmedSocial = social.trim();
+
+        return new Social(trimmedSocial);
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -109,6 +121,8 @@ public class ParserUtil {
         }
         return new Tag(trimmedTag);
     }
+
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
