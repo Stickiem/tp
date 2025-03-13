@@ -8,6 +8,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
+import seedu.address.model.event.Event; // Added for event support
 
 /**
  * The API of the Model component.
@@ -15,6 +16,8 @@ import seedu.address.model.relationship.exceptions.RelationshipNotFoundException
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    /** {@code Predicate} that always evaluate to true for events */
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -117,4 +120,37 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered relationship list */
     ObservableList<Relationship> getFilteredRelationshipList();
+
+    /**
+     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     */
+    boolean hasEvent(Event event);
+
+    /**
+     * Adds the given event.
+     * {@code event} must not already exist in the address book.
+     */
+    void addEvent(Event event);
+
+    /**
+     * Deletes the given event.
+     * The event must exist in the address book.
+     */
+    void deleteEvent(Event event);
+
+    /**
+     * Returns an unmodifiable view of the filtered event list.
+     */
+    ObservableList<Event> getFilteredEventList();
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<Event> predicate);
+
+    /**
+     * Returns the event with the given ID, or null if not found.
+     */
+    Event getEventById(String id);
 }

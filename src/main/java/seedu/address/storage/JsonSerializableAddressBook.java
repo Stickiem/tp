@@ -12,6 +12,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.Relationship;
+import seedu.address.model.event.Event;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -21,20 +22,26 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_RELATIONSHIP = "Relationships list contains duplicate relationship(s).";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Events list contains duplicate event(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedRelationship> relationships = new ArrayList<>();
+    private final List<JsonAdaptedEvent> events = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given persons.
+     * Constructs a {@code JsonSerializableAddressBook} with the given persons, relationships and events.
      */
     @JsonCreator
     public JsonSerializableAddressBook(
             @JsonProperty("persons") List<JsonAdaptedPerson> persons,
-            @JsonProperty("relationships") List<JsonAdaptedRelationship> relationships) {
+            @JsonProperty("relationships") List<JsonAdaptedRelationship> relationships,
+            @JsonProperty("events") List<JsonAdaptedEvent> events) {
         this.persons.addAll(persons);
         if (relationships != null) {
             this.relationships.addAll(relationships);
+        }
+        if (events != null) {
+            this.events.addAll(events);
         }
     }
 
@@ -47,6 +54,8 @@ class JsonSerializableAddressBook {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).toList());
         relationships.addAll(source.getRelationshipList().stream()
                 .map(JsonAdaptedRelationship::new).toList());
+        events.addAll(source.getEventList().stream()
+                .map(JsonAdaptedEvent::new).toList());
     }
 
     /**
@@ -73,6 +82,15 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_RELATIONSHIP);
             }
             addressBook.addRelationship(relationship);
+        }
+
+        // Convert events
+        for (JsonAdaptedEvent jsonAdaptedEvent : events) {
+            Event event = jsonAdaptedEvent.toModelType();
+            if (addressBook.hasEvent(event)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
+            }
+            addressBook.addEvent(event);
         }
 
         return addressBook;
