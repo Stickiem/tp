@@ -20,7 +20,7 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable view of the relationships list.
      */
     ObservableList<Relationship> getRelationshipList();
-    
+
     /**
      * Returns an unmodifiable view of the events list.
      * This list will not contain any duplicate events.

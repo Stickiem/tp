@@ -155,7 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .findFirst()
                 .orElse(null);
     }
-    
+
     /**
      * Returns an unmodifiable view of the relationships list.
      */
@@ -196,7 +196,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Event> getEventList() {
         return FXCollections.unmodifiableObservableList(events);
     }
-    
+
     //// Util methods
 
     @Override
