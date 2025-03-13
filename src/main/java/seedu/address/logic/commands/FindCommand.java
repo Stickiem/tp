@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.person.NameContainsKeywordsAsSubstringPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -20,9 +21,11 @@ public class FindCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    private final NameContainsKeywordsPredicate predicate;
+    // private final NameContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    private final NameContainsKeywordsAsSubstringPredicate predicate;
+
+    public FindCommand(NameContainsKeywordsAsSubstringPredicate predicate) {
         this.predicate = predicate;
     }
 
