@@ -29,7 +29,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final String social;
+    private final String socials;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -38,12 +38,16 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("social") String social, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("social") List<String> socials, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.social = social;
+        if (socials != null) {
+            this.socials = String.join(",", socials);
+        } else {
+            this.socials = "";
+        }
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -57,7 +61,9 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        social = source.getSocial().value;
+
+        socials = source.getSocials().stream().map(s -> s.toString()).collect(Collectors.joining(","));
+
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -72,6 +78,12 @@ class JsonAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+
+        final Set<Social> personSocials = new HashSet<>();
+        String[] socialsValues = socials.split(",");
+        for (String s : socialsValues) {
+            personSocials.add(new Social(s));
         }
 
         if (name == null) {
@@ -105,10 +117,10 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
-        final Social modelSocial = new Social(social);
+
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSocial, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, personSocials, modelTags);
     }
 
 }
