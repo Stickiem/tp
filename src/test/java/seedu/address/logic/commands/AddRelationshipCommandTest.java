@@ -20,10 +20,26 @@ public class AddRelationshipCommandTest {
 
     @Test
     public void constructor_nullRelationship_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(null, "2", "Friend", new HashSet<>()));
-        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand("1", null, "Friend", new HashSet<>()));
-        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand("1", "2", null, new HashSet<>()));
-        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand("1", "2", "Friend", null));
+        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
+                null,
+                "2",
+                "Friend",
+                new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
+                "1",
+                null,
+                "Friend",
+                new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
+                "1",
+                "2",
+                null,
+                new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
+                "1",
+                "2",
+                "Friend",
+                null));
     }
 
     @Test
@@ -57,8 +73,7 @@ public class AddRelationshipCommandTest {
                 person1.getId(), person2.getId(), "Friend", new HashSet<>());
 
         assertThrows(CommandException.class,
-                AddRelationshipCommand.MESSAGE_DUPLICATE_RELATIONSHIP,
-                () -> addRelationshipCommand.execute(modelStub));
+                AddRelationshipCommand.MESSAGE_DUPLICATE_RELATIONSHIP, () -> addRelationshipCommand.execute(modelStub));
     }
 
     @Test
@@ -71,8 +86,7 @@ public class AddRelationshipCommandTest {
                 person.getId(), person.getId(), "Friend", new HashSet<>());
 
         assertThrows(CommandException.class,
-                AddRelationshipCommand.MESSAGE_SAME_PERSON,
-                () -> addRelationshipCommand.execute(modelStub));
+                AddRelationshipCommand.MESSAGE_SAME_PERSON, () -> addRelationshipCommand.execute(modelStub));
     }
 
     @Test
@@ -86,8 +100,7 @@ public class AddRelationshipCommandTest {
                 person1.getId(), person2.getId(), "", new HashSet<>());
 
         assertThrows(CommandException.class,
-                AddRelationshipCommand.MESSAGE_EMPTY_NAME,
-                () -> addRelationshipCommand.execute(modelStub));
+                AddRelationshipCommand.MESSAGE_EMPTY_NAME, () -> addRelationshipCommand.execute(modelStub));
     }
 
     @Test

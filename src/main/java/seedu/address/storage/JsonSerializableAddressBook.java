@@ -10,9 +10,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.Relationship;
-import seedu.address.model.event.Event;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -21,7 +21,8 @@ import seedu.address.model.event.Event;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
-    public static final String MESSAGE_DUPLICATE_RELATIONSHIP = "Relationships list contains duplicate relationship(s).";
+    public static final String MESSAGE_DUPLICATE_RELATIONSHIP =
+            "Relationships list contains duplicate relationship(s).";
     public static final String MESSAGE_DUPLICATE_EVENT = "Events list contains duplicate event(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();

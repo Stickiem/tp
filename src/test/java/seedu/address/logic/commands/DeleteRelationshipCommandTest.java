@@ -57,8 +57,8 @@ public class DeleteRelationshipCommandTest {
                 person1.getId(), person2.getId(), "Friend");
 
         assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_RELATIONSHIP_NOT_FOUND,
-                () -> deleteRelationshipCommand.execute(modelStub));
+                DeleteRelationshipCommand.MESSAGE_RELATIONSHIP_NOT_FOUND, () ->
+                        deleteRelationshipCommand.execute(modelStub));
     }
 
     @Test
@@ -72,8 +72,8 @@ public class DeleteRelationshipCommandTest {
                 person1.getId(), person2.getId(), "");
 
         assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_MISSING_PARAMETERS,
-                () -> deleteRelationshipCommand.execute(modelStub));
+                DeleteRelationshipCommand.MESSAGE_MISSING_PARAMETERS, () ->
+                        deleteRelationshipCommand.execute(modelStub));
     }
 
     @Test

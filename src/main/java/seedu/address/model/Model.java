@@ -5,10 +5,10 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
-import seedu.address.model.event.Event; // Added for event support
 
 /**
  * The API of the Model component.
