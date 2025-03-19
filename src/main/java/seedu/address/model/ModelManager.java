@@ -12,6 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
+import seedu.address.model.event.Event;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -22,6 +25,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Relationship> filteredRelationships;
+    private final FilteredList<Event> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -34,6 +39,8 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredRelationships = new FilteredList<>(this.addressBook.getRelationshipList());
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList()); // Initialize event list
     }
 
     public ModelManager() {
@@ -128,6 +135,80 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Relationship ================================================================================
+    @Override
+    public Person getPersonById(String id) {
+        requireNonNull(id);
+        return addressBook.getPersonById(id);
+    }
+
+    @Override
+    public boolean hasRelationship(Relationship relationship) {
+        requireNonNull(relationship);
+        return addressBook.hasRelationship(relationship);
+    }
+
+    @Override
+    public boolean hasRelationship(String userId1, String userId2, String relationshipName) {
+        requireAllNonNull(userId1, userId2, relationshipName);
+        return addressBook.hasRelationship(userId1, userId2, relationshipName);
+    }
+
+    @Override
+    public void addRelationship(Relationship relationship) {
+        addressBook.addRelationship(relationship);
+    }
+
+    @Override
+    public void deleteRelationship(String userId1, String userId2, String relationshipName)
+            throws RelationshipNotFoundException {
+        addressBook.removeRelationship(userId1, userId2, relationshipName);
+    }
+
+    @Override
+    public ObservableList<Relationship> getFilteredRelationshipList() {
+        return filteredRelationships;
+    }
+
+    @Override
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return addressBook.hasEvent(event);
+    }
+
+    @Override
+    public void addEvent(Event event) {
+        addressBook.addEvent(event);
+        updateFilteredEventList(Model.PREDICATE_SHOW_ALL_EVENTS);
+    }
+
+    @Override
+    public void deleteEvent(Event event) {
+        addressBook.deleteEvent(event);
+    }
+
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return filteredEvents;
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public Event getEventById(String id) {
+        requireNonNull(id);
+        for (Event event : filteredEvents) {
+            if (event.getId().equals(id)) {
+                return event;
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -135,14 +216,14 @@ public class ModelManager implements Model {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ModelManager)) {
+        if (!(other instanceof ModelManager otherModelManager)) {
             return false;
         }
 
-        ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredRelationships.equals(otherModelManager.filteredRelationships)
+                && filteredEvents.equals(otherModelManager.filteredEvents);
     }
-
 }
