@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -99,11 +100,9 @@ public class ParserUtil {
     /**
      * Parses a {@code String social} into a {@code Social}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      */
     public static Social parseSocial(String social) throws ParseException {
         String trimmedSocial = social.trim();
-
         return new Social(trimmedSocial);
     }
 
@@ -134,8 +133,6 @@ public class ParserUtil {
         return new Tag(trimmedTag);
     }
 
-
-
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -146,5 +143,43 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    // ========= Event Parsing Methods =========
+
+    /**
+     * Returns true if all the specified {@code prefixes} have non-empty values in the given {@code ArgumentMultimap}.
+     */
+    public static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        requireNonNull(argumentMultimap);
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Parses {@code eventName} into a trimmed {@code String}.
+     *
+     * @throws ParseException if the trimmed event name is empty.
+     */
+    public static String parseEventName(String eventName) throws ParseException {
+        requireNonNull(eventName);
+        String trimmedName = eventName.trim();
+        if (trimmedName.isEmpty()) {
+            throw new ParseException("Event name cannot be empty.");
+        }
+        return trimmedName;
+    }
+
+    /**
+     * Parses {@code date} into a trimmed {@code String} that matches the YYYY-MM-DD format.
+     *
+     * @throws ParseException if the date does not match the expected format.
+     */
+    public static String parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!trimmedDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            throw new ParseException("Invalid date format. Expected format: YYYY-MM-DD.");
+        }
+        return trimmedDate;
     }
 }

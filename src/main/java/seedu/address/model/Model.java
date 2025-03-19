@@ -6,6 +6,9 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
+import seedu.address.model.event.Event; // Added for event support
 
 /**
  * The API of the Model component.
@@ -13,6 +16,8 @@ import seedu.address.model.person.Person;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    /** {@code Predicate} that always evaluate to true for events */
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -84,4 +89,68 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns the person with the given ID, or null if not found.
+     */
+    Person getPersonById(String id);
+
+    /**
+     * Returns true if a relationship with the same identity fields as {@code relationship} exists in the address book.
+     */
+    boolean hasRelationship(Relationship relationship);
+
+    /**
+     * Returns true if a relationship with the given user IDs and name exists in the address book.
+     */
+    boolean hasRelationship(String userId1, String userId2, String relationshipName);
+
+    /**
+     * Adds a relationship to the address book.
+     * The relationship must not already exist in the address book.
+     */
+    void addRelationship(Relationship relationship);
+
+    /**
+     * Deletes the relationship with the given user IDs and name.
+     * The relationship must exist in the address book.
+     */
+    void deleteRelationship(String userId1, String userId2, String relationshipName)
+            throws RelationshipNotFoundException;
+
+    /** Returns an unmodifiable view of the filtered relationship list */
+    ObservableList<Relationship> getFilteredRelationshipList();
+
+    /**
+     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     */
+    boolean hasEvent(Event event);
+
+    /**
+     * Adds the given event.
+     * {@code event} must not already exist in the address book.
+     */
+    void addEvent(Event event);
+
+    /**
+     * Deletes the given event.
+     * The event must exist in the address book.
+     */
+    void deleteEvent(Event event);
+
+    /**
+     * Returns an unmodifiable view of the filtered event list.
+     */
+    ObservableList<Event> getFilteredEventList();
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<Event> predicate);
+
+    /**
+     * Returns the event with the given ID, or null if not found.
+     */
+    Event getEventById(String id);
 }

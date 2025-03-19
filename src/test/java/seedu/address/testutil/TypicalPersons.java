@@ -73,4 +73,32 @@ public class TypicalPersons {
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+
+    public static String getAliceId() {
+        return ALICE.getId();
+    }
+
+    public static String getBensonId() {
+        return BENSON.getId();
+    }
+
+    public static String getCarlId() {
+        return CARL.getId();
+    }
+
+    public static String getDanielId() {
+        return DANIEL.getId();
+    }
+
+    public static String getElleId() {
+        return ELLE.getId();
+    }
+
+    public static String getFionaId() {
+        return FIONA.getId();
+    }
+
+    public static String getGeorgeId() {
+        return GEORGE.getId();
+    }
 }

@@ -262,42 +262,49 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
+* early-stage startup founders
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: comprehensive knowledge store on potential business partners, optimized for speed
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a ...        | I want to ...                   | So that I can ...                                                  |
+| -------- | --------------- | ------------------------------- | ------------------------------------------------------------------ |
+| `* * *`  | startup founder | add contacts                    | view contact information later                                     |
+| `* * *`  | startup founder | list contacts                   | view contact information                                           |
+| `* * *`  | startup founder | delete contacts                 | remove contacts I no longer need                                   |
+| `* *`    | startup founder | edit contacts                   | change contact information                                         |
+| `* *`    | startup founder | add tags to contact             | view contact categories later                                      |
+| `* *`    | startup founder | delete tags from contact        | remove tags I no longer need                                       |
+| `* *`    | startup founder | add events                      | view event attendances later                                       |
+| `* *`    | startup founder | delete events                   | remove events I no longer need                                     |
+| `* *`    | startup founder | add relationships               | view contact connections later                                     |
+| `* *`    | startup founder | delete relationships            | remove relationships I no longer need                              |
+| `*`      | startup founder | search contacts by name         | find contacts by name without looking through all contacts         |
+| `*`      | startup founder | search contacts by tag          | find contacts by tag without looking through all contacts          |
+| `*`      | startup founder | search contacts by event        | find contacts by event without looking through all contacts        |
+| `*`      | startup founder | search contacts by relationship | find contacts by relationship without looking through all contacts |
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `INcontact` and the **Actor** is the `startup founder`, unless specified otherwise)
 
 **Use case: Delete a person**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. Startup founder requests to list contacts
+1. INcontact shows a list of contacts
+1. Startup founder requests to delete a specific contact in the list
+1. INcontact deletes the contact
 
     Use case ends.
 
@@ -309,23 +316,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. INcontact shows an error message.
 
       Use case resumes at step 2.
 
-*{More to be added}*
-
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. Should work on any _mainstream OS_ as long as it has the exact version of Java `17` installed according to the [Java Installation Guides](https://se-education.org/guides/tutorials/javaInstallation.html).
+1. Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
+1. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Mainstream OS**: Windows, Linux, macOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
