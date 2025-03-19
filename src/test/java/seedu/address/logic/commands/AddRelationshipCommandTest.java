@@ -136,7 +136,7 @@ public class AddRelationshipCommandTest {
     /**
      * A Model stub that contains a single person.
      */
-    private class ModelStubWithPerson extends ModelStub {
+    private static class ModelStubWithPerson extends ModelStub {
         private final Person person;
 
         ModelStubWithPerson(Person person) {
@@ -156,7 +156,7 @@ public class AddRelationshipCommandTest {
     /**
      * A Model stub that contains two persons.
      */
-    private class ModelStubWithPersons extends ModelStub {
+    private static class ModelStubWithPersons extends ModelStub {
         private final Person person1;
         private final Person person2;
 
@@ -201,7 +201,7 @@ public class AddRelationshipCommandTest {
     /**
      * A Model stub that always accepts the relationship being added.
      */
-    private class ModelStubAcceptingRelationshipAdded extends ModelStub {
+    private static class ModelStubAcceptingRelationshipAdded extends ModelStub {
         private Relationship relationshipAdded;
         private final java.util.ArrayList<Person> persons = new java.util.ArrayList<>();
 
