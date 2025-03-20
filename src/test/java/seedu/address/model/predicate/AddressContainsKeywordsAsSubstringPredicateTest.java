@@ -19,14 +19,17 @@ public class AddressContainsKeywordsAsSubstringPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
         List<String> secondPredicateKeywordList = Arrays.asList("NUS", "Com1");
 
-        AddressContainsKeywordsAsSubstringPredicate firstPredicate = new AddressContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
-        AddressContainsKeywordsAsSubstringPredicate secondPredicate = new AddressContainsKeywordsAsSubstringPredicate(secondPredicateKeywordList);
+        AddressContainsKeywordsAsSubstringPredicate firstPredicate =
+                new AddressContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
+        AddressContainsKeywordsAsSubstringPredicate secondPredicate =
+                new AddressContainsKeywordsAsSubstringPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        AddressContainsKeywordsAsSubstringPredicate firstPredicateCopy = new AddressContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
+        AddressContainsKeywordsAsSubstringPredicate firstPredicateCopy =
+                new AddressContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -42,7 +45,8 @@ public class AddressContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void test_addressContainsKeywords_returnsTrue() {
         // One keyword
-        AddressContainsKeywordsAsSubstringPredicate predicate = new AddressContainsKeywordsAsSubstringPredicate(Collections.singletonList("NUS"));
+        AddressContainsKeywordsAsSubstringPredicate predicate =
+                new AddressContainsKeywordsAsSubstringPredicate(Collections.singletonList("NUS"));
         assertTrue(predicate.test(new PersonBuilder().withAddress("NUS Main Lab").build()));
 
         // Multiple keywords
@@ -53,7 +57,8 @@ public class AddressContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void test_addressDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        AddressContainsKeywordsAsSubstringPredicate predicate = new AddressContainsKeywordsAsSubstringPredicate(Collections.emptyList());
+        AddressContainsKeywordsAsSubstringPredicate predicate =
+                new AddressContainsKeywordsAsSubstringPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withAddress("NUS Main Lab").build()));
 
         // Non-matching keyword
@@ -64,9 +69,11 @@ public class AddressContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void toStringMethod() {
         List<String> keywords = List.of("NUS", "Com1");
-        AddressContainsKeywordsAsSubstringPredicate predicate = new AddressContainsKeywordsAsSubstringPredicate(keywords);
+        AddressContainsKeywordsAsSubstringPredicate predicate =
+                new AddressContainsKeywordsAsSubstringPredicate(keywords);
 
-        String expected = AddressContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        String expected =
+                AddressContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
 }

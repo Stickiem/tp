@@ -19,14 +19,17 @@ public class EmailContainsKeywordsAsSubstringPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("trankhoinguyen@gmail.com");
         List<String> secondPredicateKeywordList = Arrays.asList("trankhoinguyen@gmail.com", "e2222222@u.nus.edu");
 
-        EmailContainsKeywordsAsSubstringPredicate firstPredicate = new EmailContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
-        EmailContainsKeywordsAsSubstringPredicate secondPredicate = new EmailContainsKeywordsAsSubstringPredicate(secondPredicateKeywordList);
+        EmailContainsKeywordsAsSubstringPredicate firstPredicate =
+                new EmailContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
+        EmailContainsKeywordsAsSubstringPredicate secondPredicate =
+                new EmailContainsKeywordsAsSubstringPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        EmailContainsKeywordsAsSubstringPredicate firstPredicateCopy = new EmailContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
+        EmailContainsKeywordsAsSubstringPredicate firstPredicateCopy =
+                new EmailContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -42,18 +45,22 @@ public class EmailContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void test_emailContainsKeywords_returnsTrue() {
         // One keyword
-        EmailContainsKeywordsAsSubstringPredicate predicate = new EmailContainsKeywordsAsSubstringPredicate(Collections.singletonList("trankhoinguyen@gmail.com"));
+        EmailContainsKeywordsAsSubstringPredicate predicate =
+                new EmailContainsKeywordsAsSubstringPredicate(Collections.singletonList("trankhoinguyen@gmail.com"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("trankhoinguyen@gmail.com").build()));
 
         // Multiple keywords
-        predicate = new EmailContainsKeywordsAsSubstringPredicate(Arrays.asList("trankhoinguyen@gmail.com", "e2222222@u.nus.edu"));
+        predicate = new EmailContainsKeywordsAsSubstringPredicate(
+                Arrays.asList("trankhoinguyen@gmail.com", "e2222222@u.nus.edu")
+        );
         assertTrue(predicate.test(new PersonBuilder().withEmail("e2222222@u.nus.edu").build()));
     }
 
     @Test
     public void test_emailDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        EmailContainsKeywordsAsSubstringPredicate predicate = new EmailContainsKeywordsAsSubstringPredicate(Collections.emptyList());
+        EmailContainsKeywordsAsSubstringPredicate predicate =
+                new EmailContainsKeywordsAsSubstringPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withEmail("trankhoinguyen@gmail.com").build()));
 
         // Non-matching keyword
@@ -64,9 +71,11 @@ public class EmailContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void toStringMethod() {
         List<String> keywords = List.of("trankhoinguyen@gmail.com", "e2222222@u.nus.edu");
-        EmailContainsKeywordsAsSubstringPredicate predicate = new EmailContainsKeywordsAsSubstringPredicate(keywords);
+        EmailContainsKeywordsAsSubstringPredicate predicate =
+                new EmailContainsKeywordsAsSubstringPredicate(keywords);
 
-        String expected = EmailContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        String expected =
+                EmailContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
 }

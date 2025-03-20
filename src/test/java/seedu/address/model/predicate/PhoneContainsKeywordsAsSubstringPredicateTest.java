@@ -19,14 +19,17 @@ public class PhoneContainsKeywordsAsSubstringPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("1111111");
         List<String> secondPredicateKeywordList = Arrays.asList("1111111", "777777");
 
-        PhoneContainsKeywordsAsSubstringPredicate firstPredicate = new PhoneContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
-        PhoneContainsKeywordsAsSubstringPredicate secondPredicate = new PhoneContainsKeywordsAsSubstringPredicate(secondPredicateKeywordList);
+        PhoneContainsKeywordsAsSubstringPredicate firstPredicate =
+                new PhoneContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
+        PhoneContainsKeywordsAsSubstringPredicate secondPredicate =
+                new PhoneContainsKeywordsAsSubstringPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PhoneContainsKeywordsAsSubstringPredicate firstPredicateCopy = new PhoneContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
+        PhoneContainsKeywordsAsSubstringPredicate firstPredicateCopy =
+                new PhoneContainsKeywordsAsSubstringPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -42,7 +45,8 @@ public class PhoneContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void test_phoneContainsKeywords_returnsTrue() {
         // One keyword
-        PhoneContainsKeywordsAsSubstringPredicate predicate = new PhoneContainsKeywordsAsSubstringPredicate(Collections.singletonList("1111111"));
+        PhoneContainsKeywordsAsSubstringPredicate predicate =
+                new PhoneContainsKeywordsAsSubstringPredicate(Collections.singletonList("1111111"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("1111111").build()));
 
         // Multiple keywords
@@ -53,7 +57,8 @@ public class PhoneContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void test_phoneDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        PhoneContainsKeywordsAsSubstringPredicate predicate = new PhoneContainsKeywordsAsSubstringPredicate(Collections.emptyList());
+        PhoneContainsKeywordsAsSubstringPredicate predicate =
+                new PhoneContainsKeywordsAsSubstringPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withPhone("1111111").build()));
 
         // Non-matching keyword
@@ -64,9 +69,11 @@ public class PhoneContainsKeywordsAsSubstringPredicateTest {
     @Test
     public void toStringMethod() {
         List<String> keywords = List.of("1111111", "777777");
-        PhoneContainsKeywordsAsSubstringPredicate predicate = new PhoneContainsKeywordsAsSubstringPredicate(keywords);
+        PhoneContainsKeywordsAsSubstringPredicate predicate =
+                new PhoneContainsKeywordsAsSubstringPredicate(keywords);
 
-        String expected = PhoneContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        String expected =
+                PhoneContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
 }
