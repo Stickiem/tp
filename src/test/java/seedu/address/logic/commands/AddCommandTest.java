@@ -181,7 +181,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteRelationship(String userId1, String userId2, String relationshipName) throws RelationshipNotFoundException {
+        public void deleteRelationship(String userId1, String userId2, String relationshipName)
+                throws RelationshipNotFoundException {
 
         }
 
