@@ -9,12 +9,12 @@ import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.UniqueRelationshipList;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
-import seedu.address.model.event.Event;
 
 /**
  * Wraps all data at the address-book level

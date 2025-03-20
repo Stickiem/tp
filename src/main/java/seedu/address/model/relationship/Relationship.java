@@ -14,8 +14,9 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Relationship {
-    public static final String MESSAGE_CONSTRAINTS = "Relationship names can take any values, and it should not be blank";
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Relationship names can take any values, and it should not be blank";
+    public static final String VALIDATION_REGEX = "\\S.*";
 
     private final String user1Id;
     private final String user2Id;

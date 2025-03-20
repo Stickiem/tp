@@ -57,8 +57,8 @@ public class DeleteRelationshipCommandTest {
                 person1.getId(), person2.getId(), "Friend");
 
         assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_RELATIONSHIP_NOT_FOUND,
-                () -> deleteRelationshipCommand.execute(modelStub));
+                DeleteRelationshipCommand.MESSAGE_RELATIONSHIP_NOT_FOUND, () ->
+                        deleteRelationshipCommand.execute(modelStub));
     }
 
     @Test
@@ -72,8 +72,8 @@ public class DeleteRelationshipCommandTest {
                 person1.getId(), person2.getId(), "");
 
         assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_MISSING_PARAMETERS,
-                () -> deleteRelationshipCommand.execute(modelStub));
+                DeleteRelationshipCommand.MESSAGE_MISSING_PARAMETERS, () ->
+                        deleteRelationshipCommand.execute(modelStub));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class DeleteRelationshipCommandTest {
     /**
      * A Model stub that contains two persons.
      */
-    private class ModelStubWithPersons extends ModelStub {
+    private static class ModelStubWithPersons extends ModelStub {
         private final Person person1;
         private final Person person2;
 
@@ -140,7 +140,7 @@ public class DeleteRelationshipCommandTest {
     /**
      * A Model stub that always accepts the relationship being deleted.
      */
-    private class ModelStubAcceptingRelationshipDeleted extends ModelStub {
+    private static class ModelStubAcceptingRelationshipDeleted extends ModelStub {
         private final java.util.ArrayList<Person> persons = new java.util.ArrayList<>();
         private final java.util.ArrayList<Relationship> relationships = new java.util.ArrayList<>();
         private boolean relationshipDeleted = false;
