@@ -148,6 +148,24 @@ Clears all entries from INcontact.
 
 Format: `clear`
 
+### Adding a relationship: `addRelationship`
+
+Adds a relationship to INcontact.
+
+Format: `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`
+
+Example:
+* `addRelationship u/12345678 u/87654321 n/Business Partner t/Investment`
+
+### Deleting a relationship: `deleteRelationship`
+
+Deletes a relationship from INcontact.
+
+Format: `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`
+
+Example:
+* `deleteRelationship u/12345678 u/87654321 n/Business Partner`
+
 ### Exiting the program : `exit`
 
 Exits the program.
