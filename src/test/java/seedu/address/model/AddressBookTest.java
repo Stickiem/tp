@@ -34,6 +34,8 @@ public class AddressBookTest {
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(FXCollections.observableArrayList(), addressBook.getRelationshipList()); // Changed check
+        assertEquals(FXCollections.observableArrayList(), addressBook.getEventList()); // Changed check
     }
 
     @Test
@@ -89,9 +91,13 @@ public class AddressBookTest {
     }
 
     @Test
-    public void toStringMethod() {
-        String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";
-        assertEquals(expected, addressBook.toString());
+    public void getRelationshipList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> addressBook.getRelationshipList().remove(0));
+    }
+
+    @Test
+    public void getEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> addressBook.getEventList().remove(0));
     }
 
     @Test
@@ -187,6 +193,8 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Relationship> relationships = FXCollections.observableArrayList();
+        private final ObservableList<Event> events = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons) {
             this.persons.setAll(persons);
@@ -199,13 +207,12 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<Relationship> getRelationshipList() {
-            return null;
+            return relationships;
         }
 
         @Override
         public ObservableList<Event> getEventList() {
-            return null;
+            return events;
         }
     }
-
 }

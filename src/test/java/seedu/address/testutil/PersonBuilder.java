@@ -94,6 +94,15 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Social} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSocial(String social) {
+        this.socials.add(new Social(social));
+        return this;
+    }
+
+
     public Person build() {
         return new Person(name, phone, email, address, socials, tags);
     }

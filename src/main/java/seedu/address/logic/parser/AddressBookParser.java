@@ -18,18 +18,14 @@ import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DeleteRelationshipCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindAddressCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindEmailCommand;
+import seedu.address.logic.commands.FindPhoneCommand;
+import seedu.address.logic.commands.FindSocialCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.AddCommandParser;
-import seedu.address.logic.parser.EditCommandParser;
-import seedu.address.logic.parser.DeleteCommandParser;
-import seedu.address.logic.parser.FindCommandParser;
-import seedu.address.logic.parser.AddRelationshipCommandParser;
-import seedu.address.logic.parser.DeleteRelationshipCommandParser;
-import seedu.address.logic.parser.AddEventCommandParser;
-import seedu.address.logic.parser.DeleteEventCommandParser;
 
 /**
  * Parses user input.
@@ -60,23 +56,59 @@ public class AddressBookParser {
 
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        return switch (commandWord) {
-            case AddCommand.COMMAND_WORD -> new AddCommandParser().parse(arguments);
-            case EditCommand.COMMAND_WORD -> new EditCommandParser().parse(arguments);
-            case DeleteCommand.COMMAND_WORD -> new DeleteCommandParser().parse(arguments);
-            case ClearCommand.COMMAND_WORD -> new ClearCommand();
-            case FindCommand.COMMAND_WORD -> new FindCommandParser().parse(arguments);
-            case ListCommand.COMMAND_WORD -> new ListCommand();
-            case ExitCommand.COMMAND_WORD -> new ExitCommand();
-            case HelpCommand.COMMAND_WORD -> new HelpCommand();
-            case AddRelationshipCommand.COMMAND_WORD -> new AddRelationshipCommandParser().parse(arguments);
-            case DeleteRelationshipCommand.COMMAND_WORD -> new DeleteRelationshipCommandParser().parse(arguments);
-            case AddEventCommand.COMMAND_WORD -> new AddEventCommandParser().parse(arguments);
-            case DeleteEventCommand.COMMAND_WORD -> new DeleteEventCommandParser().parse(arguments);
-            default -> {
-                logger.finer("This user input caused a ParseException: " + userInput);
-                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-            }
-        };
+        switch (commandWord) {
+
+        case AddCommand.COMMAND_WORD:
+            return new AddCommandParser().parse(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
+
+        case DeleteCommand.COMMAND_WORD:
+            return new DeleteCommandParser().parse(arguments);
+
+        case ClearCommand.COMMAND_WORD:
+            return new ClearCommand();
+
+        case FindAddressCommand.COMMAND_WORD:
+            return new FindAddressCommandParser().parse(arguments);
+
+        case FindCommand.COMMAND_WORD:
+            return new FindCommandParser().parse(arguments);
+
+        case FindEmailCommand.COMMAND_WORD:
+            return new FindEmailCommandParser().parse(arguments);
+
+        case FindPhoneCommand.COMMAND_WORD:
+            return new FindPhoneCommandParser().parse(arguments);
+
+        case FindSocialCommand.COMMAND_WORD:
+            return new FindSocialCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+            return new ListCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case AddRelationshipCommand.COMMAND_WORD:
+            return new AddRelationshipCommandParser().parse(arguments);
+
+        case DeleteRelationshipCommand.COMMAND_WORD:
+            return new DeleteRelationshipCommandParser().parse(arguments);
+
+        case AddEventCommand.COMMAND_WORD:
+            return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+            return new DeleteEventCommandParser().parse(arguments);
+
+        default:
+            logger.finer("This user input caused a ParseException: " + userInput);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
     }
 }

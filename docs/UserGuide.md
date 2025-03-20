@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+INcontact is a **desktop app for managing business contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, INcontact can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -15,7 +15,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T09-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
@@ -75,27 +75,27 @@ Format: `help`
 
 ### Adding a person: `add`
 
-Adds a person to the address book.
+Adds a person to INcontact.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/social2 t/Investor`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in INcontact.
 
 Format: `list`
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in INcontact.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -128,9 +128,53 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Locating persons by phone: `findphone`
+
+Finds persons whose phone number contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the phone number is searched.
+
+Examples:
+* `find 123 456`
+
+### Locating persons by email: `findemail`
+
+Finds persons whose email contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the email is searched.
+
+Examples:
+* `find example1@example.com`
+
+### Locating persons by address: `findaddress`
+
+Finds persons whose address contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the address is searched.
+
+Examples:
+* `find street avenue park`
+
+### Locating persons by social: `findsocial`
+
+Finds persons whose social media handle contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the social media handle is searched.
+
+Examples:
+* `find facebook twitter linkedin`
+
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified person from INcontact.
 
 Format: `delete INDEX`
 
@@ -139,14 +183,51 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in INcontact.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from INcontact.
 
 Format: `clear`
+
+### Adding a relationship: `addRelationship`
+
+Adds a relationship to INcontact.
+
+Format: `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`
+
+Example:
+* `addRelationship u/12345678 u/87654321 n/Business Partner t/Investment`
+
+### Deleting a relationship: `deleteRelationship`
+
+Deletes a relationship from INcontact.
+
+Format: `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`
+
+Example:
+* `deleteRelationship u/12345678 u/87654321 n/Business Partner`
+
+### Adding an event: `addEvent`
+
+Adds an event to INcontact.
+
+Format: `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]…`
+
+Examples:
+* `addEvent n/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance`
+* `addEvent n/Tech Conference d/2025-06-20`
+
+### Deleting an event: `deleteEvent`
+
+Deletes an event from INcontact.
+
+Format: `deleteEvent u/EVENT_ID`
+
+Example:
+* `deleteEvent u/98765432`
 
 ### Exiting the program : `exit`
 
@@ -163,8 +244,8 @@ AddressBook data are saved in the hard disk automatically after any command that
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, INcontact will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
@@ -176,7 +257,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous INcontact home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -189,12 +270,20 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**Help** | `help`
+| Action                  | Format, Examples                                                                                                                                                                                                  |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                 | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
+| **Clear**               | `clear`                                                                                                                                                                                                           |
+| **Delete**              | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                               |
+| **Edit**                | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                        |
+| **Find**                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                        |
+| **Find by Phone**       | `findphone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
+| **Find by Email**       | `findemail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
+| **Find by Address**     | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                             |
+| **Find by Social**      | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
+| **List**                | `list`                                                                                                                                                                                                            |
+| **Add Relationship**    | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                            |
+| **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                  |
+| **Add Event**           | `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                            |
+| **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                          |
+| **Help**                | `help`                                                                                                                                                                                                            |

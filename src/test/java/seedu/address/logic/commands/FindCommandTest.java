@@ -18,8 +18,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsAsSubstringPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.predicate.NameContainsKeywordsAsSubstringPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -77,7 +76,8 @@ public class FindCommandTest {
 
     @Test
     public void toStringMethod() {
-        NameContainsKeywordsAsSubstringPredicate predicate = new NameContainsKeywordsAsSubstringPredicate(Arrays.asList("keyword"));
+        NameContainsKeywordsAsSubstringPredicate predicate =
+                new NameContainsKeywordsAsSubstringPredicate(Arrays.asList("keyword"));
         FindCommand findCommand = new FindCommand(predicate);
         String expected = FindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
