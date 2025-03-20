@@ -128,6 +128,50 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Locating persons by phone: `findphone`
+
+Finds persons whose phone number contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the phone number is searched.
+
+Examples:
+* `find 123 456`
+
+### Locating persons by email: `findemail`
+
+Finds persons whose email contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the email is searched.
+
+Examples:
+* `find example1@example.com`
+
+### Locating persons by address: `findaddress`
+
+Finds persons whose address contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the address is searched.
+
+Examples:
+* `find street avenue park`
+
+### Locating persons by social: `findsocial`
+
+Finds persons whose social media handle contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Only the social media handle is searched.
+
+Examples:
+* `find facebook twitter linkedin`
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from INcontact.
