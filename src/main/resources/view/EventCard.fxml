@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      spacing="10" alignment="CENTER_LEFT" styleClass="event-card">
+    
+    <VBox spacing="4">
+        <Label fx:id="name" styleClass="event-name"/>
+        <Label fx:id="date" styleClass="event-date"/>
+        <Label fx:id="location" styleClass="event-location"/>
+        <Label fx:id="description" styleClass="event-description"/>
+    </VBox>
+</HBox>
