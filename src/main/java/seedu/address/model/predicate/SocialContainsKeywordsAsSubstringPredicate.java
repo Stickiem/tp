@@ -16,7 +16,7 @@ public class SocialContainsKeywordsAsSubstringPredicate implements Predicate<Per
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> containsSubstringIgnoreCase(person.getSocial().value, keyword));
+                .anyMatch(keyword -> containsSubstringIgnoreCase(person.getSocials().toString(), keyword));
     }
 
     private boolean containsSubstringIgnoreCase(String social, String keyword) {
