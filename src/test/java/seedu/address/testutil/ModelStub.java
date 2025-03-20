@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.Model;
@@ -58,6 +59,12 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public ObservableList<Relationship> getFilteredRelationshipList() {
+        return FXCollections.observableArrayList();
+    }
+
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         throw new AssertionError("This method should not be called.");
     }
@@ -110,11 +117,6 @@ public class ModelStub implements Model {
     @Override
     public void deleteRelationship(String userId1, String userId2, String relationshipName)
             throws RelationshipNotFoundException {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public ObservableList<Relationship> getFilteredRelationshipList() {
         throw new AssertionError("This method should not be called.");
     }
 
