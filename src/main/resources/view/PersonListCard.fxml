@@ -33,6 +33,11 @@
       <Label fx:id="socials" styleClass="cell_small_label" text="\$socials" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="contactId" styleClass="cell_small_label" text="\$contactId" />
+      <VBox fx:id="relationshipsPane" styleClass="relationships-section" spacing="2">
+        <padding>
+          <Insets top="5" right="0" bottom="0" left="0" />
+        </padding>
+      </VBox>
     </VBox>
   </GridPane>
 </HBox>
