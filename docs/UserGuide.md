@@ -119,7 +119,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
@@ -132,45 +131,45 @@ Examples:
 
 Finds persons whose phone number contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findphone KEYWORD [MORE_KEYWORDS]`
 
 * Only the phone number is searched.
 
 Examples:
-* `find 123 456`
+* `findphone 123 456`
 
 ### Locating persons by email: `findemail`
 
 Finds persons whose email contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findemail KEYWORD [MORE_KEYWORDS]`
 
 * Only the email is searched.
 
 Examples:
-* `find example1@example.com`
+* `findemail example1@example.com`
 
 ### Locating persons by address: `findaddress`
 
 Finds persons whose address contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findaddress KEYWORD [MORE_KEYWORDS]`
 
 * Only the address is searched.
 
 Examples:
-* `find street avenue park`
+* `findaddress street avenue park`
 
 ### Locating persons by social: `findsocial`
 
 Finds persons whose social media handle contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findsocial KEYWORD [MORE_KEYWORDS]`
 
 * Only the social media handle is searched.
 
 Examples:
-* `find facebook twitter linkedin`
+* `findsocial facebook twitter linkedin`
 
 ### Deleting a person : `delete`
 
