@@ -16,11 +16,10 @@ import seedu.address.model.tag.Tag;
  */
 public class Event {
 
-    // A counter to generate unique IDs for each event.
-    private static final AtomicInteger COUNTER = new AtomicInteger(1);
-
     public static final String MESSAGE_CONSTRAINTS_NAME = "Event name cannot be blank.";
     public static final String MESSAGE_CONSTRAINTS_DATE = "Date must be in the format YYYY-MM-DD.";
+
+    private static final AtomicInteger COUNTER = new AtomicInteger(1);
 
     private final String id;
     private final String name;
