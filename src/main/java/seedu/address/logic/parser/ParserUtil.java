@@ -107,6 +107,18 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code Collection<String> socials} into a {@code Set<Social>}.
+     */
+    public static Set<Social> parseSocials(Collection<String> socials) throws ParseException {
+        requireNonNull(socials);
+        final Set<Social> socialSet = new HashSet<>();
+        for (String socialName : socials) {
+            socialSet.add(parseSocial(socialName));
+        }
+        return socialSet;
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *

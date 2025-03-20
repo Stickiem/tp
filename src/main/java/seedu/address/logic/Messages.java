@@ -44,8 +44,8 @@ public class Messages {
                 .append(person.getEmail())
                 .append("; Address: ")
                 .append(person.getAddress())
-                .append("; Social: ")
-                .append(person.getSocial())
+                .append("; Socials: ")
+                .append(person.getSocials())
                 .append("; ID: ")
                 .append(person.getId())
                 .append("; Tags: ");
