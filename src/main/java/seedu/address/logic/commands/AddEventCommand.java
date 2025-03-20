@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
-
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -43,6 +43,13 @@ public class AddEventCommand extends Command {
         toAdd = event;
     }
 
+    /**
+     * Executes the add event command.
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return the result of executing the command.
+     * @throws CommandException if an error occurs during command execution.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
