@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
-import static java.util.Objects.requireNonNull;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
@@ -38,6 +38,11 @@ public class AddEventCommand extends Command {
 
     private final Event toAdd;
 
+    /**
+     * Creates an AddEventCommand to add the specified {@code Event} to the address book.
+     *
+     * @param event the event to be added; must not be null
+     */
     public AddEventCommand(Event event) {
         requireNonNull(event);
         toAdd = event;
