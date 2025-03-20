@@ -166,6 +166,25 @@ Format: `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`
 Example:
 * `deleteRelationship u/12345678 u/87654321 n/Business Partner`
 
+### Adding an event: `addEvent`
+
+Adds an event to INcontact.
+
+Format: `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]…`
+
+Examples:
+* `addEvent n/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance`
+* `addEvent n/Tech Conference d/2025-06-20`
+
+### Deleting an event: `deleteEvent`
+
+Deletes an event from INcontact.
+
+Format: `deleteEvent u/EVENT_ID`
+
+Example:
+* `deleteEvent u/98765432`
+
 ### Exiting the program : `exit`
 
 Exits the program.
