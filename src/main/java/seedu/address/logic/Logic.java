@@ -35,6 +35,14 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
 
+    /**
+     * Returns an unmodifiable view of the filtered person list, sorted by the specified comparator.
+     * If no comparator is provided, the list remains unsorted.
+     *
+     * @return an observable list of sorted and filtered persons.
+     */
+    ObservableList<Person> getSortedFilteredPersonList();
+
     /** Returns an unmodifiable view of the filtered list of relationships */
     ObservableList<Relationship> getFilteredRelationshipList();
 

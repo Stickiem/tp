@@ -4,11 +4,16 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
@@ -28,6 +33,7 @@ public class ModelManager implements Model {
     private final FilteredList<Relationship> filteredRelationships;
     private final FilteredList<Event> filteredEvents;
 
+    private Comparator<Person> sortComparator;
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -41,6 +47,7 @@ public class ModelManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredRelationships = new FilteredList<>(this.addressBook.getRelationshipList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList()); // Initialize event list
+        sortComparator = (person1, person2) -> 0;
     }
 
     public ModelManager() {
@@ -130,9 +137,34 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Person> getSortedFilteredPersonList() {
+        List<Person> personList = new ArrayList<>(filteredPersons);
+        if (sortComparator != null) {
+            personList.sort(sortComparator);
+            logger.info("we have comparator");
+        }
+
+        return FXCollections.observableArrayList(personList);
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateSortedPersonList(Comparator<Person> comparator) {
+        requireNonNull(comparator);
+        sortComparator = comparator;
+        List<Person> personList = new ArrayList<>(addressBook.getPersonList());
+        if (sortComparator != null) {
+            personList.sort(sortComparator);
+            System.out.println("we have comparator");
+        }
+        System.out.println("I changed it");
+        addressBook.setPersons(personList);
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     //=========== Relationship ================================================================================
