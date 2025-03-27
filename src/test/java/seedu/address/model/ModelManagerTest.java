@@ -3,6 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -12,13 +13,17 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Person;
 import seedu.address.model.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
 
@@ -136,5 +141,55 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertNotEquals(modelManager, new ModelManager(addressBook, differentUserPrefs));
+    }
+
+    @Test
+    public void updateFilteredRelationshipList_nullPredicate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.updateFilteredRelationshipList(null));
+    }
+
+    @Test
+    public void getEventById_nullId_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.getEventById(null));
+    }
+
+    @Test
+    public void getEventById_nonExistentId_returnsNull() {
+        assertNull(modelManager.getEventById("nonexistent"));
+    }
+
+    @Test
+    public void updateRelationship_nullParameters_throwsNullPointerException() {
+        Relationship relationship = new Relationship("1", "2", "Friend", new HashSet<>());
+        assertThrows(NullPointerException.class, () -> modelManager.updateRelationship(null, relationship));
+        assertThrows(NullPointerException.class, () -> modelManager.updateRelationship(relationship, null));
+    }
+
+    @Test
+    public void getPersonById_nullId_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.getPersonById(null));
+    }
+
+    @Test
+    public void getPersonById_validId_returnsPerson() {
+        Person person = new PersonBuilder().build();
+        modelManager.addPerson(person);
+        assertEquals(person, modelManager.getPersonById(person.getId()));
+    }
+
+    @Test
+    public void getPersonById_nonExistentId_returnsNull() {
+        assertNull(modelManager.getPersonById("nonexistent"));
+    }
+
+    @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () ->
+                modelManager.getFilteredEventList().remove(0));
+    }
+
+    @Test
+    public void updateFilteredEventList_nullPredicate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.updateFilteredEventList(null));
     }
 }
