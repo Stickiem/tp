@@ -89,7 +89,7 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    private class ModelStub implements Model {
+    private static class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -172,6 +172,11 @@ public class AddCommandTest {
 
         @Override
         public boolean hasRelationship(String userId1, String userId2, String relationshipName) {
+            return false;
+        }
+
+        @Override
+        public boolean hasAnyRelationship(String userId1, String userId2) {
             return false;
         }
 

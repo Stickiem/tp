@@ -110,6 +110,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public boolean hasAnyRelationship(String userId1, String userId2) {
+        return false;
+    }
+
+    @Override
     public void addRelationship(Relationship relationship) {
         throw new AssertionError("This method should not be called.");
     }

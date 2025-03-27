@@ -150,7 +150,7 @@ public class AddressBookTest {
                 .withUser2Id(bob.getId())
                 .build();
         addressBook.addRelationship(relationship);
-        assertTrue(addressBook.hasRelationship(alice.getId(), bob.getId(), "Friend"));
+        assertTrue(addressBook.hasRelationship(alice.getId(), bob.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME));
     }
 
     @Test
@@ -166,13 +166,13 @@ public class AddressBookTest {
                 .build();
         addressBook.addRelationship(relationship);
 
-        addressBook.removeRelationship(alice.getId(), bob.getId(), "Friend");
+        addressBook.removeRelationship(alice.getId(), bob.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME);
         assertFalse(addressBook.hasRelationship(relationship));
     }
 
     @Test
     public void removeRelationship_nonExistingRelationship_throwsRelationshipNotFoundException() {
-        assertThrows(RelationshipNotFoundException.class, () -> addressBook.removeRelationship("1", "2", "Friend"));
+        assertThrows(RelationshipNotFoundException.class, () -> addressBook.removeRelationship("1", "2", RelationshipBuilder.DEFAULT_FORWARD_NAME));
     }
 
     @Test
