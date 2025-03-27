@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
@@ -90,8 +91,18 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public ObservableList<Person> getSortedFilteredPersonList() {
+        return null;
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updateSortedPersonList(Comparator<Person> comparator) {
+
     }
 
     @Override
