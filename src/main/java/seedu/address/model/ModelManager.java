@@ -155,6 +155,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasAnyRelationship(String userId1, String userId2) {
+        requireAllNonNull(userId1, userId2);
+        return addressBook.hasAnyRelationship(userId1, userId2);
+    }
+
+    @Override
     public void addRelationship(Relationship relationship) {
         addressBook.addRelationship(relationship);
         updateFilteredRelationshipList(PREDICATE_SHOW_ALL_RELATIONSHIPS);

@@ -20,7 +20,8 @@ public class Relationship {
 
     private final String user1Id;
     private final String user2Id;
-    private final String name;
+    private final String forwardName;
+    private final String reverseName;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
@@ -29,20 +30,25 @@ public class Relationship {
      *
      * @param user1Id The user ID of the first user in the relationship.
      * @param user2Id The user ID of the second user in the relationship.
-     * @param name The name of the relationship.
+     * @param forwardName The name of the relationship from user1 to user2.
+     * @param reverseName The name of the relationship from user2 to user1.
      * @param tags The tags associated with the relationship.
      */
-    public Relationship(String user1Id, String user2Id, String name, Set<Tag> tags) {
+    public Relationship(String user1Id, String user2Id, String forwardName, String reverseName, Set<Tag> tags) {
         // null checks
         requireNonNull(user1Id);
         requireNonNull(user2Id);
-        requireNonNull(name);
+        requireNonNull(forwardName);
+        requireNonNull(reverseName);
         requireNonNull(tags);
-        checkArgument(isValidRelationshipName(name), MESSAGE_CONSTRAINTS);
+
+        checkArgument(isValidRelationshipName(forwardName), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidRelationshipName(reverseName), MESSAGE_CONSTRAINTS);
 
         this.user1Id = user1Id;
         this.user2Id = user2Id;
-        this.name = name;
+        this.forwardName = forwardName;
+        this.reverseName = reverseName;
         this.tags.addAll(tags);
     }
 
@@ -65,8 +71,21 @@ public class Relationship {
         return user2Id;
     }
 
-    public String getName() {
-        return name;
+    public String getForwardName() {
+        return forwardName;
+    }
+
+    public String getReverseName() {
+        return reverseName;
+    }
+
+    public String getNameFromPerspective(String userId) {
+        if (userId.equals(user1Id)) {
+            return forwardName;
+        } else if (userId.equals(user2Id)) {
+            return reverseName;
+        }
+        throw new IllegalArgumentException("User ID does not match either end of the relationship");
     }
 
     /**
@@ -89,34 +108,57 @@ public class Relationship {
     }
 
     /**
-     * Checks if this relationship involves the given user IDs.
+     * Checks if this relationship involves the given user IDs and matches either the forward or reverse name.
+     * The order of user IDs doesn't matter, but one of the relationship names must match exactly.
      *
-     * @param userId1 The user ID of the first user.
-     * @param userId2 The user ID of the second user.
-     * @param relationshipName The name of the relationship.
-     * @return True if this relationship involves the given user IDs and has the given name, False otherwise.
+     * @param userId1 The ID of the first user
+     * @param userId2 The ID of the second user
+     * @param relationshipName The name to check against both forward and reverse names
+     * @return true if the relationship matches the given parameters
      */
     public boolean isSameRelationship(String userId1, String userId2, String relationshipName) {
-        return (user1Id.equals(userId1) && user2Id.equals(userId2)
-                || user1Id.equals(userId2) && user2Id.equals(userId1))
-                && name.equals(relationshipName);
-    }
+        boolean usersMatch = (this.user1Id.equals(userId1) && this.user2Id.equals(userId2))
+                || (this.user1Id.equals(userId2) && this.user2Id.equals(userId1));
 
+        if (!usersMatch) {
+            return false;
+        }
+
+        // Check if the provided name matches either the forward or reverse name
+        if (this.user1Id.equals(userId1)) {
+            return this.forwardName.equals(relationshipName) || this.reverseName.equals(relationshipName);
+        } else {
+            return this.reverseName.equals(relationshipName) || this.forwardName.equals(relationshipName);
+        }
+    }
     /**
      * Checks if this relationship is the same as the given relationship.
      *
-     * @param otherRelationship The relationship to compare with.
+     * @param other The relationship to compare with.
      * @return True if this relationship is the same as the given relationship, False otherwise.
      */
-    public boolean isSameRelationship(Relationship otherRelationship) {
-        if (otherRelationship == this) {
+    public boolean isSameRelationship(Relationship other) {
+        if (other == this) {
             return true;
         }
 
-        return otherRelationship != null
-                && ((user1Id.equals(otherRelationship.user1Id) && user2Id.equals(otherRelationship.user2Id)
-                || user1Id.equals(otherRelationship.user2Id) && user2Id.equals(otherRelationship.user1Id))
-                && name.equals(otherRelationship.name));
+        if (other == null) {
+            return false;
+        }
+
+        // Check if relationships match in forward direction
+        boolean matchesForwardDirection = user1Id.equals(other.user1Id)
+                && user2Id.equals(other.user2Id)
+                && forwardName.equals(other.forwardName)
+                && reverseName.equals(other.reverseName);
+
+        // Check if relationships match in reverse direction
+        boolean matchesReverseDirection = user1Id.equals(other.user2Id)
+                && user2Id.equals(other.user1Id)
+                && forwardName.equals(other.reverseName)
+                && reverseName.equals(other.forwardName);
+
+        return matchesForwardDirection || matchesReverseDirection;
     }
 
     /**
@@ -127,7 +169,7 @@ public class Relationship {
     public Relationship withAddedTag(Tag tag) {
         Set<Tag> newTags = new HashSet<>(tags);
         newTags.add(tag);
-        return new Relationship(user1Id, user2Id, name, newTags);
+        return new Relationship(user1Id, user2Id, forwardName, reverseName, newTags);
     }
 
     /**
@@ -138,7 +180,7 @@ public class Relationship {
     public Relationship withRemovedTag(Tag tag) {
         Set<Tag> newTags = new HashSet<>(tags);
         newTags.remove(tag);
-        return new Relationship(user1Id, user2Id, name, newTags);
+        return new Relationship(user1Id, user2Id, forwardName, reverseName, newTags);
     }
 
     /**
@@ -153,14 +195,11 @@ public class Relationship {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof Relationship otherRelationship)) {
             return false;
         }
 
-        return (user1Id.equals(otherRelationship.user1Id) && user2Id.equals(otherRelationship.user2Id)
-                || user1Id.equals(otherRelationship.user2Id) && user2Id.equals(otherRelationship.user1Id))
-                && name.equals(otherRelationship.name)
+        return isSameRelationship(otherRelationship)
                 && tags.equals(otherRelationship.tags);
     }
 
@@ -172,13 +211,13 @@ public class Relationship {
      */
     @Override
     public int hashCode() {
-        // Use a combination of both user IDs (in a way that order doesn't matter)
-        // along with the name and tags
-        return Objects.hash(
-                user1Id.compareTo(user2Id) < 0 ? user1Id + user2Id : user2Id + user1Id,
-                name,
-                tags
-        );
+        // Create a consistent hash regardless of direction
+        String smallerId = user1Id.compareTo(user2Id) < 0 ? user1Id : user2Id;
+        String largerId = user1Id.compareTo(user2Id) < 0 ? user2Id : user1Id;
+        String smallerName = smallerId.equals(user1Id) ? forwardName : reverseName;
+        String largerName = smallerId.equals(user1Id) ? reverseName : forwardName;
+
+        return Objects.hash(smallerId + largerId, smallerName + largerName, tags);
     }
 
     /**
@@ -191,11 +230,15 @@ public class Relationship {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Between: ")
-                .append(getUser1Id())
+        builder.append("[Forward: ")
+                .append(forwardName)
+                .append(", Reverse: ")
+                .append(reverseName)
+                .append("] Between: ")
+                .append(user1Id)
                 .append(" and ")
-                .append(getUser2Id());
+                .append(user2Id);
+
         if (!tags.isEmpty()) {
             builder.append(" Tags: ");
             tags.forEach(builder::append);

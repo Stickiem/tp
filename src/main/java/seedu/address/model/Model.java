@@ -98,14 +98,22 @@ public interface Model {
     Person getPersonById(String id);
 
     /**
-     * Returns true if a relationship with the same identity fields as {@code relationship} exists in the address book.
+     * Returns true if a relationship with the same identity fields exists in the address book.
      */
     boolean hasRelationship(Relationship relationship);
 
     /**
-     * Returns true if a relationship with the given user IDs and name exists in the address book.
+     * Returns true if a relationship exists between the given users.
+     * The relationship can be found using either the forward or reverse name.
+     * The order of user IDs doesn't matter.
      */
     boolean hasRelationship(String userId1, String userId2, String relationshipName);
+
+    /**
+     * Returns true if any relationship exists between the given users,
+     * regardless of the relationship names.
+     */
+    boolean hasAnyRelationship(String userId1, String userId2);
 
     /**
      * Adds a relationship to the address book.
