@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -156,8 +157,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Person> getSortedFilteredPersonList() {
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateSortedPersonList(Comparator<Person> comparator) {
+
         }
 
         @Override

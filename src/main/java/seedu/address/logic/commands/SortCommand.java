@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
+import java.util.Comparator;
+import java.util.List;
+
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
-
-import java.util.Comparator;
-import java.util.List;
 
 
 /**
@@ -61,47 +61,33 @@ public class SortCommand extends Command {
         }
 
         String firstField = fields.get(0).toLowerCase();
-        switch (firstField) {
-            case "name":
-                comparator = (p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
-                break;
-            case "phone":
-                comparator = (p1, p2) -> p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString());
-                break;
-            case "email":
-                comparator = (p1, p2) -> p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString());
-                break;
-            case "address":
-                comparator = (p1, p2) -> p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString());
-                break;
-            case "tags":
-                comparator = Comparator.comparingInt(p -> p.getTags().size());
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown field: " + firstField);
-        }
+        comparator = switch (firstField) {
+            case "name" -> (p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
+            case "phone" -> (p1, p2) -> p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString());
+            case "email" -> (p1, p2) -> p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString());
+            case "address" -> (p1, p2) -> p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString());
+            case "tags" -> Comparator.comparingInt(p -> p.getTags().size());
+            default -> throw new IllegalArgumentException("Unknown field: " + firstField);
+        };
 
         for (int i = 1; i < fields.size(); i++) {
             String field = fields.get(i).toLowerCase();
-            switch (field) {
-                case "name":
-                    comparator = comparator.thenComparing((p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString()));
-                    break;
-                case "phone":
-                    comparator = comparator.thenComparing((p1, p2) -> p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString()));
-                    break;
-                case "email":
-                    comparator = comparator.thenComparing((p1, p2) -> p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString()));
-                    break;
-                case "address":
-                    comparator = comparator.thenComparing((p1, p2) -> p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString()));
-                    break;
-                case "tags":
-                    comparator = comparator.thenComparingInt(p -> p.getTags().size());
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown field: " + field);
-            }
+            comparator = switch (field) {
+                case "name" ->
+                        comparator.thenComparing((p1, p2) -> p1.getName().toString()
+                                .compareToIgnoreCase(p2.getName().toString()));
+                case "phone" ->
+                        comparator.thenComparing((p1, p2) -> p1.getPhone().toString()
+                                .compareToIgnoreCase(p2.getPhone().toString()));
+                case "email" ->
+                        comparator.thenComparing((p1, p2) -> p1.getEmail().toString()
+                                .compareToIgnoreCase(p2.getEmail().toString()));
+                case "address" ->
+                        comparator.thenComparing((p1, p2) -> p1.getAddress().toString()
+                                .compareToIgnoreCase(p2.getAddress().toString()));
+                case "tags" -> comparator.thenComparingInt(p -> p.getTags().size());
+                default -> throw new IllegalArgumentException("Unknown field: " + field);
+            };
         }
 
         return comparator;
@@ -113,19 +99,15 @@ public class SortCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof SortCommand)) {
+        if (!(other instanceof SortCommand otherSortCommand)) {
             return false;
         }
 
-        SortCommand otherSortCommand = (SortCommand) other;
         return isReverse == otherSortCommand.isReverse && fields.equals(otherSortCommand.fields);
     }
 
     @Override
     public String toString() {
-        return "SortCommand{" +
-                "isReverse=" + isReverse +
-                ", fields=" + fields +
-                '}';
+        return "SortCommand{" + "isReverse=" + isReverse + ", fields=" + fields + '}';
     }
 }
