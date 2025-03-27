@@ -1,0 +1,48 @@
+package seedu.address.logic.commands;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.testutil.Assert.assertThrows;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.event.Event;
+import seedu.address.model.person.UniquePersonList;
+import seedu.address.testutil.ModelStub;
+
+class AddEventCommandTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddEventCommand(null, null));
+    }
+
+    @Test
+    public void execute_eventAcceptedByModel_addSuccessful() throws CommandException {
+        Model modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new Event("A valid event name.", "2025-01-01", null, null, null, new UniquePersonList());
+
+        CommandResult commandResult = new AddEventCommand(validEvent, List.of()).execute(modelStub);
+
+        assertEquals(
+                String.format(AddEventCommand.MESSAGE_SUCCESS, Messages.format(validEvent)),
+                commandResult.getFeedbackToUser());
+        // assertEquals(List.of(validEvent), modelStub.events);
+    }
+
+    private class ModelStubAcceptingEventAdded extends ModelStub {
+        @Override
+        public boolean hasEvent(Event event) {
+            return false;
+        }
+
+        @Override
+        public void addEvent(Event event) {
+        }
+    }
+
+}
