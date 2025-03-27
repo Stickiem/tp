@@ -5,24 +5,24 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.predicate.PhoneContainsKeywordsAsSubstringPredicate;
+import seedu.address.model.predicate.TagContainsKeywordsAsSubstringPredicate;
 
 /**
- * Finds and lists all persons in address book whose phone number contains any of the argument keywords.
+ * Finds and lists all persons in address book whose tags contain any of the argument keywords.
  * Keyword matching is case-insensitive.
  */
-public class FindPhoneCommand extends Command {
+public class FindTagCommand extends Command {
 
-    public static final String COMMAND_WORD = "findPhone";
+    public static final String COMMAND_WORD = "findTag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose phone number contains any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " 123 456";
+            + "Example: " + COMMAND_WORD + " friend family";
 
-    private final PhoneContainsKeywordsAsSubstringPredicate predicate;
+    private final TagContainsKeywordsAsSubstringPredicate predicate;
 
-    public FindPhoneCommand(PhoneContainsKeywordsAsSubstringPredicate predicate) {
+    public FindTagCommand(TagContainsKeywordsAsSubstringPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -40,12 +40,12 @@ public class FindPhoneCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindPhoneCommand)) {
+        if (!(other instanceof FindTagCommand)) {
             return false;
         }
 
-        FindPhoneCommand otherFindPhoneCommand = (FindPhoneCommand) other;
-        return predicate.equals(otherFindPhoneCommand.predicate);
+        FindTagCommand otherFindTagCommand = (FindTagCommand) other;
+        return predicate.equals(otherFindTagCommand.predicate);
     }
 
     @Override
