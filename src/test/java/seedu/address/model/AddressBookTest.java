@@ -101,6 +101,15 @@ public class AddressBookTest {
     }
 
     @Test
+    public void toStringMethod() {
+        String expected = AddressBook.class.getCanonicalName()
+                + "{persons=" + addressBook.getPersonList()
+                + ", relationships=" + addressBook.getRelationshipList()
+                + ", events=" + addressBook.getEventList() + "}";
+        assertEquals(expected, addressBook.toString());
+    }
+
+    @Test
     public void hasRelationship_nullRelationship_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> addressBook.hasRelationship((Relationship) null));
     }

@@ -187,4 +187,9 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
 
         internalList.set(index, editedRelationship);
     }
+
+    @Override
+    public String toString() {
+        return internalList.toString();
+    }
 }
