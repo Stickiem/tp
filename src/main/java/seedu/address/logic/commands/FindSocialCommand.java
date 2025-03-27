@@ -13,7 +13,7 @@ import seedu.address.model.predicate.SocialContainsKeywordsAsSubstringPredicate;
  */
 public class FindSocialCommand extends Command {
 
-    public static final String COMMAND_WORD = "findsocial";
+    public static final String COMMAND_WORD = "findSocial";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose social value contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"

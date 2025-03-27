@@ -13,7 +13,7 @@ import seedu.address.model.predicate.PhoneContainsKeywordsAsSubstringPredicate;
  */
 public class FindPhoneCommand extends Command {
 
-    public static final String COMMAND_WORD = "findphone";
+    public static final String COMMAND_WORD = "findPhone";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose phone number contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"

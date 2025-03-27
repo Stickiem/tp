@@ -11,7 +11,7 @@ import seedu.address.model.predicate.NameContainsKeywordsAsSubstringPredicate;
 /**
  * Parses input arguments and creates a new FindCommand object
  */
-public class FindCommandParser implements Parser<FindNameCommand> {
+public class FindNameCommandParser implements Parser<FindNameCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand

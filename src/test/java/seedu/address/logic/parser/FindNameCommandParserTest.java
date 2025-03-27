@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.FindNameCommand;
 import seedu.address.model.predicate.NameContainsKeywordsAsSubstringPredicate;
 
-public class FindCommandParserTest {
+public class FindNameCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private FindNameCommandParser parser = new FindNameCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {

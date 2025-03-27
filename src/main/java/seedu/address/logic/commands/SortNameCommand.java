@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
 
-public class SortCommand {
+public class SortNameCommand {
 
 }
