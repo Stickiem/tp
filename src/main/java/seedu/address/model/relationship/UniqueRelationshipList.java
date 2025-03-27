@@ -145,4 +145,34 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    /**
+     * Returns the relationship with the given user IDs and name.
+     * @param userId1 The user ID of the first user.
+     * @param userId2 The user ID of the second user.
+     * @param relationshipName The name of the relationship.
+     * @return The relationship with the given user IDs and name, or null if not found.
+     */
+    public Relationship getRelationship(String userId1, String userId2, String relationshipName) {
+        return internalList.stream()
+                .filter(r -> r.isSameRelationship(userId1, userId2, relationshipName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * Replaces the relationship {@code target} in the list with {@code editedRelationship}.
+     * @param target The relationship to replace.
+     * @param editedRelationship The edited relationship.
+     */
+    public void setRelationship(Relationship target, Relationship editedRelationship) {
+        requireNonNull(editedRelationship);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new RelationshipNotFoundException();
+        }
+
+        internalList.set(index, editedRelationship);
+    }
 }

@@ -141,6 +141,16 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public Relationship getRelationship(String userId1, String userId2, String relationshipName) {
+        return null;
+    }
+
+    @Override
+    public void updateRelationship(Relationship target, Relationship updatedRelationship) {
+
+    }
+
+    @Override
     public ObservableList<Event> getFilteredEventList() {
         throw new AssertionError("This method should not be called.");
     }

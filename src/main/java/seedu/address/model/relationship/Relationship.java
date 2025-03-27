@@ -120,6 +120,28 @@ public class Relationship {
     }
 
     /**
+     * Returns a new relationship with the given tag added to it.
+     * @param tag The tag to add.
+     * @return A new relationship with the given tag added to it.
+     */
+    public Relationship withAddedTag(Tag tag) {
+        Set<Tag> newTags = new HashSet<>(tags);
+        newTags.add(tag);
+        return new Relationship(user1Id, user2Id, name, newTags);
+    }
+
+    /**
+     * Returns a new relationship with the given tag removed from it.
+     * @param tag The tag to remove.
+     * @return A new relationship with the given tag removed from it.
+     */
+    public Relationship withRemovedTag(Tag tag) {
+        Set<Tag> newTags = new HashSet<>(tags);
+        newTags.remove(tag);
+        return new Relationship(user1Id, user2Id, name, newTags);
+    }
+
+    /**
      * Checks if this relationship is the same as the given relationship. This method ignores the tags.
      *
      * @param other The relationship to compare with.
