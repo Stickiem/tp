@@ -13,7 +13,12 @@ import seedu.address.model.predicate.RelationshipContainsKeywordsAsSubstringPred
  * Parses input arguments and creates a new FindRelationshipCommand object
  */
 public class FindRelationshipCommandParser implements Parser<FindRelationshipCommand> {
-
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindRelationshipCommand
+     * and returns a FindRelationshipCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform to the expected format
+     */
     public FindRelationshipCommand parse(String args) throws ParseException {
         throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindRelationshipCommand.MESSAGE_USAGE));
@@ -32,6 +37,7 @@ public class FindRelationshipCommandParser implements Parser<FindRelationshipCom
 
         String[] relationshipKeywords = trimmedArgs.split("\\s+");
 
-        return new FindRelationshipCommand(new RelationshipContainsKeywordsAsSubstringPredicate(Arrays.asList(relationshipKeywords), model));
+        return new FindRelationshipCommand(
+                new RelationshipContainsKeywordsAsSubstringPredicate(Arrays.asList(relationshipKeywords), model));
     }
 }
