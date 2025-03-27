@@ -30,7 +30,8 @@ public class DeleteTagFromRelationshipCommand extends Command {
             + PREFIX_USERID + "12345678 "
             + PREFIX_USERID + "87654321 "
             + PREFIX_NAME + "Business Partner "
-            + PREFIX_TAG + "Important";
+            + PREFIX_TAG + "Important" + "\n"
+            + "Note: You can use either the forward or reverse relationship name to identify the relationship.\n";
 
     public static final String MESSAGE_SUCCESS = "Removed tag from relationship: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "This tag does not exist in the relationship";

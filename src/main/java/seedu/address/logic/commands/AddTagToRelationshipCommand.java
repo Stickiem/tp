@@ -29,7 +29,8 @@ public class AddTagToRelationshipCommand extends Command {
             + PREFIX_USERID + "12345678 "
             + PREFIX_USERID + "87654321 "
             + PREFIX_NAME + "Business Partner "
-            + PREFIX_TAG + "Important";
+            + PREFIX_TAG + "Important" + "\n"
+            + "Note: You can use either the forward or reverse relationship name to identify the relationship.\n";
 
     public static final String MESSAGE_SUCCESS = "Added tag to relationship: %1$s";
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in the relationship";
