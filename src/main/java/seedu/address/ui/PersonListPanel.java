@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -38,6 +41,15 @@ public class PersonListPanel extends UiPart<Region> {
 
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
+
+        // Listener for relationship changes
+        relationships.addListener((ListChangeListener<Relationship>) change -> {
+            while (change.next()) {
+                if (change.wasAdded() || change.wasRemoved()) {
+                    refreshAffectedPersonCards(change.getAddedSubList(), change.getRemoved());
+                }
+            }
+        });
     }
 
     /**
@@ -59,6 +71,36 @@ public class PersonListPanel extends UiPart<Region> {
 
                 setGraphic(new PersonCard(person, getIndex() + 1, personRelationships,
                         (seedu.address.model.AddressBook) addressBook).getRoot());
+            }
+        }
+    }
+
+    /**
+     * Refreshes the person cards that are affected by relationship changes.
+     * @param added List of added relationships.
+     * @param removed List of removed relationships.
+     */
+    private void refreshAffectedPersonCards(List<? extends Relationship> added, List<? extends Relationship> removed) {
+        Set<String> affectedPersonIds = new HashSet<>();
+
+        // Collect IDs of persons affected by added relationships
+        added.forEach(relationship -> {
+            affectedPersonIds.add(relationship.getUser1Id());
+            affectedPersonIds.add(relationship.getUser2Id());
+        });
+
+        // Collect IDs of persons affected by removed relationships
+        removed.forEach(relationship -> {
+            affectedPersonIds.add(relationship.getUser1Id());
+            affectedPersonIds.add(relationship.getUser2Id());
+        });
+
+        // Refresh the affected person cards
+        for (int i = 0; i < personListView.getItems().size(); i++) {
+            Person person = personListView.getItems().get(i);
+            if (affectedPersonIds.contains(person.getId())) {
+                personListView.refresh();
+                break; // Exit after refreshing the list once
             }
         }
     }

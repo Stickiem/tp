@@ -18,6 +18,8 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     /** {@code Predicate} that always evaluate to true for events */
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
+    /** {@code Predicate} that always evaluate to true for relationships */
+    Predicate<Relationship> PREDICATE_SHOW_ALL_RELATIONSHIPS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -169,4 +171,10 @@ public interface Model {
      * Adds a tag to a relationship between two persons.
      */
     void updateRelationship(Relationship target, Relationship updatedRelationship);
+
+    /**
+     * Updates the filter of the filtered relationship list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredRelationshipList(Predicate<Relationship> predicate);
 }
