@@ -26,7 +26,7 @@ public class Phone {
             checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
             value = phone;
         } else {
-            value = "";
+            value = null;
         }
 
     }
