@@ -172,7 +172,8 @@ public class AddressBookTest {
 
     @Test
     public void removeRelationship_nonExistingRelationship_throwsRelationshipNotFoundException() {
-        assertThrows(RelationshipNotFoundException.class, () -> addressBook.removeRelationship("1", "2", RelationshipBuilder.DEFAULT_FORWARD_NAME));
+        assertThrows(RelationshipNotFoundException.class, () -> addressBook.removeRelationship("1", "2",
+                RelationshipBuilder.DEFAULT_FORWARD_NAME));
     }
 
     @Test
