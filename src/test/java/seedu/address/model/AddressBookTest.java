@@ -101,6 +101,15 @@ public class AddressBookTest {
     }
 
     @Test
+    public void toStringMethod() {
+        String expected = AddressBook.class.getCanonicalName()
+                + "{persons=" + addressBook.getPersonList()
+                + ", relationships=" + addressBook.getRelationshipList()
+                + ", events=" + addressBook.getEventList() + "}";
+        assertEquals(expected, addressBook.toString());
+    }
+
+    @Test
     public void hasRelationship_nullRelationship_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> addressBook.hasRelationship((Relationship) null));
     }
@@ -150,7 +159,7 @@ public class AddressBookTest {
                 .withUser2Id(bob.getId())
                 .build();
         addressBook.addRelationship(relationship);
-        assertTrue(addressBook.hasRelationship(alice.getId(), bob.getId(), "Friend"));
+        assertTrue(addressBook.hasRelationship(alice.getId(), bob.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME));
     }
 
     @Test
@@ -166,13 +175,14 @@ public class AddressBookTest {
                 .build();
         addressBook.addRelationship(relationship);
 
-        addressBook.removeRelationship(alice.getId(), bob.getId(), "Friend");
+        addressBook.removeRelationship(alice.getId(), bob.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME);
         assertFalse(addressBook.hasRelationship(relationship));
     }
 
     @Test
     public void removeRelationship_nonExistingRelationship_throwsRelationshipNotFoundException() {
-        assertThrows(RelationshipNotFoundException.class, () -> addressBook.removeRelationship("1", "2", "Friend"));
+        assertThrows(RelationshipNotFoundException.class, () -> addressBook.removeRelationship("1", "2",
+                RelationshipBuilder.DEFAULT_FORWARD_NAME));
     }
 
     @Test

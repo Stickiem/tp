@@ -187,20 +187,48 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasAnyRelationship(String userId1, String userId2) {
+        requireAllNonNull(userId1, userId2);
+        return addressBook.hasAnyRelationship(userId1, userId2);
+    }
+
+    @Override
     public void addRelationship(Relationship relationship) {
         addressBook.addRelationship(relationship);
+        updateFilteredRelationshipList(PREDICATE_SHOW_ALL_RELATIONSHIPS);
+    }
+
+    @Override
+    public Relationship getRelationship(String userId1, String userId2, String relationshipName) {
+        return addressBook.getRelationship(userId1, userId2, relationshipName);
+    }
+
+    @Override
+    public void updateRelationship(Relationship target, Relationship updatedRelationship) {
+        requireAllNonNull(target, updatedRelationship);
+        addressBook.updateRelationship(target, updatedRelationship);
+        filteredRelationships.setPredicate(PREDICATE_SHOW_ALL_RELATIONSHIPS); // Use setPredicate directly
     }
 
     @Override
     public void deleteRelationship(String userId1, String userId2, String relationshipName)
             throws RelationshipNotFoundException {
         addressBook.removeRelationship(userId1, userId2, relationshipName);
+        updateFilteredRelationshipList(PREDICATE_SHOW_ALL_RELATIONSHIPS);
+    }
+
+    @Override
+    public void updateFilteredRelationshipList(Predicate<Relationship> predicate) {
+        requireNonNull(predicate);
+        filteredRelationships.setPredicate(predicate);
     }
 
     @Override
     public ObservableList<Relationship> getFilteredRelationshipList() {
         return filteredRelationships;
     }
+
+    //=========== Event =============================================================
 
     @Override
     public boolean hasEvent(Event event) {
@@ -264,16 +292,5 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons)
                 && filteredRelationships.equals(otherModelManager.filteredRelationships)
                 && filteredEvents.equals(otherModelManager.filteredEvents);
-    }
-
-    @Override
-    public Relationship getRelationship(String userId1, String userId2, String relationshipName) {
-        return addressBook.getRelationship(userId1, userId2, relationshipName);
-    }
-
-    @Override
-    public void updateRelationship(Relationship target, Relationship updatedRelationship) {
-        requireAllNonNull(target, updatedRelationship);
-        addressBook.updateRelationship(target, updatedRelationship);
     }
 }

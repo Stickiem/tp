@@ -14,11 +14,13 @@ public class RelationshipBuilder {
 
     public static final String DEFAULT_USER1_ID = "123456";
     public static final String DEFAULT_USER2_ID = "654321";
-    public static final String DEFAULT_NAME = "Friend";
+    public static final String DEFAULT_FORWARD_NAME = "Boss of";
+    public static final String DEFAULT_REVERSE_NAME = "Reports to";
 
     private String user1Id;
     private String user2Id;
-    private String name;
+    private String forwardName;
+    private String reverseName;
     private Set<Tag> tags;
 
     /**
@@ -27,7 +29,8 @@ public class RelationshipBuilder {
     public RelationshipBuilder() {
         user1Id = DEFAULT_USER1_ID;
         user2Id = DEFAULT_USER2_ID;
-        name = DEFAULT_NAME;
+        forwardName = DEFAULT_FORWARD_NAME;
+        reverseName = DEFAULT_REVERSE_NAME;
         tags = new HashSet<>();
     }
 
@@ -37,8 +40,29 @@ public class RelationshipBuilder {
     public RelationshipBuilder(Relationship relationshipToCopy) {
         user1Id = relationshipToCopy.getUser1Id();
         user2Id = relationshipToCopy.getUser2Id();
-        name = relationshipToCopy.getName();
+        forwardName = relationshipToCopy.getForwardName();
+        reverseName = relationshipToCopy.getReverseName();
         tags = new HashSet<>(relationshipToCopy.getTags());
+    }
+
+    /**
+     * Sets the {@code forwardName} of the {@code Relationship} that we are building.
+     * @param name The name of the relationship from user1 to user2.
+     * @return The RelationshipBuilder with the forwardName set.
+     */
+    public RelationshipBuilder withForwardName(String name) {
+        this.forwardName = name;
+        return this;
+    }
+
+    /**
+     * Sets the {@code reverseName} of the {@code Relationship} that we are building.
+     * @param name The name of the relationship from user2 to user1.
+     * @return The RelationshipBuilder with the reverseName set.
+     */
+    public RelationshipBuilder withReverseName(String name) {
+        this.reverseName = name;
+        return this;
     }
 
     /**
@@ -58,14 +82,6 @@ public class RelationshipBuilder {
     }
 
     /**
-     * Sets the {@code name} of the {@code Relationship} that we are building.
-     */
-    public RelationshipBuilder withName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Relationship} that we are building.
      */
     public RelationshipBuilder withTags(String ... tags) {
@@ -74,6 +90,6 @@ public class RelationshipBuilder {
     }
 
     public Relationship build() {
-        return new Relationship(user1Id, user2Id, name, tags);
+        return new Relationship(user1Id, user2Id, forwardName, reverseName, tags);
     }
 }

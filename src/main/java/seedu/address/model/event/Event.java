@@ -48,6 +48,7 @@ public class Event {
                  UniquePersonList contacts) {
         requireNonNull(name, "Event name is required");
         requireNonNull(date, "Event date is required");
+        requireNonNull(contacts, "Event contacts are required");
         if (name.trim().isEmpty()) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_NAME);
         }
@@ -202,6 +203,18 @@ public class Event {
         contacts.remove(person);
     }
 
+    /**
+     * Returns true if both events have the same id.
+     */
+    public boolean isSameEvent(Event otherEvent) {
+        if (otherEvent == this) {
+            return true;
+        }
+
+        return otherEvent != null
+                && otherEvent.getId().equals(getId());
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -230,18 +243,18 @@ public class Event {
         final StringBuilder builder = new StringBuilder();
         builder.append("Event Name: ")
                 .append(name)
-                .append(" | Date: ")
+                .append("; Date: ")
                 .append(date)
-                .append(" | Location: ")
+                .append("; Location: ")
                 .append(location)
-                .append(" | Description: ")
+                .append("; Description: ")
                 .append(description);
         if (!tags.isEmpty()) {
-            builder.append(" | Tags: ");
+            builder.append("; Tags: ");
             tags.forEach(tag -> builder.append(tag.toString()).append(" "));
         }
-        builder.append(" | Contacts: ").append(contacts.toString());
-        builder.append(" | ID: ").append(id);
+        builder.append("; Contacts: ").append(contacts.toString());
+        builder.append("; ID: ").append(id);
         return builder.toString();
     }
 }

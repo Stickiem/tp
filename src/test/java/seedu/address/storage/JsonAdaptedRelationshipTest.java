@@ -19,7 +19,8 @@ public class JsonAdaptedRelationshipTest {
 
     private static final String VALID_USER1_ID = "123456";
     private static final String VALID_USER2_ID = "654321";
-    private static final String VALID_NAME = "Friend";
+    private static final String VALID_FORWARD_NAME = "Boss of";
+    private static final String VALID_REVERSE_NAME = "Reports to";
     private static final List<JsonAdaptedTag> VALID_TAGS = new RelationshipBuilder().build().getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
@@ -34,23 +35,35 @@ public class JsonAdaptedRelationshipTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedRelationship relationship =
-                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, INVALID_NAME, VALID_TAGS);
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, INVALID_NAME, VALID_REVERSE_NAME,
+                        VALID_TAGS);
         String expectedMessage = Relationship.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, relationship::toModelType);
+
+        JsonAdaptedRelationship relationshipReverse =
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, VALID_FORWARD_NAME, INVALID_NAME,
+                        VALID_TAGS);
+        assertThrows(IllegalValueException.class, expectedMessage, relationshipReverse::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedRelationship relationship =
-                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, null, VALID_TAGS);
-        String expectedMessage = String.format(JsonAdaptedRelationship.MISSING_FIELD_MESSAGE_FORMAT, "Name");
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, null, VALID_REVERSE_NAME, VALID_TAGS);
+        String expectedMessage = String.format(JsonAdaptedRelationship.MISSING_FIELD_MESSAGE_FORMAT, "Forward Name");
         assertThrows(IllegalValueException.class, expectedMessage, relationship::toModelType);
+
+        JsonAdaptedRelationship relationshipReverse =
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, VALID_FORWARD_NAME, null, VALID_TAGS);
+        String expectedMessageReverse = String.format(JsonAdaptedRelationship.MISSING_FIELD_MESSAGE_FORMAT,
+                "Reverse Name");
+        assertThrows(IllegalValueException.class, expectedMessageReverse, relationshipReverse::toModelType);
     }
 
     @Test
     public void toModelType_nullUser1Id_throwsIllegalValueException() {
         JsonAdaptedRelationship relationship =
-                new JsonAdaptedRelationship(null, VALID_USER2_ID, VALID_NAME, VALID_TAGS);
+                new JsonAdaptedRelationship(null, VALID_USER2_ID, VALID_FORWARD_NAME, VALID_REVERSE_NAME, VALID_TAGS);
         String expectedMessage = String.format(JsonAdaptedRelationship.MISSING_FIELD_MESSAGE_FORMAT, "User 1 ID");
         assertThrows(IllegalValueException.class, expectedMessage, relationship::toModelType);
     }
@@ -58,7 +71,7 @@ public class JsonAdaptedRelationshipTest {
     @Test
     public void toModelType_nullUser2Id_throwsIllegalValueException() {
         JsonAdaptedRelationship relationship =
-                new JsonAdaptedRelationship(VALID_USER1_ID, null, VALID_NAME, VALID_TAGS);
+                new JsonAdaptedRelationship(VALID_USER1_ID, null, VALID_FORWARD_NAME, VALID_REVERSE_NAME, VALID_TAGS);
         String expectedMessage = String.format(JsonAdaptedRelationship.MISSING_FIELD_MESSAGE_FORMAT, "User 2 ID");
         assertThrows(IllegalValueException.class, expectedMessage, relationship::toModelType);
     }
@@ -68,7 +81,8 @@ public class JsonAdaptedRelationshipTest {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedRelationship relationship =
-                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, VALID_NAME, invalidTags);
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, VALID_FORWARD_NAME, VALID_REVERSE_NAME,
+                        invalidTags);
         assertThrows(IllegalValueException.class, relationship::toModelType);
     }
 }

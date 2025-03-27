@@ -129,6 +129,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns true if there is any relationship between the two users.
+     */
+    public boolean hasAnyRelationship(String userId1, String userId2) {
+        requireAllNonNull(userId1, userId2);
+        return relationships.containsAnyRelationship(userId1, userId2);
+    }
+
+    /**
      * Adds a relationship to the address book.
      * The relationship must not already exist in the address book.
      */

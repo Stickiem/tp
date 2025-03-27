@@ -65,7 +65,9 @@ public class Messages {
                 .append("; Location: ")
                 .append(event.getLocation())
                 .append("; Description: ")
-                .append(event.getDescription());
+                .append(event.getDescription())
+                .append("; Contacts: ")
+                .append(event.getContacts());
         if (!event.getTags().isEmpty()) {
             builder.append("; Tags: ");
             event.getTags().forEach(builder::append);

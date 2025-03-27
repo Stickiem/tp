@@ -24,21 +24,31 @@ public class AddRelationshipCommandTest {
                 null,
                 "2",
                 "Friend",
+                "Reports to",
                 new HashSet<>()));
         assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
                 "1",
                 null,
                 "Friend",
+                "Reports to",
                 new HashSet<>()));
         assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
                 "1",
                 "2",
+                null,
+                "Reports to",
+                new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
+                "1",
+                "2",
+                "Friend",
                 null,
                 new HashSet<>()));
         assertThrows(NullPointerException.class, () -> new AddRelationshipCommand(
                 "1",
                 "2",
                 "Friend",
+                "Reports to",
                 null));
     }
 
@@ -56,7 +66,7 @@ public class AddRelationshipCommandTest {
                 .build();
 
         CommandResult commandResult = new AddRelationshipCommand(
-                person1.getId(), person2.getId(), "Friend", new HashSet<>()).execute(modelStub);
+                person1.getId(), person2.getId(), "Boss of", "Reports to", new HashSet<>()).execute(modelStub);
 
         assertEquals(AddRelationshipCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
         assertEquals(validRelationship, modelStub.relationshipAdded);
@@ -70,7 +80,7 @@ public class AddRelationshipCommandTest {
         ModelStub modelStub = new ModelStubWithPersonsAndRelationship(person1, person2);
 
         AddRelationshipCommand addRelationshipCommand = new AddRelationshipCommand(
-                person1.getId(), person2.getId(), "Friend", new HashSet<>());
+                person1.getId(), person2.getId(), "Boss of", "Reports to", new HashSet<>());
 
         assertThrows(CommandException.class,
                 AddRelationshipCommand.MESSAGE_DUPLICATE_RELATIONSHIP, () -> addRelationshipCommand.execute(modelStub));
@@ -83,7 +93,7 @@ public class AddRelationshipCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(person);
 
         AddRelationshipCommand addRelationshipCommand = new AddRelationshipCommand(
-                person.getId(), person.getId(), "Friend", new HashSet<>());
+                person.getId(), person.getId(), "Boss of", "Reports to", new HashSet<>());
 
         assertThrows(CommandException.class,
                 AddRelationshipCommand.MESSAGE_SAME_PERSON, () -> addRelationshipCommand.execute(modelStub));
@@ -97,7 +107,7 @@ public class AddRelationshipCommandTest {
         ModelStub modelStub = new ModelStubWithPersons(person1, person2);
 
         AddRelationshipCommand addRelationshipCommand = new AddRelationshipCommand(
-                person1.getId(), person2.getId(), "", new HashSet<>());
+                person1.getId(), person2.getId(), "", "", new HashSet<>());
 
         assertThrows(CommandException.class,
                 AddRelationshipCommand.MESSAGE_EMPTY_NAME, () -> addRelationshipCommand.execute(modelStub));
@@ -111,16 +121,16 @@ public class AddRelationshipCommandTest {
         String name2 = "BusinessPartner";
 
         AddRelationshipCommand addFriendCommand = new AddRelationshipCommand(
-                user1Id, user2Id, name1, new HashSet<>());
+                user1Id, user2Id, name1, "Reports to", new HashSet<>());
         AddRelationshipCommand addBusinessPartnerCommand = new AddRelationshipCommand(
-                user1Id, user2Id, name2, new HashSet<>());
+                user1Id, user2Id, name2, "Reports to", new HashSet<>());
 
         // same object -> returns true
         assertEquals(addFriendCommand, addFriendCommand);
 
         // same values -> returns true
         AddRelationshipCommand addFriendCommandCopy = new AddRelationshipCommand(
-                user1Id, user2Id, name1, new HashSet<>());
+                user1Id, user2Id, name1, "Reports to", new HashSet<>());
         assertEquals(addFriendCommand, addFriendCommandCopy);
 
         // different types -> returns false
@@ -181,7 +191,7 @@ public class AddRelationshipCommandTest {
     /**
      * A Model stub that contains two persons and a relationship between them.
      */
-    private class ModelStubWithPersonsAndRelationship extends ModelStubWithPersons {
+    private static class ModelStubWithPersonsAndRelationship extends ModelStubWithPersons {
         private final Relationship relationship;
 
         ModelStubWithPersonsAndRelationship(Person person1, Person person2) {
