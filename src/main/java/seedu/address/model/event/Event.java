@@ -65,6 +65,20 @@ public class Event {
     }
 
     /**
+     * Private constructor used for creating an updated version of an event.
+     */
+    private Event(String id, String name, String date, String location, String description, Set<Tag> tags,
+                  UniquePersonList contacts) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.location = location;
+        this.description = description;
+        this.tags.addAll(tags);
+        this.contacts = contacts;
+    }
+
+    /**
      * Returns the unique identifier of this event.
      *
      * @return the event id.
@@ -107,6 +121,17 @@ public class Event {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns a new {@code Event} with an updated description.
+     *
+     * @param newDescription the new description to set.
+     * @return a new {@code Event} instance with the updated description.
+     */
+    public Event withUpdatedDescription(String newDescription) {
+        requireNonNull(newDescription);
+        return new Event(this.id, this.name, this.date, this.location, newDescription, this.tags, this.contacts);
     }
 
     /**

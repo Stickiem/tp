@@ -197,6 +197,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(events);
     }
 
+    /**
+     * Replaces the given event {@code target} with {@code editedEvent}.
+     * The event must exist in the address book.
+     *
+     * @param target      the event to be replaced.
+     * @param editedEvent the new event to replace the target event.
+     * @throws IllegalArgumentException if the target event is not found.
+     */
+    public void setEvent(Event target, Event editedEvent) {
+        requireAllNonNull(target, editedEvent);
+        int index = events.indexOf(target);
+        if (index == -1) {
+            throw new IllegalArgumentException("Target event not found in address book.");
+        }
+        events.set(index, editedEvent);
+    }
+
     //// Util methods
 
     @Override

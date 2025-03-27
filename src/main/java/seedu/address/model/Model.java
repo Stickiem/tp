@@ -153,4 +153,10 @@ public interface Model {
      * Returns the event with the given ID, or null if not found.
      */
     Event getEventById(String id);
+
+    /**
+     * Replaces the given event {@code target} with {@code updatedEvent}.
+     * {@code target} must exist in the address book.
+     */
+    void updateEvent(Event target, Event updatedEvent);
 }
