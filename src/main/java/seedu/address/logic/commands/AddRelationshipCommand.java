@@ -31,7 +31,7 @@ public class AddRelationshipCommand extends Command {
             + PREFIX_USERID + "12345678 "
             + PREFIX_USERID + "87654321 "
             + PREFIX_NAME + "Business Partner "
-            + PREFIX_TAG + "Investment"
+            + PREFIX_TAG + "Investment" + "\n"
             + "Note: You can find a person's ID displayed in the contact card.";
 
     public static final String MESSAGE_SUCCESS = "Relationship successfully added.";
