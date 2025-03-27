@@ -8,30 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddContactToEventCommand;
-import seedu.address.logic.commands.AddEventCommand;
-import seedu.address.logic.commands.AddRelationshipCommand;
-import seedu.address.logic.commands.AddTagToEventCommand;
-import seedu.address.logic.commands.AddTagToRelationshipCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteContactFromEventCommand;
-import seedu.address.logic.commands.DeleteEventCommand;
-import seedu.address.logic.commands.DeleteRelationshipCommand;
-import seedu.address.logic.commands.DeleteTagFromEventCommand;
-import seedu.address.logic.commands.DeleteTagFromRelationshipCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindAddressCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.FindEmailCommand;
-import seedu.address.logic.commands.FindPhoneCommand;
-import seedu.address.logic.commands.FindSocialCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.UpdateEventDescriptionCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -69,10 +46,11 @@ public class AddressBookParser {
             case DeleteCommand.COMMAND_WORD -> new DeleteCommandParser().parse(arguments);
             case ClearCommand.COMMAND_WORD -> new ClearCommand();
             case FindAddressCommand.COMMAND_WORD -> new FindAddressCommandParser().parse(arguments);
-            case FindCommand.COMMAND_WORD -> new FindCommandParser().parse(arguments);
+            case FindNameCommand.COMMAND_WORD -> new FindCommandParser().parse(arguments);
             case FindEmailCommand.COMMAND_WORD -> new FindEmailCommandParser().parse(arguments);
             case FindPhoneCommand.COMMAND_WORD -> new FindPhoneCommandParser().parse(arguments);
             case FindSocialCommand.COMMAND_WORD -> new FindSocialCommandParser().parse(arguments);
+            case FindTagCommand.COMMAND_WORD -> new FindTagCommandParser().parse(arguments);
             case ListCommand.COMMAND_WORD -> new ListCommand();
             case ExitCommand.COMMAND_WORD -> new ExitCommand();
             case HelpCommand.COMMAND_WORD -> new HelpCommand();
