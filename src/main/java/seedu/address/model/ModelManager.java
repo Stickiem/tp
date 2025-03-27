@@ -183,6 +183,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateEvent(Event target, Event updatedEvent) {
+        requireAllNonNull(target, updatedEvent);
+        addressBook.setEvent(target, updatedEvent);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+
+    @Override
     public void deleteEvent(Event event) {
         addressBook.deleteEvent(event);
     }
