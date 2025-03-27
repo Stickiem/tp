@@ -124,6 +124,32 @@ public class Event {
     }
 
     /**
+     * Returns a new {@code Event} with the specified tag added to its tag set.
+     *
+     * @param tag the tag to add.
+     * @return a new Event instance with the updated tag set.
+     */
+    public Event withAddedTag(Tag tag) {
+        requireNonNull(tag);
+        Set<Tag> newTags = new HashSet<>(this.tags);
+        newTags.add(tag);
+        return new Event(this.id, this.name, this.date, this.location, this.description, newTags, this.contacts);
+    }
+
+    /**
+     * Returns a new {@code Event} with the specified tag removed from its tag set.
+     *
+     * @param tag the tag to remove.
+     * @return a new Event instance with the updated tag set.
+     */
+    public Event withRemovedTag(Tag tag) {
+        requireNonNull(tag);
+        Set<Tag> newTags = new HashSet<>(this.tags);
+        newTags.remove(tag);
+        return new Event(this.id, this.name, this.date, this.location, this.description, newTags, this.contacts);
+    }
+
+    /**
      * Returns a new {@code Event} with an updated description.
      *
      * @param newDescription the new description to set.
