@@ -21,4 +21,6 @@ public class CliSyntax {
 
     // Relationship prefixes.
     public static final Prefix PREFIX_USERID = new Prefix("u/");
+    public static final Prefix PREFIX_FORWARD_RELATIONSHIP_NAME = new Prefix("fn/");
+    public static final Prefix PREFIX_REVERSE_RELATIONSHIP_NAME = new Prefix("rn/");
 }
