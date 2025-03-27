@@ -37,7 +37,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_SOCIAL, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -56,7 +56,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             email = ParserUtil.parseEmail(emailDetails.get());
         }
 
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Optional<String> addressDetails= argMultimap.getValue(PREFIX_ADDRESS);
+        Address address = new Address(null);
+        if (addressDetails.isPresent()){
+            address = ParserUtil.parseAddress(addressDetails.get());
+        }
+
         Set<Social> social = ParserUtil.parseSocials(argMultimap.getAllValues(PREFIX_SOCIAL));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
