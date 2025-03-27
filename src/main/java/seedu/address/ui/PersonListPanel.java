@@ -99,13 +99,9 @@ public class PersonListPanel extends UiPart<Region> {
         for (int i = 0; i < personListView.getItems().size(); i++) {
             Person person = personListView.getItems().get(i);
             if (affectedPersonIds.contains(person.getId())) {
-                affectedIndices.add(i);
-            }
-        }
-
-        // Refresh the affected person cards
-        if (!affectedIndices.isEmpty()) {
-            personListView.refresh();
+                personListView.refresh();
+                break;
+            } // exit after refreshing the list once
         }
     }
 }
