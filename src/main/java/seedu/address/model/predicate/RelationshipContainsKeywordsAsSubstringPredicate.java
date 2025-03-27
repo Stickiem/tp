@@ -3,8 +3,11 @@ package seedu.address.model.predicate;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.relationship.Relationship;
 
 /**
  * Tests that a {@code Person}'s {@code Relationships} matches any of the keywords given.
@@ -12,13 +15,23 @@ import seedu.address.model.person.Person;
 public class RelationshipContainsKeywordsAsSubstringPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public RelationshipContainsKeywordsAsSubstringPredicate(List<String> keywords) {
+    private final Model model;
+    /**
+     * Constructs a {@code RelationshipContainsKeywordsAsSubstringPredicate}.
+     *
+     * @param keywords The list of keywords to match against relationship fields
+     * @param model The model to search within for relationships
+     */
+    public RelationshipContainsKeywordsAsSubstringPredicate(List<String> keywords, Model model) {
         this.keywords = keywords;
+        this.model = model;
     }
 
     @Override
     public boolean test(Person person) {
-        return true;
+        ObservableList<Relationship> relationships = model.getFilteredRelationshipList();
+        return relationships.stream().anyMatch(relationship ->
+                person.getId().equals(relationship.getUser1Id()) || person.getId().equals(relationship.getUser2Id()));
     }
 
     private boolean containsSubstringIgnoreCase(String relationships, String keyword) {
