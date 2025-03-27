@@ -21,9 +21,14 @@ public class Phone {
      * @param phone A valid phone number.
      */
     public Phone(String phone) {
-        requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = phone;
+        if (!(phone == null)) {
+            requireNonNull(phone);
+            checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
+            value = phone;
+        } else {
+            value = "";
+        }
+
     }
 
     /**
