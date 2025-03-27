@@ -9,11 +9,13 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddContactToEventCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddRelationshipCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteContactFromEventCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DeleteRelationshipCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -105,6 +107,12 @@ public class AddressBookParser {
 
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteEventCommandParser().parse(arguments);
+
+        case AddContactToEventCommand.COMMAND_WORD:
+            return new AddContactToEventCommandParser().parse(arguments);
+
+        case DeleteContactFromEventCommand.COMMAND_WORD:
+            return new DeleteContactFromEventCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

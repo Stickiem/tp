@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,6 +27,7 @@ class JsonAdaptedEvent {
     private final String location;
     private final String description;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedPerson> contacts = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedEvent} with the given event details.
@@ -36,7 +39,8 @@ class JsonAdaptedEvent {
             @JsonProperty("date") String date,
             @JsonProperty("location") String location,
             @JsonProperty("description") String description,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("contacts") List<JsonAdaptedPerson> contacts) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -44,6 +48,9 @@ class JsonAdaptedEvent {
         this.description = description;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (contacts != null) {
+            this.contacts.addAll(contacts);
         }
     }
 
@@ -58,6 +65,9 @@ class JsonAdaptedEvent {
         this.description = source.getDescription();
         this.tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
+                .toList());
+        this.contacts.addAll(source.getContacts().stream()
+                .map(JsonAdaptedPerson::new)
                 .toList());
     }
 
@@ -81,6 +91,15 @@ class JsonAdaptedEvent {
         }
         final Set<Tag> modelTags = new HashSet<>(eventTags);
 
-        return new Event(name, date, location, description, modelTags);
+        final List<Person> modelContacts = new ArrayList<>();
+        for (JsonAdaptedPerson jsonContact : contacts) {
+            modelContacts.add(jsonContact.toModelType());
+        }
+        UniquePersonList contactsList = new UniquePersonList();
+        for (Person p : modelContacts) {
+            contactsList.add(p);
+        }
+
+        return new Event(name, date, location, description, modelTags, contactsList);
     }
 }

@@ -1,18 +1,22 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,7 +36,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
     public AddEventCommand parse(String userInput) throws ParseException {
         requireNonNull(userInput);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_EVENT_NAME,
-                PREFIX_DATE, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_TAG);
+                PREFIX_DATE, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_TAG, PREFIX_CONTACT);
 
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_DATE)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -40,14 +44,17 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
                     String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
         }
 
-        String eventName = ParserUtil.parseEventName(
-                argMultimap.getValue(PREFIX_EVENT_NAME).get());
+        String eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME).get());
         String date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         String location = argMultimap.getValue(PREFIX_LOCATION).orElse("");
         String description = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Event event = new Event(eventName, date, location, description, tagList);
-        return new AddEventCommand(event);
+        // Parse contacts; they are optional so this list might be empty.
+        List<Person> contactsToAdd = ParserUtil.parseContacts(argMultimap.getAllValues(PREFIX_CONTACT));
+
+        // Create an event with an empty contacts list.
+        Event event = new Event(eventName, date, location, description, tagList, new UniquePersonList());
+        return new AddEventCommand(event, contactsToAdd);
     }
 }

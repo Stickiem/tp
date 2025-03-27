@@ -2,8 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -13,6 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Social;
 import seedu.address.model.tag.Tag;
@@ -181,5 +184,45 @@ public class ParserUtil {
             throw new ParseException("Invalid date format. Expected format: YYYY-MM-DD.");
         }
         return trimmedDate;
+    }
+
+    // ========= Contact Parsing Methods =========
+
+    /**
+     * Parses {@code Collection<String> contacts} into a {@code List<Person>}.
+     * Each contact string is interpreted as a person's name, and a {@code Person} object is created with
+     * default values for phone, email, address, socials, and tags.
+     *
+     * @throws ParseException if any of the contact strings are invalid.
+     */
+    public static List<Person> parseContacts(Collection<String> contacts) throws ParseException {
+        requireNonNull(contacts);
+        List<Person> contactList = new ArrayList<>();
+        for (String contact : contacts) {
+            contactList.add(parseContact(contact));
+        }
+        return contactList;
+    }
+
+    /**
+     * Parses a single {@code String contact} into a {@code Person} object using the contact name.
+     * Default values are used for phone, email, address, socials, and tags.
+     *
+     * @throws ParseException if the contact string is invalid.
+     */
+    public static Person parseContact(String contact) throws ParseException {
+        requireNonNull(contact);
+        String trimmedContact = contact.trim();
+        if (trimmedContact.isEmpty()) {
+            throw new ParseException("Contact name cannot be empty.");
+        }
+        Name name = parseName(trimmedContact);
+        // Create default dummy values for the remaining fields.
+        Phone defaultPhone = new Phone("00000000");
+        Email defaultEmail = new Email("unknown@example.com");
+        Address defaultAddress = new Address("Unknown");
+        Set<Social> socials = new HashSet<>();
+        Set<Tag> tags = new HashSet<>();
+        return new Person(name, defaultPhone, defaultEmail, defaultAddress, socials, tags);
     }
 }
