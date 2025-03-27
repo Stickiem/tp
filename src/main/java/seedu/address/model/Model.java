@@ -159,4 +159,14 @@ public interface Model {
      * {@code target} must exist in the address book.
      */
     void updateEvent(Event target, Event updatedEvent);
+
+    /**
+     * Returns the relationship with the given user IDs and name, or null if not found.
+     */
+    Relationship getRelationship(String userId1, String userId2, String relationshipName);
+
+    /**
+     * Adds a tag to a relationship between two persons.
+     */
+    void updateRelationship(Relationship target, Relationship updatedRelationship);
 }

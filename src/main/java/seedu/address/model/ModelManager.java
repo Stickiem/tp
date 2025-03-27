@@ -233,4 +233,15 @@ public class ModelManager implements Model {
                 && filteredRelationships.equals(otherModelManager.filteredRelationships)
                 && filteredEvents.equals(otherModelManager.filteredEvents);
     }
+
+    @Override
+    public Relationship getRelationship(String userId1, String userId2, String relationshipName) {
+        return addressBook.getRelationship(userId1, userId2, relationshipName);
+    }
+
+    @Override
+    public void updateRelationship(Relationship target, Relationship updatedRelationship) {
+        requireAllNonNull(target, updatedRelationship);
+        addressBook.updateRelationship(target, updatedRelationship);
+    }
 }

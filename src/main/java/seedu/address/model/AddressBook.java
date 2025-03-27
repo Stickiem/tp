@@ -248,4 +248,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         return Objects.hash(persons, relationships, events);
     }
+
+    public Relationship getRelationship(String userId1, String userId2, String relationshipName) {
+        return relationships.getRelationship(userId1, userId2, relationshipName);
+    }
+
+    public void updateRelationship(Relationship target, Relationship updatedRelationship) {
+        relationships.setRelationship(target, updatedRelationship);
+    }
 }
