@@ -23,7 +23,7 @@ public class DeleteTagFromEventCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 t/Finance";
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Tag removed from event: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "This tag does not exist in the event";
-    public static final String MESSAGE_EVENT_NOT_FOUND = "The event index provided is invalid.";
+    public static final String MESSAGE_EVENT_NOT_FOUND = "The event index provided is invalid";
 
     private final Index eventIndex;
     private final Tag tag;

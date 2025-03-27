@@ -24,7 +24,7 @@ public class DeleteContactFromEventCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 c/John Doe";
     public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Contact removed from event: %1$s";
     public static final String MESSAGE_CONTACT_NOT_FOUND = "This contact does not exist in the event";
-    public static final String MESSAGE_EVENT_NOT_FOUND = "The event index provided is invalid.";
+    public static final String MESSAGE_EVENT_NOT_FOUND = "The event index provided is invalid";
 
     private final Index eventIndex;
     private final Person contact;
