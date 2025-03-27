@@ -40,7 +40,7 @@ public class DeleteRelationshipCommandTest {
         modelStub.addRelationship(relationship);
 
         CommandResult commandResult = new DeleteRelationshipCommand(
-                person1.getId(), person2.getId(), "Friend").execute(modelStub);
+                person1.getId(), person2.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME).execute(modelStub);
 
         assertEquals(DeleteRelationshipCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
         assertTrue(modelStub.relationshipDeleted);

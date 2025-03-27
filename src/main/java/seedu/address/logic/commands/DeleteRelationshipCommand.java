@@ -26,7 +26,8 @@ public class DeleteRelationshipCommand extends Command {
             + PREFIX_USERID + "12345678 "
             + PREFIX_USERID + "87654321 "
             + PREFIX_NAME + "Business Partner" + "\n"
-            + "Note: You can find a person's ID displayed in the contact card.";
+            + "Note: You can use either the forward or reverse relationship name to identify the relationship.\n"
+            + "You can find a person's ID displayed in the contact card.";
 
     public static final String MESSAGE_SUCCESS = "Relationship successfully deleted.";
     public static final String MESSAGE_RELATIONSHIP_NOT_FOUND = "Error: Relationship not found.";

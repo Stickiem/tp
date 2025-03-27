@@ -16,32 +16,23 @@ public class RelationshipTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Relationship(null, "2", "Friend", new HashSet<>()));
-        assertThrows(NullPointerException.class, () -> new Relationship("1", null, "Friend", new HashSet<>()));
-        assertThrows(NullPointerException.class, () -> new Relationship("1", "2", null, new HashSet<>()));
-        assertThrows(NullPointerException.class, () -> new Relationship("1", "2", "Friend", null));
+        assertThrows(NullPointerException.class, () -> new Relationship(null, "2", "Friend", "Reports to",
+                new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new Relationship("1", null, "Friend", "Reports to",
+                new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new Relationship("1", "2", null, "Reports to", new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new Relationship("1", "2", "Friend", null, new HashSet<>()));
+        assertThrows(NullPointerException.class, () -> new Relationship("1", "2", "Friend", "Reports to", null));
     }
 
     @Test
     public void constructor_invalidName_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Relationship("1", "2", "", new HashSet<>()));
-        assertThrows(IllegalArgumentException.class, () -> new Relationship("1", "2", " ", new HashSet<>()));
-    }
-
-    @Test
-    public void isValidRelationshipName() {
-        // null name
-        assertThrows(NullPointerException.class, () -> Relationship.isValidRelationshipName(null));
-
-        // invalid name
-        assertFalse(Relationship.isValidRelationshipName("")); // empty string
-        assertFalse(Relationship.isValidRelationshipName(" ")); // spaces only
-
-        // valid name
-        assertTrue(Relationship.isValidRelationshipName("Friend"));
-        assertTrue(Relationship.isValidRelationshipName("Business Partner"));
-        assertTrue(Relationship.isValidRelationshipName("-")); // one character
-        assertTrue(Relationship.isValidRelationshipName("Very Long Relationship Name")); // long name
+        assertThrows(IllegalArgumentException.class, () -> new Relationship("1", "2", "", "Reports to",
+                new HashSet<>()));
+        assertThrows(IllegalArgumentException.class, () -> new Relationship("1", "2", "Friend", "", new HashSet<>()));
+        assertThrows(IllegalArgumentException.class, () -> new Relationship("1", "2", " ", "Reports to",
+                new HashSet<>()));
+        assertThrows(IllegalArgumentException.class, () -> new Relationship("1", "2", "Friend", " ", new HashSet<>()));
     }
 
     @Test
@@ -54,22 +45,28 @@ public class RelationshipTest {
         // null -> returns false
         assertFalse(relationship.isSameRelationship((Relationship) null));
 
-        // different name -> returns false
-        Relationship editedRelationship = new RelationshipBuilder().withName("Different").build();
+        // different forward name -> returns false
+        Relationship editedRelationship = new RelationshipBuilder().withForwardName("Different").build();
         assertFalse(relationship.isSameRelationship(editedRelationship));
 
-        // same name, same user1Id, different user2Id -> returns false
+        // different reverse name -> returns false
+        editedRelationship = new RelationshipBuilder().withReverseName("Different").build();
+        assertFalse(relationship.isSameRelationship(editedRelationship));
+
+        // same names, same user1Id, different user2Id -> returns false
         editedRelationship = new RelationshipBuilder().withUser2Id("different").build();
         assertFalse(relationship.isSameRelationship(editedRelationship));
 
-        // same name, different user1Id, same user2Id -> returns false
+        // same names, different user1Id, same user2Id -> returns false
         editedRelationship = new RelationshipBuilder().withUser1Id("different").build();
         assertFalse(relationship.isSameRelationship(editedRelationship));
 
-        // same name, switched user IDs -> returns true
+        // same names, switched user IDs -> returns true
         editedRelationship = new RelationshipBuilder()
                 .withUser1Id(RelationshipBuilder.DEFAULT_USER2_ID)
                 .withUser2Id(RelationshipBuilder.DEFAULT_USER1_ID)
+                .withForwardName(RelationshipBuilder.DEFAULT_REVERSE_NAME)
+                .withReverseName(RelationshipBuilder.DEFAULT_FORWARD_NAME)
                 .build();
         assertTrue(relationship.isSameRelationship(editedRelationship));
     }
@@ -82,13 +79,18 @@ public class RelationshipTest {
         assertTrue(relationship.isSameRelationship(
                 RelationshipBuilder.DEFAULT_USER1_ID,
                 RelationshipBuilder.DEFAULT_USER2_ID,
-                RelationshipBuilder.DEFAULT_NAME));
+                RelationshipBuilder.DEFAULT_FORWARD_NAME));
 
-        // switched user IDs -> returns true
         assertTrue(relationship.isSameRelationship(
                 RelationshipBuilder.DEFAULT_USER2_ID,
                 RelationshipBuilder.DEFAULT_USER1_ID,
-                RelationshipBuilder.DEFAULT_NAME));
+                RelationshipBuilder.DEFAULT_REVERSE_NAME));
+
+        // switched user IDs, but wrong name -> returns true
+        assertTrue(relationship.isSameRelationship(
+                RelationshipBuilder.DEFAULT_USER2_ID,
+                RelationshipBuilder.DEFAULT_USER1_ID,
+                RelationshipBuilder.DEFAULT_FORWARD_NAME));
 
         // different name -> returns false
         assertFalse(relationship.isSameRelationship(
@@ -100,7 +102,7 @@ public class RelationshipTest {
         assertFalse(relationship.isSameRelationship(
                 "different1",
                 "different2",
-                RelationshipBuilder.DEFAULT_NAME));
+                RelationshipBuilder.DEFAULT_FORWARD_NAME));
     }
 
     @Test
@@ -134,8 +136,12 @@ public class RelationshipTest {
         // different type -> returns false
         assertNotEquals(5, relationship);
 
-        // different name -> returns false
-        Relationship editedRelationship = new RelationshipBuilder().withName("Different").build();
+        // different forwardName -> returns false
+        Relationship editedRelationship = new RelationshipBuilder().withForwardName("Different").build();
+        assertNotEquals(relationship, editedRelationship);
+
+        // different reverseName -> returns false
+        editedRelationship = new RelationshipBuilder().withReverseName("Different").build();
         assertNotEquals(relationship, editedRelationship);
 
         // different user1Id -> returns false
@@ -154,14 +160,15 @@ public class RelationshipTest {
     @Test
     public void toStringMethod() {
         Relationship relationship = new RelationshipBuilder().build();
-        String expected = relationship.getName() + " Between: " + relationship.getUser1Id()
-                + " and " + relationship.getUser2Id();
+        String expected = "[Forward: " + relationship.getForwardName() + ", Reverse: " + relationship.getReverseName()
+                + "] Between: " + relationship.getUser1Id() + " and " + relationship.getUser2Id();
         assertEquals(expected, relationship.toString());
 
         // with tags
         relationship = new RelationshipBuilder().withTags("Tag1", "Tag2").build();
-        expected = relationship.getName() + " Between: " + relationship.getUser1Id()
-                + " and " + relationship.getUser2Id() + " Tags: [Tag1][Tag2]";
+        expected = "[Forward: " + relationship.getForwardName() + ", Reverse: " + relationship.getReverseName()
+                + "] Between: " + relationship.getUser1Id() + " and " + relationship.getUser2Id()
+                + " Tags: [Tag1][Tag2]";
         assertEquals(expected, relationship.toString());
     }
 }

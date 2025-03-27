@@ -1,7 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FORWARD_RELATIONSHIP_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REVERSE_RELATIONSHIP_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
@@ -17,7 +18,6 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddRelationshipCommand object
  */
 public class AddRelationshipCommandParser implements Parser<AddRelationshipCommand> {
-
     /**
      * Parses the given {@code String} of arguments in the context of the AddRelationshipCommand
      * and returns an AddRelationshipCommand object for execution.
@@ -25,10 +25,12 @@ public class AddRelationshipCommandParser implements Parser<AddRelationshipComma
      */
     public AddRelationshipCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_USERID, PREFIX_NAME, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_USERID, PREFIX_FORWARD_RELATIONSHIP_NAME,
+                        PREFIX_REVERSE_RELATIONSHIP_NAME, PREFIX_TAG);
 
-        // Check if we have both user IDs
-        if (!arePrefixesPresent(argMultimap, PREFIX_USERID, PREFIX_NAME)
+        // Check if we have both user IDs and both relationship names
+        if (!arePrefixesPresent(argMultimap, PREFIX_USERID, PREFIX_FORWARD_RELATIONSHIP_NAME,
+                PREFIX_REVERSE_RELATIONSHIP_NAME)
                 || argMultimap.getAllValues(PREFIX_USERID).size() != 2
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -40,18 +42,18 @@ public class AddRelationshipCommandParser implements Parser<AddRelationshipComma
         String userId1 = userIds.get(0);
         String userId2 = userIds.get(1);
 
-        // Get the relationship name
-        String relationshipName = argMultimap.getValue(PREFIX_NAME).get();
+        // Get the relationship names
+        String forwardName = argMultimap.getValue(PREFIX_FORWARD_RELATIONSHIP_NAME).get();
+        String reverseName = argMultimap.getValue(PREFIX_REVERSE_RELATIONSHIP_NAME).get();
 
         // Get the tags, if any
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new AddRelationshipCommand(userId1, userId2, relationshipName, tagList);
+        return new AddRelationshipCommand(userId1, userId2, forwardName, reverseName, tagList);
     }
 
     /**
-     * Returns true if the prefix is present and has a non-empty value in the given
-     * ArgumentMultimap.
+     * Returns true if all required prefixes are present and have non-empty values.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());

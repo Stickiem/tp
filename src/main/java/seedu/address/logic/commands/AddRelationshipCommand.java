@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FORWARD_RELATIONSHIP_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REVERSE_RELATIONSHIP_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
@@ -25,13 +26,15 @@ public class AddRelationshipCommand extends Command {
             + "Parameters: "
             + PREFIX_USERID + "USER_ID_1 "
             + PREFIX_USERID + "USER_ID_2 "
-            + PREFIX_NAME + "RELATIONSHIP_NAME "
+            + PREFIX_FORWARD_RELATIONSHIP_NAME + "FORWARD_RELATIONSHIP_NAME "
+            + PREFIX_REVERSE_RELATIONSHIP_NAME + "REVERSE_RELATIONSHIP_NAME "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_USERID + "12345678 "
             + PREFIX_USERID + "87654321 "
-            + PREFIX_NAME + "Business Partner "
-            + PREFIX_TAG + "Investment" + "\n"
+            + PREFIX_FORWARD_RELATIONSHIP_NAME + "Boss of "
+            + PREFIX_REVERSE_RELATIONSHIP_NAME + "Reports to "
+            + PREFIX_TAG + "Work" + "\n"
             + "Note: You can find a person's ID displayed in the contact card.";
 
     public static final String MESSAGE_SUCCESS = "Relationship successfully added.";
@@ -42,21 +45,25 @@ public class AddRelationshipCommand extends Command {
 
     private final String userId1;
     private final String userId2;
-    private final String relationshipName;
+    private final String forwardName;
+    private final String reverseName;
     private final Set<Tag> tags;
 
     /**
      * Creates an AddRelationshipCommand to add the specified relationship.
      */
-    public AddRelationshipCommand(String userId1, String userId2, String relationshipName, Set<Tag> tags) {
+    public AddRelationshipCommand(String userId1, String userId2, String forwardName, String reverseName,
+                                  Set<Tag> tags) {
         requireNonNull(userId1);
         requireNonNull(userId2);
-        requireNonNull(relationshipName);
+        requireNonNull(forwardName);
+        requireNonNull(reverseName);
         requireNonNull(tags);
 
         this.userId1 = userId1;
         this.userId2 = userId2;
-        this.relationshipName = relationshipName;
+        this.forwardName = forwardName;
+        this.reverseName = reverseName;
         this.tags = tags;
     }
 
@@ -68,7 +75,7 @@ public class AddRelationshipCommand extends Command {
             throw new CommandException(MESSAGE_SAME_PERSON);
         }
 
-        if (relationshipName.trim().isEmpty()) {
+        if (forwardName.trim().isEmpty() || reverseName.trim().isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_NAME);
         }
 
@@ -81,11 +88,12 @@ public class AddRelationshipCommand extends Command {
         }
 
         // Check if the same relationship already exists
-        if (model.hasRelationship(userId1, userId2, relationshipName)) {
+        if (model.hasRelationship(userId1, userId2, forwardName)
+                || model.hasRelationship(userId2, userId1, reverseName)) {
             throw new CommandException(MESSAGE_DUPLICATE_RELATIONSHIP);
         }
 
-        Relationship relationship = new Relationship(userId1, userId2, relationshipName, tags);
+        Relationship relationship = new Relationship(userId1, userId2, forwardName, reverseName, tags);
         model.addRelationship(relationship);
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -103,7 +111,8 @@ public class AddRelationshipCommand extends Command {
 
         return userId1.equals(otherCommand.userId1)
                 && userId2.equals(otherCommand.userId2)
-                && relationshipName.equals(otherCommand.relationshipName)
+                && forwardName.equals(otherCommand.forwardName)
+                && reverseName.equals(otherCommand.reverseName)
                 && tags.equals(otherCommand.tags);
     }
 
@@ -112,7 +121,8 @@ public class AddRelationshipCommand extends Command {
         return new ToStringBuilder(this)
                 .add("userId1", userId1)
                 .add("userId2", userId2)
-                .add("relationshipName", relationshipName)
+                .add("forwardName", forwardName)
+                .add("reverseName", reverseName)
                 .add("tags", tags)
                 .toString();
     }

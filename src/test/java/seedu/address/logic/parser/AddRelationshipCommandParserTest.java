@@ -19,21 +19,21 @@ public class AddRelationshipCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         // Basic case
-        assertParseSuccess(parser, " u/1 u/2 n/Friend",
-                new AddRelationshipCommand("1", "2", "Friend", new HashSet<>()));
+        assertParseSuccess(parser, " u/1 u/2 fn/Friend rn/Reports to",
+                new AddRelationshipCommand("1", "2", "Friend", "Reports to", new HashSet<>()));
 
         // With tags
         Set<Tag> tags = new HashSet<>();
         tags.add(new Tag(VALID_TAG_FRIEND));
-        assertParseSuccess(parser, " u/1 u/2 n/Friend t/friend",
-                new AddRelationshipCommand("1", "2", "Friend", tags));
+        assertParseSuccess(parser, " u/1 u/2 fn/Friend rn/Reports to t/friend",
+                new AddRelationshipCommand("1", "2", "Friend", "Reports to", tags));
 
         // With multiple tags
         Set<Tag> multipleTags = new HashSet<>();
         multipleTags.add(new Tag(VALID_TAG_FRIEND));
         multipleTags.add(new Tag("colleague"));
-        assertParseSuccess(parser, " u/1 u/2 n/Friend t/friend t/colleague",
-                new AddRelationshipCommand("1", "2", "Friend", multipleTags));
+        assertParseSuccess(parser, " u/1 u/2 fn/Friend rn/Reports to t/friend t/colleague",
+                new AddRelationshipCommand("1", "2", "Friend", "Reports to", multipleTags));
     }
 
     @Test
@@ -41,10 +41,10 @@ public class AddRelationshipCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE);
 
         // Missing user ID prefixes
-        assertParseFailure(parser, " n/Friend", expectedMessage);
+        assertParseFailure(parser, " fn/Friend rn/Reports to", expectedMessage);
 
         // Only one user ID
-        assertParseFailure(parser, " u/1 n/Friend", expectedMessage);
+        assertParseFailure(parser, " u/1 fn/Friend rn/Reports to", expectedMessage);
 
         // Missing name prefix
         assertParseFailure(parser, " u/1 u/2", expectedMessage);
@@ -56,11 +56,11 @@ public class AddRelationshipCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // Non-empty preamble
-        assertParseFailure(parser, "some random string u/1 u/2 n/Friend",
+        assertParseFailure(parser, "some random string u/1 u/2 fn/Friend rn/Reports to",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
 
         // Invalid tag
-        assertParseFailure(parser, " u/1 u/2 n/Friend t/*&",
+        assertParseFailure(parser, " u/1 u/2 fn/Friend rn/Reports to t/*&",
                 Tag.MESSAGE_CONSTRAINTS);
     }
 }

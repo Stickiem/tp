@@ -92,22 +92,19 @@ public class PersonCard extends UiPart<Region> {
             HBox relationshipBox = new HBox();
             relationshipBox.setSpacing(5);
 
-            Label relationshipLabel = new Label(relationship.getName());
+            // Get the relationship name from this person's perspective
+            String relationshipName = relationship.getNameFromPerspective(person.getId());
+            Label relationshipLabel = new Label(relationshipName);
             relationshipLabel.getStyleClass().add("relationship-name");
 
-            Label withLabel = new Label("with");
-            withLabel.getStyleClass().add("relationship-with");
-
-            // Determine the other person in the relationship
+            // Get the other person's details
             String otherId = person.getId().equals(relationship.getUser1Id())
                     ? relationship.getUser2Id() : relationship.getUser1Id();
-
-            // Fetch the other person and display their name
             String otherPersonName = getOtherPersonName(otherId);
-            Label otherPersonLabel = new Label(otherPersonName + " (" + otherId + ")");
+            Label otherPersonLabel = new Label(otherPersonName);
             otherPersonLabel.getStyleClass().add("relationship-person");
 
-            relationshipBox.getChildren().addAll(relationshipLabel, withLabel, otherPersonLabel);
+            relationshipBox.getChildren().addAll(relationshipLabel, otherPersonLabel);
             relationshipsPane.getChildren().add(relationshipBox);
 
             // Add tags for this relationship if any

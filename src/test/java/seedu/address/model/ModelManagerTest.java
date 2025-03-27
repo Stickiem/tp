@@ -160,7 +160,7 @@ public class ModelManagerTest {
 
     @Test
     public void updateRelationship_nullParameters_throwsNullPointerException() {
-        Relationship relationship = new Relationship("1", "2", "Friend", new HashSet<>());
+        Relationship relationship = new Relationship("1", "2", "Friend", "Reports to", new HashSet<>());
         assertThrows(NullPointerException.class, () -> modelManager.updateRelationship(null, relationship));
         assertThrows(NullPointerException.class, () -> modelManager.updateRelationship(relationship, null));
     }

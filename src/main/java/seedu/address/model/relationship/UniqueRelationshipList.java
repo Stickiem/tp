@@ -49,6 +49,18 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
     }
 
     /**
+     * Checks if the list contains any relationship between the given users, regardless of the relationship names.
+     * @param userId1 The user ID of the first user.
+     * @param userId2 The user ID of the second user.
+     * @return True if the list contains any relationship between the given users, False otherwise.
+     */
+    public boolean containsAnyRelationship(String userId1, String userId2) {
+        return internalList.stream()
+                .anyMatch(r -> (r.getUser1Id().equals(userId1) && r.getUser2Id().equals(userId2))
+                        || (r.getUser1Id().equals(userId2) && r.getUser2Id().equals(userId1)));
+    }
+
+    /**
      * Adds a relationship to the list.
      * The relationship must not already exist in the list.
      *

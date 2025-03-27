@@ -21,7 +21,8 @@ class JsonAdaptedRelationship {
 
     private final String user1Id;
     private final String user2Id;
-    private final String name;
+    private final String forwardName;
+    private final String reverseName;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -31,11 +32,13 @@ class JsonAdaptedRelationship {
     public JsonAdaptedRelationship(
             @JsonProperty("user1Id") String user1Id,
             @JsonProperty("user2Id") String user2Id,
-            @JsonProperty("name") String name,
+            @JsonProperty("forwardName") String forwardName,
+            @JsonProperty("reverseName") String reverseName,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.user1Id = user1Id;
         this.user2Id = user2Id;
-        this.name = name;
+        this.forwardName = forwardName;
+        this.reverseName = reverseName;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -47,7 +50,8 @@ class JsonAdaptedRelationship {
     public JsonAdaptedRelationship(Relationship source) {
         user1Id = source.getUser1Id();
         user2Id = source.getUser2Id();
-        name = source.getName();
+        forwardName = source.getForwardName();
+        reverseName = source.getReverseName();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .toList());
@@ -72,15 +76,19 @@ class JsonAdaptedRelationship {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "User 2 ID"));
         }
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
+        if (forwardName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Forward Name"));
         }
 
-        if (!Relationship.isValidRelationshipName(name)) {
+        if (reverseName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Reverse Name"));
+        }
+
+        if (!Relationship.isValidRelationshipName(forwardName) || !Relationship.isValidRelationshipName(reverseName)) {
             throw new IllegalValueException(Relationship.MESSAGE_CONSTRAINTS);
         }
 
         final Set<Tag> modelTags = new HashSet<>(relationshipTags);
-        return new Relationship(user1Id, user2Id, name, modelTags);
+        return new Relationship(user1Id, user2Id, forwardName, reverseName, modelTags);
     }
 }
