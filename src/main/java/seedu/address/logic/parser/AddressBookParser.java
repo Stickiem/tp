@@ -12,12 +12,14 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddContactToEventCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddRelationshipCommand;
+import seedu.address.logic.commands.AddTagToEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteContactFromEventCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DeleteRelationshipCommand;
+import seedu.address.logic.commands.DeleteTagFromEventCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindAddressCommand;
@@ -114,6 +116,12 @@ public class AddressBookParser {
 
         case DeleteContactFromEventCommand.COMMAND_WORD:
             return new DeleteContactFromEventCommandParser().parse(arguments);
+
+        case AddTagToEventCommand.COMMAND_WORD:
+            return new AddTagToEventCommandParser().parse(arguments);
+
+        case DeleteTagFromEventCommand.COMMAND_WORD:
+            return new DeleteTagFromEventCommandParser().parse(arguments);
 
         case UpdateEventDescriptionCommand.COMMAND_WORD:
             return new UpdateEventDescriptionCommandParser().parse(arguments);
