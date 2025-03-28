@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -108,6 +109,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Sorts the person list using the provided comparator.
+     * @param comparator The comparator to use for sorting.
+     */
+    public void sortPersons(Comparator<? super Person> comparator) {
+        requireNonNull(comparator);
+        persons.sortPersons(comparator);
     }
 
     //// Relationship-level operations
