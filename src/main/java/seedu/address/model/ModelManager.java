@@ -4,13 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -137,13 +134,13 @@ public class ModelManager implements Model {
 
     @Override
     public ObservableList<Person> getSortedFilteredPersonList() {
-        List<Person> personList = new ArrayList<>(filteredPersons);
-        if (sortComparator != null) {
-            personList.sort(sortComparator);
-            logger.info("we have comparator");
-        }
+        //        List<Person> personList = new ArrayList<>(filteredPersons);
+        //        if (sortComparator != null) {
+        //            personList.sort(sortComparator);
+        //            logger.info("we have comparator");
+        //        }
 
-        return FXCollections.observableArrayList(personList);
+        return filteredPersons;
     }
 
     @Override
@@ -154,16 +151,18 @@ public class ModelManager implements Model {
 
     @Override
     public void updateSortedPersonList(Comparator<Person> comparator) {
-        requireNonNull(comparator);
-        sortComparator = comparator;
-        List<Person> personList = new ArrayList<>(addressBook.getPersonList());
-        if (sortComparator != null) {
-            personList.sort(sortComparator);
-            System.out.println("we have comparator");
-        }
-        System.out.println("I changed it");
-        addressBook.setPersons(personList);
-        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
+        //        requireNonNull(comparator);
+        //        sortComparator = comparator;
+        //        List<Person> personList = new ArrayList<>(addressBook.getPersonList());
+        //        if (sortComparator != null) {
+        //            personList.sort(sortComparator);
+        //        }
+        //        addressBook.setPersons(personList);
+        // System.out.println(comparator);
+        this.addressBook.sortPersons(comparator);
+        //        FXCollections.<Person>sort(this.addressBook.getPersonList(), (
+        //                p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString()));
+        // filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     //=========== Relationship ================================================================================

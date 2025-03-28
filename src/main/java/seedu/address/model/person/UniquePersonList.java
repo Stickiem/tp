@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,6 +96,21 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+    }
+
+    /**
+     * Sorts the internal list of persons using the provided comparator.
+     * Catches any exceptions that might occur during sorting.
+     */
+    public void sortPersons(Comparator<? super Person> comparator) {
+        requireNonNull(comparator);
+        try {
+            FXCollections.sort(internalList, comparator); // Attempt to sort
+        } catch (ClassCastException e) {
+            System.err.println("Error: The elements cannot be compared using the provided comparator.");
+        } catch (Exception e) {
+            System.err.println("An error occurred while sorting the persons list: " + e.getMessage());
+        }
     }
 
     /**

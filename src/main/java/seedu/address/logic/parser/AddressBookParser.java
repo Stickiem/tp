@@ -28,6 +28,7 @@ import seedu.address.logic.commands.FindAddressCommand;
 import seedu.address.logic.commands.FindEmailCommand;
 import seedu.address.logic.commands.FindNameCommand;
 import seedu.address.logic.commands.FindPhoneCommand;
+import seedu.address.logic.commands.FindRelationshipCommand;
 import seedu.address.logic.commands.FindSocialCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -35,6 +36,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UpdateEventDescriptionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 
 /**
  * Parses user input.
@@ -54,7 +56,7 @@ public class AddressBookParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
+    public Command parseCommand(String userInput, Model model) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -74,6 +76,7 @@ public class AddressBookParser {
             case FindNameCommand.COMMAND_WORD -> new FindNameCommandParser().parse(arguments);
             case FindEmailCommand.COMMAND_WORD -> new FindEmailCommandParser().parse(arguments);
             case FindPhoneCommand.COMMAND_WORD -> new FindPhoneCommandParser().parse(arguments);
+            case FindRelationshipCommand.COMMAND_WORD -> new FindRelationshipCommandParser().parse(arguments, model);
             case FindSocialCommand.COMMAND_WORD -> new FindSocialCommandParser().parse(arguments);
             case FindTagCommand.COMMAND_WORD -> new FindTagCommandParser().parse(arguments);
             case ListCommand.COMMAND_WORD -> new ListCommand();

@@ -43,7 +43,6 @@ public class SortCommand extends Command {
         }
 
         model.updateSortedPersonList(comparator);
-        System.out.println("hello I insert comparator");
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
@@ -56,10 +55,6 @@ public class SortCommand extends Command {
     private Comparator<Person> createComparator(List<String> fields) {
         Comparator<Person> comparator;
 
-        if (fields.isEmpty()) {
-            throw new IllegalArgumentException("At least one field must be specified for sorting.");
-        }
-
         String firstField = fields.get(0).toLowerCase();
         comparator = switch (firstField) {
             case "name" -> (p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
@@ -67,7 +62,8 @@ public class SortCommand extends Command {
             case "email" -> (p1, p2) -> p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString());
             case "address" -> (p1, p2) -> p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString());
             case "tags" -> Comparator.comparingInt(p -> p.getTags().size());
-            default -> throw new IllegalArgumentException("Unknown field: " + firstField);
+            case "socials" -> Comparator.comparingInt(p -> p.getSocials().size());
+            default -> null;
         };
 
         for (int i = 1; i < fields.size(); i++) {
@@ -86,7 +82,8 @@ public class SortCommand extends Command {
                         comparator.thenComparing((p1, p2) -> p1.getAddress().toString()
                                 .compareToIgnoreCase(p2.getAddress().toString()));
                 case "tags" -> comparator.thenComparingInt(p -> p.getTags().size());
-                default -> throw new IllegalArgumentException("Unknown field: " + field);
+                case "socials" -> comparator.thenComparingInt(p -> p.getSocials().size());
+                default -> null;
             };
         }
 
