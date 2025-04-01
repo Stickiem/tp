@@ -18,6 +18,9 @@ import com.zoho.hawking.language.english.model.ParserOutput;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Contains a utility method used for parsing dates.
+ */
 public class DateParserUtil {
 
     private static final HawkingTimeParser HAWKING_TIME_PARSER;
