@@ -206,7 +206,7 @@ Example:
 
 Deletes a relationship from INcontact.
 
-Format: `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`
+Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`
 
 Example:
 * `deleteRelationship u/12345678 u/87654321 n/Business Partner`
@@ -284,7 +284,7 @@ _Details coming soon ..._
 | **Find by Social**      | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                        |
 | **List**                | `list`                                                                                                                                                                                                                      |
 | **Add Relationship**    | `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`                                                                                                                                        |
-| **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                            |
+| **Delete Relationship** | `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`                                                                                                                                                 |
 | **Add Event**           | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
 | **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
 | **Help**                | `help`                                                                                                                                                                                                                      |
