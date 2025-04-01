@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -77,13 +79,16 @@ class JsonAdaptedEvent {
      * @throws IllegalValueException if there were any data constraints violated in the adapted event.
      */
     public Event toModelType() throws IllegalValueException {
+        // Optionally, add further validation for name if required.
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
         }
+
         if (date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Date"));
         }
-        // Optionally, add further validation for name and date if required.
+
+        LocalDateTime parsedDate = ParserUtil.parseDate(date);
 
         final List<Tag> eventTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
@@ -100,6 +105,6 @@ class JsonAdaptedEvent {
             contactsList.add(p);
         }
 
-        return new Event(name, date, location, description, modelTags, contactsList);
+        return new Event(name, parsedDate, location, description, modelTags, contactsList);
     }
 }

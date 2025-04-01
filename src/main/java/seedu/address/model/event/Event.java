@@ -2,6 +2,7 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class Event {
 
     private final String id;
     private final String name;
-    private final String date;
+    private final LocalDateTime date;
     private final String location;
     private final String description;
     private final Set<Tag> tags = new HashSet<>();
@@ -44,7 +45,7 @@ public class Event {
      * @param tags        A set of tags associated with the event.
      * @param contacts    A {@code UniquePersonList} of contacts associated with the event.
      */
-    public Event(String name, String date, String location, String description, Set<Tag> tags,
+    public Event(String name, LocalDateTime date, String location, String description, Set<Tag> tags,
                  UniquePersonList contacts) {
         requireNonNull(name, "Event name is required");
         requireNonNull(date, "Event date is required");
@@ -68,7 +69,7 @@ public class Event {
     /**
      * Private constructor used for creating an updated version of an event.
      */
-    private Event(String id, String name, String date, String location, String description, Set<Tag> tags,
+    private Event(String id, String name, LocalDateTime date, String location, String description, Set<Tag> tags,
                   UniquePersonList contacts) {
         this.id = id;
         this.name = name;
@@ -103,7 +104,7 @@ public class Event {
      * @return the event date.
      */
     public String getDate() {
-        return date;
+        return date.toString();
     }
 
     /**
