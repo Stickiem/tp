@@ -4,56 +4,55 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
-participant ":FindAddressCommandParser" as FindAddressCommandParser LOGIC_COLOR
-participant "p:AddressContainsKeywordsAsSubstringPredicate" as Predicate LOGIC_COLOR
-participant "f:FindAddressCommand" as FindAddressCommand LOGIC_COLOR
+participant ":FindEmailCommandParser" as FindEmailCommandParser LOGIC_COLOR
+participant "p:EmailContainsKeywordsAsSubstringPredicate" as Predicate LOGIC_COLOR
+participant "f:FindEmailCommand" as FindEmailCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
 end box
 box Model MODEL_COLOR_T1
 participant "m:Model" as Model MODEL_COLOR
 end box
-[-> LogicManager : execute("findAddress avenue NUS COM1")
+[-> LogicManager : execute("findEmail trnguyen@nus.edu ilovevoi@nus.edu")
 activate LogicManager
-LogicManager -> AddressBookParser : parseCommand("findAddress avenue NUS COM1")
+LogicManager -> AddressBookParser : parseCommand("findEmail trnguyen@nus.edu ilovevoi@nus.edu")
 activate AddressBookParser
-create FindAddressCommandParser
-AddressBookParser -> FindAddressCommandParser
-activate FindAddressCommandParser
-FindAddressCommandParser --> AddressBookParser
-deactivate FindAddressCommandParser
-AddressBookParser -> FindAddressCommandParser : parse("avenue NUS COM1")
-activate FindAddressCommandParser
-
+create FindEmailCommandParser
+AddressBookParser -> FindEmailCommandParser
+activate FindEmailCommandParser
+FindEmailCommandParser --> AddressBookParser
+deactivate FindEmailCommandParser
+AddressBookParser -> FindEmailCommandParser : parse("trnguyen@nus.edu ilovevoi@nus.edu")
+activate FindEmailCommandParser
 create Predicate
-FindAddressCommandParser -> Predicate
+FindEmailCommandParser -> Predicate
 activate Predicate
-Predicate --> FindAddressCommandParser : p
+Predicate --> FindEmailCommandParser : p
 deactivate Predicate
-create FindAddressCommand
-FindAddressCommandParser -> FindAddressCommand : new FindAddressCommand(p)
-activate FindAddressCommand
-FindAddressCommand --> FindAddressCommandParser :
-deactivate FindAddressCommand
-FindAddressCommandParser --> AddressBookParser : f
-deactivate FindAddressCommandParser
+create FindEmailCommand
+FindEmailCommandParser -> FindEmailCommand : new FindEmailCommand(p)
+activate FindEmailCommand
+FindEmailCommand --> FindEmailCommandParser :
+deactivate FindEmailCommand
+FindEmailCommandParser --> AddressBookParser : f
+deactivate FindEmailCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
-FindAddressCommandParser -[hidden]-> AddressBookParser
-destroy FindAddressCommandParser
+FindEmailCommandParser -[hidden]-> AddressBookParser
+destroy FindEmailCommandParser
 AddressBookParser --> LogicManager : f
 deactivate AddressBookParser
-LogicManager -> FindAddressCommand : execute(m)
-activate FindAddressCommand
-FindAddressCommand -> Model : updateFilteredPersonList(p)
+LogicManager -> FindEmailCommand : execute(m)
+activate FindEmailCommand
+FindEmailCommand -> Model : updateFilteredPersonList(p)
 activate Model
-Model --> FindAddressCommand
+Model --> FindEmailCommand
 deactivate Model
 create CommandResult
-FindAddressCommand -> CommandResult
+FindEmailCommand -> CommandResult
 activate CommandResult
-CommandResult --> FindAddressCommand
+CommandResult --> FindEmailCommand
 deactivate CommandResult
-FindAddressCommand --> LogicManager : r
-deactivate FindAddressCommand
+FindEmailCommand --> LogicManager : r
+deactivate FindEmailCommand
 [<--LogicManager
 deactivate LogicManager
 @enduml
