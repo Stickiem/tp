@@ -33,6 +33,7 @@ import seedu.address.logic.commands.FindSocialCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UpdateEventDescriptionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
