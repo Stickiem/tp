@@ -1,0 +1,58 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindEmailCommandParser" as FindEmailCommandParser LOGIC_COLOR
+participant "p:EmailContainsKeywordsAsSubstringPredicate" as Predicate LOGIC_COLOR
+participant "f:FindEmailCommand" as FindEmailCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+[-> LogicManager : execute("findEmail trnguyen@nus.edu ilovevoi@nus.edu")
+activate LogicManager
+LogicManager -> AddressBookParser : parseCommand("findEmail trnguyen@nus.edu ilovevoi@nus.edu")
+activate AddressBookParser
+create FindEmailCommandParser
+AddressBookParser -> FindEmailCommandParser
+activate FindEmailCommandParser
+FindEmailCommandParser --> AddressBookParser
+deactivate FindEmailCommandParser
+AddressBookParser -> FindEmailCommandParser : parse("trnguyen@nus.edu ilovevoi@nus.edu")
+activate FindEmailCommandParser
+create Predicate
+FindEmailCommandParser -> Predicate
+activate Predicate
+Predicate --> FindEmailCommandParser : p
+deactivate Predicate
+create FindEmailCommand
+FindEmailCommandParser -> FindEmailCommand : new FindEmailCommand(p)
+activate FindEmailCommand
+FindEmailCommand --> FindEmailCommandParser :
+deactivate FindEmailCommand
+FindEmailCommandParser --> AddressBookParser : f
+deactivate FindEmailCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+FindEmailCommandParser -[hidden]-> AddressBookParser
+destroy FindEmailCommandParser
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+LogicManager -> FindEmailCommand : execute(m)
+activate FindEmailCommand
+FindEmailCommand -> Model : updateFilteredPersonList(p)
+activate Model
+Model --> FindEmailCommand
+deactivate Model
+create CommandResult
+FindEmailCommand -> CommandResult
+activate CommandResult
+CommandResult --> FindEmailCommand
+deactivate CommandResult
+FindEmailCommand --> LogicManager : r
+deactivate FindEmailCommand
+[<--LogicManager
+deactivate LogicManager
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindRelationshipCommandParser" as FindRelationshipCommandParser LOGIC_COLOR
+participant "p:RelationshipContainsKeywordsAsSubstringPredicate" as Predicate LOGIC_COLOR
+participant "f:FindRelationshipCommand" as FindRelationshipCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+[-> LogicManager : execute("findRelationship businesspartner")
+activate LogicManager
+LogicManager -> AddressBookParser : parseCommand("findRelationship businesspartner")
+activate AddressBookParser
+create FindRelationshipCommandParser
+AddressBookParser -> FindRelationshipCommandParser
+activate FindRelationshipCommandParser
+FindRelationshipCommandParser --> AddressBookParser
+deactivate FindRelationshipCommandParser
+AddressBookParser -> FindRelationshipCommandParser : parse("businesspartner")
+activate FindRelationshipCommandParser
+create Predicate
+FindRelationshipCommandParser -> Predicate
+activate Predicate
+Predicate --> FindRelationshipCommandParser : p
+deactivate Predicate
+create FindRelationshipCommand
+FindRelationshipCommandParser -> FindRelationshipCommand : new FindRelationshipCommand(p)
+activate FindRelationshipCommand
+FindRelationshipCommand --> FindRelationshipCommandParser :
+deactivate FindRelationshipCommand
+FindRelationshipCommandParser --> AddressBookParser : f
+deactivate FindRelationshipCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+FindRelationshipCommandParser -[hidden]-> AddressBookParser
+destroy FindRelationshipCommandParser
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+LogicManager -> FindRelationshipCommand : execute(m)
+activate FindRelationshipCommand
+FindRelationshipCommand -> Model : updateFilteredPersonList(p)
+activate Model
+Model --> FindRelationshipCommand
+deactivate Model
+create CommandResult
+FindRelationshipCommand -> CommandResult
+activate CommandResult
+CommandResult --> FindRelationshipCommand
+deactivate CommandResult
+FindRelationshipCommand --> LogicManager : r
+deactivate FindRelationshipCommand
+[<--LogicManager
+deactivate LogicManager
+@enduml

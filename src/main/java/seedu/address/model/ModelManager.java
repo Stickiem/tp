@@ -151,18 +151,7 @@ public class ModelManager implements Model {
 
     @Override
     public void updateSortedPersonList(Comparator<Person> comparator) {
-        //        requireNonNull(comparator);
-        //        sortComparator = comparator;
-        //        List<Person> personList = new ArrayList<>(addressBook.getPersonList());
-        //        if (sortComparator != null) {
-        //            personList.sort(sortComparator);
-        //        }
-        //        addressBook.setPersons(personList);
-        // System.out.println(comparator);
         this.addressBook.sortPersons(comparator);
-        //        FXCollections.<Person>sort(this.addressBook.getPersonList(), (
-        //                p1, p2) -> p1.getName().toString().compareToIgnoreCase(p2.getName().toString()));
-        // filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     //=========== Relationship ================================================================================

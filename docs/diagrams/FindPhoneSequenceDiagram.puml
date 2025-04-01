@@ -1,0 +1,58 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindPhoneCommandParser" as FindPhoneCommandParser LOGIC_COLOR
+participant "p:PhoneContainsKeywordsAsSubstringPredicate" as Predicate LOGIC_COLOR
+participant "f:FindPhoneCommand" as FindPhoneCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+[-> LogicManager : execute("findPhone 9123 8456")
+activate LogicManager
+LogicManager -> AddressBookParser : parseCommand("findPhone 9123 8456")
+activate AddressBookParser
+create FindPhoneCommandParser
+AddressBookParser -> FindPhoneCommandParser
+activate FindPhoneCommandParser
+FindPhoneCommandParser --> AddressBookParser
+deactivate FindPhoneCommandParser
+AddressBookParser -> FindPhoneCommandParser : parse("9123 8456")
+activate FindPhoneCommandParser
+create Predicate
+FindPhoneCommandParser -> Predicate
+activate Predicate
+Predicate --> FindPhoneCommandParser : p
+deactivate Predicate
+create FindPhoneCommand
+FindPhoneCommandParser -> FindPhoneCommand : new FindPhoneCommand(p)
+activate FindPhoneCommand
+FindPhoneCommand --> FindPhoneCommandParser :
+deactivate FindPhoneCommand
+FindPhoneCommandParser --> AddressBookParser : f
+deactivate FindPhoneCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+FindPhoneCommandParser -[hidden]-> AddressBookParser
+destroy FindPhoneCommandParser
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+LogicManager -> FindPhoneCommand : execute(m)
+activate FindPhoneCommand
+FindPhoneCommand -> Model : updateFilteredPersonList(p)
+activate Model
+Model --> FindPhoneCommand
+deactivate Model
+create CommandResult
+FindPhoneCommand -> CommandResult
+activate CommandResult
+CommandResult --> FindPhoneCommand
+deactivate CommandResult
+FindPhoneCommand --> LogicManager : r
+deactivate FindPhoneCommand
+[<--LogicManager
+deactivate LogicManager
+@enduml

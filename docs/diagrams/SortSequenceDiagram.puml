@@ -49,6 +49,11 @@ deactivate AddressBookParser
 LogicManager -> SortCommand : execute(m)
 activate SortCommand
 
+SortCommand -> SortCommand : createComparator(["name", "phone"])
+activate SortCommand
+SortCommand --> SortCommand : return comparator
+deactivate SortCommand
+
 SortCommand -> Model : updateSortedPersonList(comparator)
 activate Model
 
