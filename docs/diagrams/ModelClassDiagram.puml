@@ -42,6 +42,7 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+Person *--> "*" Social
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
