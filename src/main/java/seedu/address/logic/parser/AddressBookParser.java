@@ -33,6 +33,8 @@ import seedu.address.logic.commands.FindSocialCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RedoListCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UpdateEventDescriptionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -66,7 +68,6 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
 
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
-
         return switch (commandWord) {
             case AddCommand.COMMAND_WORD -> new AddCommandParser().parse(arguments);
             case EditCommand.COMMAND_WORD -> new EditCommandParser().parse(arguments);
@@ -97,6 +98,8 @@ public class AddressBookParser {
             case DeleteTagFromRelationshipCommand.COMMAND_WORD ->
                     new DeleteTagFromRelationshipCommandParser().parse(arguments);
             case SortCommand.COMMAND_WORD -> new SortCommandParser().parse(arguments);
+            case RedoCommand.COMMAND_WORD -> new RedoCommandParser().parse(arguments);
+            case RedoListCommand.COMMAND_WORD -> new RedoListCommandParser().parse(arguments);
             default -> {
                 logger.finer("This user input caused a ParseException: " + userInput);
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
