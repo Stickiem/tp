@@ -77,7 +77,7 @@ Format: `help`
 
 Adds a person to INcontact.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…`
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
@@ -86,6 +86,7 @@ A person can have any number of tags (including 0)
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/social2 t/Investor`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/contact with name only`
 
 ### Listing all persons : `list`
 
@@ -269,20 +270,20 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                  | Format, Examples                                                                                                                                                                                                  |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                 | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
-| **Clear**               | `clear`                                                                                                                                                                                                           |
-| **Delete**              | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                               |
-| **Edit**                | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                        |
-| **Find**                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                        |
-| **Find by Phone**       | `findphone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
-| **Find by Email**       | `findemail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
-| **Find by Address**     | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                             |
-| **Find by Social**      | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
-| **List**                | `list`                                                                                                                                                                                                            |
-| **Add Relationship**    | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                            |
-| **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                  |
-| **Add Event**           | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                           |
-| **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                          |
-| **Help**                | `help`                                                                                                                                                                                                            |
+| Action                  | Format, Examples                                                                                                                                                                                                            |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                 | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
+| **Clear**               | `clear`                                                                                                                                                                                                                     |
+| **Delete**              | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                         |
+| **Edit**                | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                  |
+| **Find**                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                  |
+| **Find by Phone**       | `findphone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                         |
+| **Find by Email**       | `findemail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                         |
+| **Find by Address**     | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                       |
+| **Find by Social**      | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                        |
+| **List**                | `list`                                                                                                                                                                                                                      |
+| **Add Relationship**    | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                                      |
+| **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                            |
+| **Add Event**           | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
+| **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
+| **Help**                | `help`                                                                                                                                                                                                                      |
