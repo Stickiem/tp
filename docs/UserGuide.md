@@ -220,6 +220,15 @@ Format: `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NA
 Example:
 * `addRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`
 
+### Deleting a relationship tag: `deleteRelationshipTag`
+
+Deletes a relationship tag from a relationship.
+
+Format: `deleteRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`
+
+Example:
+* `deleteRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`
+
 ### Adding an event: `addEvent`
 
 Adds an event to INcontact.
@@ -280,21 +289,22 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                   | Format, Examples                                                                                                                                                                                                            |
-|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                  | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
-| **Clear**                | `clear`                                                                                                                                                                                                                     |
-| **Delete**               | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                         |
-| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                  |
-| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                  |
-| **Find by Phone**        | `findphone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                         |
-| **Find by Email**        | `findemail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                         |
-| **Find by Address**      | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                       |
-| **Find by Social**       | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                        |
-| **List**                 | `list`                                                                                                                                                                                                                      |
-| **Add Relationship**     | `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`                                                                                                                                        |
-| **Delete Relationship**  | `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`                                                                                                                                                 |
-| **Add Relationship Tag** | `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`                                                                                                                                           |
-| **Add Event**            | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
-| **Delete Event**         | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
-| **Help**                 | `help`                                                                                                                                                                                                                      |
+| Action                      | Format, Examples                                                                                                                                                                                                            |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                     | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
+| **Clear**                   | `clear`                                                                                                                                                                                                                     |
+| **Delete**                  | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                         |
+| **Edit**                    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                  |
+| **Find**                    | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                  |
+| **Find by Phone**           | `findphone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                         |
+| **Find by Email**           | `findemail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                         |
+| **Find by Address**         | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                       |
+| **Find by Social**          | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                        |
+| **List**                    | `list`                                                                                                                                                                                                                      |
+| **Add Relationship**        | `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`                                                                                                                                        |
+| **Delete Relationship**     | `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`                                                                                                                                                 |
+| **Add Relationship Tag**    | `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`                                                                                                                                           |
+| **Delete Relationship Tag** | `deleteRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`                                                                                                                                                |
+| **Add Event**               | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
+| **Delete Event**            | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
+| **Help**                    | `help`                                                                                                                                                                                                                      |
