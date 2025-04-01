@@ -197,10 +197,10 @@ Format: `clear`
 
 Adds a relationship to INcontact.
 
-Format: `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`
+Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
 
 Example:
-* `addRelationship u/12345678 u/87654321 n/Business Partner t/Investment`
+* `addRelationship u/12345678 u/87654321 fn/Boss of rn/Reports to t/Work`
 
 ### Deleting a relationship: `deleteRelationship`
 
@@ -283,7 +283,7 @@ _Details coming soon ..._
 | **Find by Address**     | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                       |
 | **Find by Social**      | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                        |
 | **List**                | `list`                                                                                                                                                                                                                      |
-| **Add Relationship**    | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                                      |
+| **Add Relationship**    | `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`                                                                                                                                        |
 | **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                            |
 | **Add Event**           | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
 | **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
