@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="INcontact" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
   <icons>
@@ -45,15 +46,30 @@
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
         </StackPane>
+        <SplitPane>
+          <VBox>
+            <StackPane fx:id="EventCardPlaceholder" VBox.vgrow="ALWAYS" alignment="CENTER_LEFT">
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+            </StackPane>
+          </VBox>
 
+
+
+            <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+              <StackPane>
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+              </StackPane>
+            </VBox>
+
+
+
+        </SplitPane>
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+
+
       </VBox>
     </Scene>
   </scene>
