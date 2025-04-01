@@ -52,7 +52,6 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
     private boolean isValidField(String field) {
-        // Define valid fields
         List<String> validFields = Arrays.asList("name", "phone", "email", "address", "tags", "socials");
         return validFields.contains(field.toLowerCase());
     }
