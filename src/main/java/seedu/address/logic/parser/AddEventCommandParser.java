@@ -46,7 +46,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         }
 
         String eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME).get());
-        LocalDateTime date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        LocalDateTime date = DateParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         String location = argMultimap.getValue(PREFIX_LOCATION).orElse("");
         String description = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
