@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
 public class Event {
 
     public static final String MESSAGE_CONSTRAINTS_NAME = "Event name cannot be blank.";
-    public static final String MESSAGE_CONSTRAINTS_DATE = "Date must be in the format YYYY-MM-DD.";
+    public static final String MESSAGE_CONSTRAINTS_DATE = "Date must be a valid absolute or relative date.";
 
     private static final AtomicInteger COUNTER = new AtomicInteger(1);
 
@@ -39,7 +39,7 @@ public class Event {
      * Constructs an {@code Event} with the given details.
      *
      * @param name        A valid event name.
-     * @param date        A valid date in the format YYYY-MM-DD.
+     * @param date        A valid absolute or relative date.
      * @param location    The location of the event (can be empty).
      * @param description The event description (can be empty).
      * @param tags        A set of tags associated with the event.

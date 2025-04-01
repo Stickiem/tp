@@ -31,7 +31,7 @@ public class AddEventCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
             + "Parameters: "
             + PREFIX_EVENT_NAME + "EVENT_NAME "
-            + PREFIX_DATE + "DATE (YYYY-MM-DD) "
+            + PREFIX_DATE + "DATE (absolute or relative date) "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
             + "[" + PREFIX_TAG + "TAG]... "
