@@ -213,11 +213,11 @@ Example:
 
 Adds an event to INcontact.
 
-Format: `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]…`
+Format: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]…`
 
 Examples:
-* `addEvent n/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance`
-* `addEvent n/Tech Conference d/2025-06-20`
+* `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance`
+* `addEvent en/Tech Conference d/2025-06-20`
 
 ### Deleting an event: `deleteEvent`
 
@@ -283,6 +283,6 @@ _Details coming soon ..._
 | **List**                | `list`                                                                                                                                                                                                            |
 | **Add Relationship**    | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                            |
 | **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                  |
-| **Add Event**           | `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                            |
+| **Add Event**           | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                           |
 | **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                          |
 | **Help**                | `help`                                                                                                                                                                                                            |
