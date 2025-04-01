@@ -67,7 +67,6 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
 
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
-
         return switch (commandWord) {
             case AddCommand.COMMAND_WORD -> new AddCommandParser().parse(arguments);
             case EditCommand.COMMAND_WORD -> new EditCommandParser().parse(arguments);
@@ -98,6 +97,7 @@ public class AddressBookParser {
             case DeleteTagFromRelationshipCommand.COMMAND_WORD ->
                     new DeleteTagFromRelationshipCommandParser().parse(arguments);
             case SortCommand.COMMAND_WORD -> new SortCommandParser().parse(arguments);
+            case RedoCommand.COMMAND_WORD -> new RedoCommandParser().parse(arguments);
             default -> {
                 logger.finer("This user input caused a ParseException: " + userInput);
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
