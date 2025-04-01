@@ -15,9 +15,9 @@ public class RedoCommand extends Command {
     public static final String COMMAND_WORD = "redo";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " COMMAND_NUMBER\n"
             + "Executes the x-th last command. \n"
-            + "Command number must be between 1 and 5.";
+            + "Command number must be between 1 and 10.";
 
-    public static final String MESSAGE_INVALID_COMMAND_INDEX = "Invalid command index. Must be between 1 and 5.";
+    public static final String MESSAGE_INVALID_COMMAND_INDEX = "Invalid command index. Must be between 1 and 10.";
     public static final String MESSAGE_NOT_ENOUGH_COMMAND_HISTORY = "Not enough commands in history to redo.";
 
     private final int commandIndex;
@@ -28,7 +28,7 @@ public class RedoCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        if (commandIndex < 1 || commandIndex > 5) {
+        if (commandIndex < 1 || commandIndex > 10) {
             throw new CommandException(MESSAGE_INVALID_COMMAND_INDEX);
         }
 

@@ -48,12 +48,12 @@ public class LogicManager implements Logic {
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
-
+        String previousCommandText = new String(commandText);
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText, model);
         commandResult = command.execute(model);
 
-        CommandHistory.addCommandToHistory(commandText);
+        CommandHistory.addCommandToHistory(previousCommandText);
 
         try {
             storage.saveAddressBook(model.getAddressBook());
