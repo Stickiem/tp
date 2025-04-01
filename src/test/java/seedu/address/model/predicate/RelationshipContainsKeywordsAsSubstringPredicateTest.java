@@ -35,8 +35,10 @@ public class RelationshipContainsKeywordsAsSubstringPredicateTest {
 
     private Model createModelWithRelationships() {
         ObservableList<Relationship> relationshipList = FXCollections.observableArrayList(
-                new Relationship(person1Id, person2Id, "Best Friend", "Best Friend", Collections.singleton(new Tag("Friends"))),
-                new Relationship(person2Id, person3Id, "Lender", "Borrower", Set.of(new Tag("Money"), new Tag("Business")))
+                new Relationship(person1Id, person2Id, "Best Friend", "Best Friend",
+                        Collections.singleton(new Tag("Friends"))),
+                new Relationship(person2Id, person3Id, "Lender", "Borrower",
+                        Set.of(new Tag("Money"), new Tag("Business")))
         );
 
         return new ModelStub() {
@@ -128,7 +130,8 @@ public class RelationshipContainsKeywordsAsSubstringPredicateTest {
                 new RelationshipContainsKeywordsAsSubstringPredicate(keywords, model);
 
         String expected =
-                RelationshipContainsKeywordsAsSubstringPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+                RelationshipContainsKeywordsAsSubstringPredicate.class.getCanonicalName()
+                        + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
 
@@ -300,3 +303,4 @@ public class RelationshipContainsKeywordsAsSubstringPredicateTest {
         }
     }
 }
+

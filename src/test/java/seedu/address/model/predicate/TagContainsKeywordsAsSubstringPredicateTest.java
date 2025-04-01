@@ -106,3 +106,4 @@ public class TagContainsKeywordsAsSubstringPredicateTest {
         assertEquals(expected, predicate.toString());
     }
 }
+
