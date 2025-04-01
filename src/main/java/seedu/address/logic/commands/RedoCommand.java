@@ -49,4 +49,19 @@ public class RedoCommand extends Command {
 
         return command.execute(model);
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        RedoCommand other = (RedoCommand) obj;
+        return commandIndex == other.commandIndex;
+    }
+    @Override
+    public String toString() {
+        return "RedoCommand{commandIndex=" + commandIndex + "}";
+    }
 }
