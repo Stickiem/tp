@@ -55,14 +55,14 @@
 
 
 
-            <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-              <StackPane>
+          <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+            <StackPane>
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
               <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-              </StackPane>
-            </VBox>
+            </StackPane>
+          </VBox>
 
 
 
