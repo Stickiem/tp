@@ -63,10 +63,10 @@ public class PersonCard extends UiPart<Region> {
         String socialsDisplay = person.getSocials().stream().map(s -> s.toString()).collect(Collectors.joining(","));
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        socials.setText(socialsDisplay);
+        phone.setText("Phone: " + person.getPhone().value);
+        address.setText("Address: " + person.getAddress().value);
+        email.setText("Email: " + person.getEmail().value);
+        socials.setText("Socials: " + socialsDisplay);
         contactId.setText("ID: " + person.getId());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
