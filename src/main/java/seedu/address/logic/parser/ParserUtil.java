@@ -172,20 +172,6 @@ public class ParserUtil {
         return trimmedName;
     }
 
-    /**
-     * Parses {@code date} into a trimmed {@code String} that matches the YYYY-MM-DD format.
-     *
-     * @throws ParseException if the date does not match the expected format.
-     */
-    public static String parseDate(String date) throws ParseException {
-        requireNonNull(date);
-        String trimmedDate = date.trim();
-        if (!trimmedDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
-            throw new ParseException("Invalid date format. Expected format: YYYY-MM-DD.");
-        }
-        return trimmedDate;
-    }
-
     // ========= Contact Parsing Methods =========
 
     /**

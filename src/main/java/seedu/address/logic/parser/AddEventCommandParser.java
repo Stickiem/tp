@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         }
 
         String eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME).get());
-        String date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        LocalDateTime date = DateParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         String location = argMultimap.getValue(PREFIX_LOCATION).orElse("");
         String description = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));

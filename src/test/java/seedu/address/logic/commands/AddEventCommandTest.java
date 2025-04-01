@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.DateParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.testutil.ModelStub;
@@ -22,9 +24,16 @@ class AddEventCommandTest {
     }
 
     @Test
-    public void execute_eventAcceptedByModel_addSuccessful() throws CommandException {
+    public void execute_eventAcceptedByModel_addSuccessful() throws CommandException, ParseException {
         ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
-        Event validEvent = new Event("A valid event name.", "2025-01-01", null, null, null, new UniquePersonList());
+        Event validEvent = new Event(
+                "A valid event name.",
+                DateParserUtil.parseDate("2025-01-01"),
+                null,
+                null,
+                null,
+                new UniquePersonList()
+        );
 
         CommandResult commandResult = new AddEventCommand(validEvent, List.of()).execute(modelStub);
 
