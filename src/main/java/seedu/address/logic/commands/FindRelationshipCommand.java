@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.predicate.RelationshipContainsKeywordsAsSubstringPredicate;
@@ -47,11 +46,8 @@ public class FindRelationshipCommand extends Command {
         FindRelationshipCommand otherFindRelationshipCommand = (FindRelationshipCommand) other;
         return predicate.equals(otherFindRelationshipCommand.predicate);
     }
-
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return "FindRelationshipCommand{" + "predicate=" + predicate + "}";
     }
 }

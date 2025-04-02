@@ -28,4 +28,8 @@ public class RedoCommandParser implements Parser<RedoCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE), e);
         }
     }
+    @Override
+    public String toString() {
+        return "RedoCommandParser{}";
+    }
 }

@@ -47,11 +47,11 @@ public class SocialContainsKeywordsAsSubstringPredicateTest {
         // One keyword
         SocialContainsKeywordsAsSubstringPredicate predicate =
                 new SocialContainsKeywordsAsSubstringPredicate(Collections.singletonList("facebook"));
-        assertTrue(predicate.test(new PersonBuilder().withSocial("facebook.com/user").build()));
+        assertTrue(predicate.test(new PersonBuilder().withSocials("facebook.com/user").build()));
 
         // Multiple keywords
         predicate = new SocialContainsKeywordsAsSubstringPredicate(Arrays.asList("facebook", "whatsapp"));
-        assertTrue(predicate.test(new PersonBuilder().withSocial("whatsapp.com/user").build()));
+        assertTrue(predicate.test(new PersonBuilder().withSocials("whatsapp.com/user").build()));
     }
 
     @Test
@@ -59,11 +59,11 @@ public class SocialContainsKeywordsAsSubstringPredicateTest {
         // Zero keywords
         SocialContainsKeywordsAsSubstringPredicate predicate =
                 new SocialContainsKeywordsAsSubstringPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withSocial("facebook.com/user").build()));
+        assertFalse(predicate.test(new PersonBuilder().withSocials("facebook.com/user").build()));
 
         // Non-matching keyword
         predicate = new SocialContainsKeywordsAsSubstringPredicate(Arrays.asList("instagram"));
-        assertFalse(predicate.test(new PersonBuilder().withSocial("facebook.com/user").build()));
+        assertFalse(predicate.test(new PersonBuilder().withSocials("facebook.com/user").build()));
     }
 
     @Test

@@ -37,4 +37,19 @@ public class RedoListCommand extends Command {
 
         throw new CommandException(String.format(MESSAGE_SUCCESS, history.toString()));
     }
+    @Override
+    public String toString() {
+        return "RedoListCommand{}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        return true;
+    }
 }

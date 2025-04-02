@@ -36,7 +36,6 @@ public class CommandHistory {
         }
 
         final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
 
         if (Objects.equals(commandWord, RedoCommand.COMMAND_WORD)) {
             return;
@@ -62,15 +61,6 @@ public class CommandHistory {
         }
 
         return (String) lastCommands.toArray()[dequeIndex];
-    }
-
-    /**
-     * Returns the last 10 commands (user inputs).
-     *
-     * @return list of last 10 commands.
-     */
-    public static Deque<String> getLastCommands() {
-        return lastCommands;
     }
 
     /**
