@@ -239,10 +239,10 @@ Example:
 
 Adds an event to INcontact.
 
-Format: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]…`
+Format: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`
 
 Examples:
-* `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance`
+* `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance c/John Doe c/Jane Smith`
 * `addEvent en/Tech Conference d/2025-06-20`
 
 ### Deleting an event: `deleteEvent`
@@ -338,7 +338,7 @@ _Details coming soon ..._
 | **Delete Relationship**      | `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`                                                                                                                                                 |
 | **Add Relationship Tag**     | `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`                                                                                                                                           |
 | **Delete Relationship Tag**  | `deleteRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`                                                                                                                                                |
-| **Add Event**                | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
+| **Add Event**                | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`                                                                                                                              |
 | **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
 | **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                                |
 | **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                              |
