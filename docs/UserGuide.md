@@ -290,6 +290,15 @@ Format: `addEventContact INDEX c/CONTACT_NAME`
 Example:
 * `addEventContact 1 c/John Doe`
 
+### Deleting an event contact: `deleteEventContact`
+
+Deletes a contact from an event.
+
+Format: `deleteEventContact INDEX c/CONTACT_NAME`
+
+Example:
+* `deleteEventContact 1 c/John Doe`
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -353,4 +362,5 @@ _Details coming soon ..._
 | **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                              |
 | **Delete Event Tag**         | `deleteEventTag INDEX t/TAG_NAME`                                                                                                                                                                                           |
 | **Add Event Contact**        | `addEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                                      |
+| **Delete Event Contact**     | `deleteEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                                   |
 | **Help**                     | `help`                                                                                                                                                                                                                      |
