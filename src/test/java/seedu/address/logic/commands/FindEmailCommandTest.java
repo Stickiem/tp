@@ -117,3 +117,4 @@ public class FindEmailCommandTest {
         return new EmailContainsKeywordsAsSubstringPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }
+

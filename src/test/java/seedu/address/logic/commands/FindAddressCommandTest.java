@@ -7,10 +7,8 @@ import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersonsTestSet2.ALICE;
 import static seedu.address.testutil.TypicalPersonsTestSet2.BENSON;
-import static seedu.address.testutil.TypicalPersonsTestSet2.CARL;
 import static seedu.address.testutil.TypicalPersonsTestSet2.DANIEL;
 import static seedu.address.testutil.TypicalPersonsTestSet2.ELLE;
-import static seedu.address.testutil.TypicalPersonsTestSet2.FIONA;
 import static seedu.address.testutil.TypicalPersonsTestSet2.GEORGE;
 import static seedu.address.testutil.TypicalPersonsTestSet2.HOON;
 import static seedu.address.testutil.TypicalPersonsTestSet2.IDA;
@@ -119,3 +117,4 @@ public class FindAddressCommandTest {
         return new AddressContainsKeywordsAsSubstringPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }
+

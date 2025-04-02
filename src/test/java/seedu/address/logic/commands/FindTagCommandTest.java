@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersonsTestSet2.ALICE;
 import static seedu.address.testutil.TypicalPersonsTestSet2.BENSON;
 import static seedu.address.testutil.TypicalPersonsTestSet2.DANIEL;
 import static seedu.address.testutil.TypicalPersonsTestSet2.PHUNG_KHANH_LINH;
@@ -177,3 +176,5 @@ public class FindTagCommandTest {
         return new TagContainsKeywordsAsSubstringPredicate(tagSet);
     }
 }
+
+

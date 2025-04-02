@@ -155,3 +155,4 @@ public class FindRelationshipCommandTest {
                 Arrays.asList(userInput.split("\\s+")), model);
     }
 }
+

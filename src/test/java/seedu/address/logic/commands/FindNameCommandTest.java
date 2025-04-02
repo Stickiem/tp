@@ -121,3 +121,4 @@ public class FindNameCommandTest {
         return new NameContainsKeywordsAsSubstringPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }
+
