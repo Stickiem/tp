@@ -281,6 +281,15 @@ Format: `deleteEventTag INDEX t/TAG_NAME`
 Example:
 * `deleteEventTag 1 t/Finance`
 
+### Adding an event contact: `addEventContact`
+
+Adds a contact to an event.
+
+Format: `addEventContact INDEX c/CONTACT_NAME`
+
+Example:
+* `addEventContact 1 c/John Doe`
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -343,4 +352,5 @@ _Details coming soon ..._
 | **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                                |
 | **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                              |
 | **Delete Event Tag**         | `deleteEventTag INDEX t/TAG_NAME`                                                                                                                                                                                           |
+| **Add Event Contact**        | `addEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                                      |
 | **Help**                     | `help`                                                                                                                                                                                                                      |
