@@ -272,6 +272,15 @@ Format: `addEventTag INDEX t/TAG_NAME`
 Example:
 * `addEventTag 1 t/Finance`
 
+### Deleting an event tag: `deleteEventTag`
+
+Deletes a tag from an event.
+
+Format: `deleteEventTag INDEX t/TAG_NAME`
+
+Example:
+* `deleteEventTag 1 t/Finance`
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -333,4 +342,5 @@ _Details coming soon ..._
 | **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
 | **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                                |
 | **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                              |
+| **Delete Event Tag**         | `deleteEventTag INDEX t/TAG_NAME`                                                                                                                                                                                           |
 | **Help**                     | `help`                                                                                                                                                                                                                      |
