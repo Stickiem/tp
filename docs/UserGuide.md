@@ -263,6 +263,15 @@ Format: `updateEventDesc INDEX desc/NEW_DESCRIPTION`
 Example:
 * `updateEventDesc 1 desc/New description for the event`
 
+### Adding an event tag: `addEventTag`
+
+Adds a tag to an event.
+
+Format: `addEventTag INDEX t/TAG_NAME`
+
+Example:
+* `addEventTag 1 t/Finance`
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -323,4 +332,5 @@ _Details coming soon ..._
 | **Add Event**                | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                                     |
 | **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                    |
 | **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                                |
+| **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                              |
 | **Help**                     | `help`                                                                                                                                                                                                                      |
