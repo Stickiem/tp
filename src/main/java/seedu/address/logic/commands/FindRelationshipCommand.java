@@ -47,11 +47,8 @@ public class FindRelationshipCommand extends Command {
         FindRelationshipCommand otherFindRelationshipCommand = (FindRelationshipCommand) other;
         return predicate.equals(otherFindRelationshipCommand.predicate);
     }
-
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return "FindRelationshipCommand{" + "predicate=" + predicate + "}";
     }
 }
