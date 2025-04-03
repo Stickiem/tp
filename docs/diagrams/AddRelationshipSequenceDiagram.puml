@@ -1,0 +1,104 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":AddRelationshipCommandParser" as ARCP LOGIC_COLOR
+participant "cmd:AddRelationshipCommand" as ARC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "relationship:Relationship" as Relationship MODEL_COLOR
+end box
+
+' User initiates the command (implicit)
+[-> LM : execute("addRelationship u/123 u/456 fn/Boss rn/Staff t/Work")
+activate LM
+
+LM -> ABP : parseCommand("addRelationship u/123 u/456 fn/Boss rn/Staff t/Work")
+activate ABP
+
+' AddressBookParser identifies the command and delegates to the specific parser
+create ARCP
+ABP -> ARCP : new AddRelationshipCommandParser()
+activate ARCP
+ARCP --> ABP
+deactivate ARCP
+
+ABP -> ARCP : parse("u/123 u/456 fn/Boss rn/Staff t/Work")
+activate ARCP
+
+' AddRelationshipCommandParser parses arguments and creates the command object
+create ARC
+ARCP -> ARC : new AddRelationshipCommand("123", "456", "Boss", "Staff", tags)
+activate ARC
+ARC --> ARCP
+deactivate ARC
+
+ARCP --> ABP : cmd
+deactivate ARCP
+
+ABP --> LM : cmd
+deactivate ABP
+
+' LogicManager executes the command
+LM -> ARC : execute(Model)
+activate ARC
+
+' AddRelationshipCommand interacts with the Model
+ARC -> Model : getPersonById("123")
+activate Model
+Model --> ARC : person1
+deactivate Model
+
+ARC -> Model : getPersonById("456")
+activate Model
+Model --> ARC : person2
+deactivate Model
+
+' Check for duplicate relationship (can be condensed for brevity if needed)
+ARC -> Model : hasRelationship("123", "456", "Boss")
+activate Model
+Model --> ARC : false
+deactivate Model
+ARC -> Model : hasRelationship("456", "123", "Staff")
+activate Model
+Model --> ARC : false
+deactivate Model
+
+' Create the Relationship object (can be shown within ARC activation)
+create Relationship
+ARC -> Relationship : new Relationship("123", "456", "Boss", "Staff", tags)
+activate Relationship
+Relationship --> ARC : relationship
+deactivate Relationship
+
+' Add the relationship to the Model
+ARC -> Model : addRelationship(relationship)
+activate Model
+' Internal Model interactions (e.g., calling AddressBook, UniqueRelationshipList)
+Model -> Model : internal list update
+Model --> ARC
+deactivate Model
+
+' Create and return the CommandResult
+create CR
+ARC -> CR : new CommandResult("New relationship created...")
+activate CR
+CR --> ARC : r
+deactivate CR
+
+ARC --> LM : r
+deactivate ARC
+
+' LogicManager potentially saves the state (omitted for command-specific focus)
+' LM -> Storage : saveAddressBook(Model)
+
+[<-- LM : r
+deactivate LM
+
+@enduml
