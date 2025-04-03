@@ -211,7 +211,7 @@ Example:
 * `updateEventDesc 1 desc/New description for the event`
 
 ---
-### Updating an date time: `updateEventDate`
+### Updating an event time: `updateEventDate`
 
 Updates the date of an event.
 
