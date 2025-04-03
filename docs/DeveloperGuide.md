@@ -1,26 +1,26 @@
 ---
-layout: default.md
+layout: page
 title: Developer Guide
-pageNav: 3
 ---
-<!-- * Table of Contents -->
-<page-nav-print />
+
+* Table of Contents
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Acknowledgements**
+## Acknowledgements
 
 * **[Hawking Date/Time Parser](https://github.com/zoho/hawking):** Used for natural language date parsing for Event commands.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
+## Setting up, getting started
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Design**
+## Design
 
 ### Architecture
 
@@ -157,7 +157,7 @@ Classes used by multiple components are in the `seedu.address.commons` package. 
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+## Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
@@ -313,7 +313,7 @@ The `redo` and `redoList` commands allow users to re-execute or view recently ex
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+## Documentation, logging, testing, configuration, dev-ops
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -323,7 +323,7 @@ The `redo` and `redoList` commands allow users to re-execute or view recently ex
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## Appendix: Requirements
 
 ### Product scope
 
@@ -884,7 +884,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## Appendix: Instructions for manual testing
 
 Given below are instructions to test the app manually.
 
@@ -1042,8 +1042,6 @@ testers are expected to do more *exploratory* testing.
         Expected: Persons with ID1 and ID3 are listed.
     4.  Test case: `findRelationship Tech` (finding by relationship tag - *verify if this is supported by the predicate*)
         Expected: *If supported:* Persons ID1 and ID2 listed. *If not supported:* 0 persons listed or only matches relationship name. **(Note: The current `RelationshipContainsKeywordsAsSubstringPredicate` only checks if the person is *involved* in *any* relationship when the command is run, not if the relationship *itself* matches the keyword. This needs correction in the predicate or command logic to be useful.)**
-
-*(Add similar substring test cases for findEmail, findPhone, findAddress, findSocial, findTag)*
 
 ### Sort Command
 
