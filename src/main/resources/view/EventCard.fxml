@@ -18,19 +18,21 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label" />
-        <Label fx:id="name" styleClass="cell_big_label" />
+      <HBox spacing="5" alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_big_label">
+          <minWidth>
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+        <Label fx:id="name" text="\$name" styleClass="cell_big_label" />
       </HBox>
-      <Label fx:id="date" styleClass="cell_small_label" wrapText="true" />
-      <Label fx:id="location" styleClass="cell_small_label" wrapText="true" />
-      <Label fx:id="description" styleClass="cell_small_label" wrapText="true" />
-      <Label fx:id="eventId" styleClass="cell_small_label" />
       <FlowPane fx:id="tags" />
+      <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
+      <Label fx:id="locationLabel" styleClass="cell_small_label" text="\$location" />
+      <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
+      <Label fx:id="eventId" styleClass="cell_small_label" text="\$eventId" />
       <VBox fx:id="contactsPane" spacing="2">
-        <padding>
-          <Insets top="5" right="0" bottom="0" left="0" />
-        </padding>
+        <!-- Contacts will be added here dynamically -->
       </VBox>
     </VBox>
   </GridPane>

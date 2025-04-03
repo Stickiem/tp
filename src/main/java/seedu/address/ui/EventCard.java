@@ -16,7 +16,7 @@ import seedu.address.model.event.Event;
  */
 public class EventCard extends UiPart<Region> {
 
-    private static final String FXML = "EventListCard.fxml";
+    private static final String FXML = "EventCard.fxml";
 
     public final Event event;
     private final AddressBook addressBook;
@@ -32,7 +32,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label date;
     @FXML
-    private Label location;
+    private Label locationLabel;
     @FXML
     private Label description;
     @FXML
@@ -53,7 +53,7 @@ public class EventCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(event.getName());
         date.setText("Date: " + event.getDate());
-        location.setText("Location: " + event.getLocation());
+        locationLabel.setText("Location: " + event.getLocation());
         description.setText("Description: " + event.getDescription());
         eventId.setText("Event ID: " + event.getId());
 
