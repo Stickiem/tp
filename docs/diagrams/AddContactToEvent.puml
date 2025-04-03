@@ -1,0 +1,39 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":AddContactToEventCommandParser" as ACTCP LOGIC_COLOR
+participant "cmd:AddContactToEventCommand" as ACTC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LM : execute("addEventContact 1 c/John Doe")
+activate LM
+LM -> ABP : parseCommand("addEventContact 1 c/John Doe")
+activate ABP
+create ACTCP
+ABP -> ACTCP : parse("addEventContact 1 c/John Doe")
+activate ACTCP
+ACTCP --> ABP : AddContactToEventCommand
+deactivate ACTCP
+ABP --> LM : AddContactToEventCommand
+deactivate ABP
+
+LM -> ACTC : execute(Model)
+activate ACTC
+ACTC -> Model : updateEvent(event, updated)
+activate Model
+Model --> ACTC : event updated
+deactivate Model
+ACTC --> LM : CommandResult
+deactivate ACTC
+LM --> CR : return result
+deactivate LM
+@enduml

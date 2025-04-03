@@ -4,7 +4,7 @@ skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
-Package Model as ModelPackage <<Rectangle>>{
+Package Model as ModelPackage <<Rectangle>> {
   Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
   Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
   Class "<<interface>>\nModel" as Model
@@ -19,15 +19,11 @@ Package Model as ModelPackage <<Rectangle>>{
   Class Name
   Class Phone
   Class Tag
-  Class Event {
-      - id: String
-      - name: String
-      - date: String
-      - location: String
-      - description: String
-      - tags: Set<Tag>
-      - contacts: UniquePersonList
-  }
+
+  Class Date
+  Class Location
+  Class Description
+  Class Event
 
   Class I #FFFFFF
 }
@@ -53,8 +49,14 @@ Person *--> Address
 Person *--> "*" Tag
 Person *--> "*" Social
 
-' Added relationship: AddressBook contains events.
 AddressBook *--> "*" Event
+
+Event *--> "1" Name : name
+Event *--> "1" Date : date
+Event *--> "1" Location : location
+Event *--> "1" Description : description
+Event *--> "*" Tag : tags
+Event *--> "1" UniquePersonList : contacts
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I

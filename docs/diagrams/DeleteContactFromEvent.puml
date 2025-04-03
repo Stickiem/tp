@@ -1,0 +1,39 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":DeleteContactFromEventCommandParser" as DCTCP LOGIC_COLOR
+participant "cmd:DeleteContactFromEventCommand" as DCTC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LM : execute("deleteEventContact 1 c/John Doe")
+activate LM
+LM -> ABP : parseCommand("deleteEventContact 1 c/John Doe")
+activate ABP
+create DCTCP
+ABP -> DCTCP : parse("deleteEventContact 1 c/John Doe")
+activate DCTCP
+DCTCP --> ABP : DeleteContactFromEventCommand
+deactivate DCTCP
+ABP --> LM : DeleteContactFromEventCommand
+deactivate ABP
+
+LM -> DCTC : execute(Model)
+activate DCTC
+DCTC -> Model : updateEvent(event, updated)
+activate Model
+Model --> DCTC : event updated
+deactivate Model
+DCTC --> LM : CommandResult
+deactivate DCTC
+LM --> CR : return result
+deactivate LM
+@enduml

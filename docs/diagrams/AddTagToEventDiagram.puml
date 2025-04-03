@@ -1,0 +1,39 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":AddTagToEventCommandParser" as ATCP LOGIC_COLOR
+participant "cmd:AddTagToEventCommand" as ATC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LM : execute("addEventTag 1 t/Important")
+activate LM
+LM -> ABP : parseCommand("addEventTag 1 t/Important")
+activate ABP
+create ATCP
+ABP -> ATCP : parse("addEventTag 1 t/Important")
+activate ATCP
+ATCP --> ABP : AddTagToEventCommand
+deactivate ATCP
+ABP --> LM : AddTagToEventCommand
+deactivate ABP
+
+LM -> ATC : execute(Model)
+activate ATC
+ATC -> Model : updateEvent(event, updated)
+activate Model
+Model --> ATC : event updated
+deactivate Model
+ATC --> LM : CommandResult
+deactivate ATC
+LM --> CR : return result
+deactivate LM
+@enduml
