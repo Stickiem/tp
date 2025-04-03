@@ -8,16 +8,15 @@ class UniqueRelationshipList {
 
   + contains(toCheck : Relationship) : boolean
   + contains(userId1 : String, userId2 : String, relationshipName : String) : boolean
-  + containsAnyRelationship(userId1 : String, userId2 : String) : boolean
+  + hasAnyRelationshipBetween(userId1 : String, userId2 : String) : boolean
   + add(toAdd : Relationship) : void
   + remove(userId1 : String, userId2 : String, relationshipName : String) : void
+  + getRelationship(userId1 : String, userId2 : String, relationshipName : String) : Relationship
+  + setRelationship(target : Relationship, editedRelationship : Relationship) : void
   + asUnmodifiableObservableList() : ObservableList<Relationship>
-  + getRelationshipsInvolvingUser(userId : String) : List<Relationship>
   + iterator() : Iterator<Relationship>
   + equals(other : Object) : boolean
   + hashCode() : int
-  + getRelationship(userId1 : String, userId2 : String, relationshipName : String) : Relationship
-  + setRelationship(target : Relationship, editedRelationship : Relationship) : void
   + toString() : String
 }
 

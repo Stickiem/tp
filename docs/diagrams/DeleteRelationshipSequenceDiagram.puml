@@ -1,0 +1,86 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":DeleteRelationshipCommandParser" as DRCP LOGIC_COLOR
+participant "cmd:DeleteRelationshipCommand" as DRC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+' User initiates the command (implicit)
+[-> LM : execute("deleteRelationship u/123 u/456 n/Boss")
+activate LM
+
+LM -> ABP : parseCommand("deleteRelationship u/123 u/456 n/Boss")
+activate ABP
+
+' AddressBookParser identifies the command and delegates to the specific parser
+create DRCP
+ABP -> DRCP : new DeleteRelationshipCommandParser()
+activate DRCP
+DRCP --> ABP
+deactivate DRCP
+
+ABP -> DRCP : parse("u/123 u/456 n/Boss")
+activate DRCP
+
+' DeleteRelationshipCommandParser parses arguments and creates the command object
+create DRC
+DRCP -> DRC : new DeleteRelationshipCommand("123", "456", "Boss")
+activate DRC
+DRC --> DRCP
+deactivate DRC
+
+DRCP --> ABP : cmd
+deactivate DRCP
+
+ABP --> LM : cmd
+deactivate ABP
+
+' LogicManager executes the command
+LM -> DRC : execute(Model)
+activate DRC
+
+' DeleteRelationshipCommand interacts with the Model to find persons
+DRC -> Model : getPersonById("123")
+activate Model
+Model --> DRC : person1
+deactivate Model
+
+DRC -> Model : getPersonById("456")
+activate Model
+Model --> DRC : person2
+deactivate Model
+
+' DeleteRelationshipCommand interacts with the Model to delete the relationship
+DRC -> Model : deleteRelationship("123", "456", "Boss")
+activate Model
+' Model performs deletion from UniqueRelationshipList
+Model -> Model : internal list removal
+Model --> DRC : success or RelationshipNotFoundException
+deactivate Model
+
+' Create and return the CommandResult
+create CR
+DRC -> CR : new CommandResult("Successfully deleted relationship...")
+activate CR
+CR --> DRC : r
+deactivate CR
+
+DRC --> LM : r
+deactivate DRC
+
+' LogicManager potentially saves the state (omitted for command-specific focus)
+' LM -> Storage : saveAddressBook(Model)
+
+[<-- LM : r
+deactivate LM
+
+@enduml

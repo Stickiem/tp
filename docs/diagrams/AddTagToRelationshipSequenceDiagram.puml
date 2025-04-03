@@ -1,0 +1,104 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":AddTagToRelationshipCommandParser" as ATRCP LOGIC_COLOR
+participant "cmd:AddTagToRelationshipCommand" as ATRC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "originalRelationship:Relationship" as OrigRel MODEL_COLOR_T2
+participant "updatedRelationship:Relationship" as UpdatedRel MODEL_COLOR_T2
+end box
+
+' User initiates the command (implicit)
+[-> LM : execute("addRelationshipTag u/123 u/456 n/Boss t/Important")
+activate LM
+
+LM -> ABP : parseCommand("addRelationshipTag u/123 u/456 n/Boss t/Important")
+activate ABP
+
+' AddressBookParser identifies the command and delegates to the specific parser
+create ATRCP
+ABP -> ATRCP : new AddTagToRelationshipCommandParser()
+activate ATRCP
+ATRCP --> ABP
+deactivate ATRCP
+
+ABP -> ATRCP : parse("u/123 u/456 n/Boss t/Important")
+activate ATRCP
+
+' AddTagToRelationshipCommandParser parses arguments and creates the command object
+create ATRC
+ATRCP -> ATRC : new AddTagToRelationshipCommand("123", "456", "Boss", tag)
+activate ATRC
+ATRC --> ATRCP
+deactivate ATRC
+
+ATRCP --> ABP : cmd
+deactivate ATRCP
+' Optional: destroy parser instance if needed
+' destroy ATRCP
+
+ABP --> LM : cmd
+deactivate ABP
+
+' LogicManager executes the command
+LM -> ATRC : execute(Model)
+activate ATRC
+
+' AddTagToRelationshipCommand interacts with the Model
+ATRC -> Model : getRelationship("123", "456", "Boss")
+activate Model
+Model --> ATRC : originalRelationship
+deactivate Model
+
+' Check if the tag already exists (implicit check within command or helper)
+ATRC -> OrigRel : getTags()
+activate OrigRel
+OrigRel --> ATRC : tagSet
+deactivate OrigRel
+' Assume tag doesn't exist
+
+' Create the updated Relationship object with the new tag
+ATRC -> OrigRel : withAddedTag(tag)
+activate OrigRel
+create UpdatedRel
+OrigRel -> UpdatedRel : new Relationship(...)
+activate UpdatedRel
+UpdatedRel --> OrigRel
+deactivate UpdatedRel
+OrigRel --> ATRC : updatedRelationship
+deactivate OrigRel
+
+
+' Update the relationship in the Model
+ATRC -> Model : updateRelationship(originalRelationship, updatedRelationship)
+activate Model
+' Internal Model interactions (e.g., calling AddressBook, UniqueRelationshipList.setRelationship)
+Model -> Model : internal list update
+Model --> ATRC
+deactivate Model
+
+' Create and return the CommandResult
+create CR
+ATRC -> CR : new CommandResult("Added tag to relationship...")
+activate CR
+CR --> ATRC : r
+deactivate CR
+
+ATRC --> LM : r
+deactivate ATRC
+
+' LogicManager potentially saves the state (omitted for command-specific focus)
+' LM -> Storage : saveAddressBook(Model)
+
+[<-- LM : r
+deactivate LM
+
+@enduml
