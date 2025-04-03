@@ -8,6 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 
 /**
@@ -20,11 +21,14 @@ public class EventListPanel extends UiPart<Region> {
     @FXML
     private ListView<Event> eventListView;
 
+    private final ReadOnlyAddressBook addressBook;
+
     /**
-     * Creates an {@code EventListPanel} with the given {@code ObservableList} of events.
+     * Creates an {@code EventListPanel} with the given {@code ObservableList} and {@code ReadOnlyAddressBook}.
      */
-    public EventListPanel(ObservableList<Event> eventList) {
+    public EventListPanel(ObservableList<Event> eventList, ReadOnlyAddressBook addressBook) {
         super(FXML);
+        this.addressBook = addressBook;
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
     }
@@ -41,7 +45,8 @@ public class EventListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new EventCard(event, getIndex() + 1).getRoot());
+                setGraphic(new EventCard(event, getIndex() + 1,
+                        (seedu.address.model.AddressBook) addressBook).getRoot());
             }
         }
     }

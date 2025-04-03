@@ -188,7 +188,7 @@ Format: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]..
 
 Examples:
 * `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance c/John Doe c/Jane Smith`
-* `addEvent en/Tech Conference d/2025-06-20`
+* `addEvent en/Tech Conference d/2025-06-02`
 
 ---
 ### Deleting an event: `deleteEvent`

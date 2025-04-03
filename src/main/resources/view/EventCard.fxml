@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      spacing="10" alignment="CENTER_LEFT" styleClass="event-card">
-
-    <VBox spacing="4">
-        <Label fx:id="name" styleClass="event-name"/>
-        <Label fx:id="date" styleClass="event-date"/>
-        <Label fx:id="location" styleClass="event-location"/>
-        <Label fx:id="description" styleClass="event-description"/>
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+    </columnConstraints>
+    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+      <padding>
+        <Insets top="5" right="5" bottom="5" left="15" />
+      </padding>
+      <HBox spacing="0.5" alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_big_label" />
+        <Label fx:id="name" styleClass="cell_big_label" />
+      </HBox>
+      <Label fx:id="date" styleClass="cell_small_label" wrapText="true" />
+      <Label fx:id="location" styleClass="cell_small_label" wrapText="true" />
+      <Label fx:id="description" styleClass="cell_small_label" wrapText="true" />
+      <Label fx:id="eventId" styleClass="cell_small_label" />
+      <FlowPane fx:id="tags" />
+      <VBox fx:id="contactsPane" spacing="2">
+        <padding>
+          <Insets top="5" right="0" bottom="0" left="0" />
+        </padding>
+      </VBox>
     </VBox>
+  </GridPane>
 </HBox>
