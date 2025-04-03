@@ -19,7 +19,6 @@ Package Model as ModelPackage <<Rectangle>>{
   Class Name
   Class Phone
   Class Tag
-  
   Class Event {
       - id: String
       - name: String
