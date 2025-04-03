@@ -211,15 +211,15 @@ Example:
 * `updateEventDesc 1 desc/New description for the event`
 
 ---
-### Updating an event time: `updateEventTime`
+### Updating an event time: `updateEventDate`
 
-Updates the time of an event.
+Updates the date of an event.
 
 **Format:**  
-`updateEventTime INDEX time/NEW_TIME`
+`updateEventDate INDEX d/NEW_DATE`
 
 **Example:**
-* `updateEventTime 1 time/09:30`
+* `updateEventDate 1 d/2025-03-15T09:30`
 
 ---
 ### Updating an event location: `updateEventLoc`
@@ -436,6 +436,8 @@ _Details coming soon ..._
 | **Add Event**                | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`                                                                                                                          |
 | **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                |
 | **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                            |
+| **Update Event Location**    | `updateEventLoc INDEX l/NEW_LOCATION`                                                                                                                                                                                   |
+| **Update Event Time**        | `updateEventDate INDEX d/NEW_DATE`                                                                                                                                                                                      |
 | **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                          |
 | **Delete Event Tag**         | `deleteEventTag INDEX t/TAG_NAME`                                                                                                                                                                                       |
 | **Add Event Contact**        | `addEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                                  |
