@@ -1,0 +1,103 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":DeleteTagFromRelationshipCommandParser" as DTRCP LOGIC_COLOR
+participant "cmd:DeleteTagFromRelationshipCommand" as DTRC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "originalRelationship:Relationship" as OrigRel MODEL_COLOR_T2
+participant "updatedRelationship:Relationship" as UpdatedRel MODEL_COLOR_T2
+end box
+
+' User initiates the command (implicit)
+[-> LM : execute("deleteRelationshipTag u/123 u/456 n/Boss t/Important")
+activate LM
+
+LM -> ABP : parseCommand("deleteRelationshipTag u/123 u/456 n/Boss t/Important")
+activate ABP
+
+' AddressBookParser identifies the command and delegates to the specific parser
+create DTRCP
+ABP -> DTRCP : new DeleteTagFromRelationshipCommandParser()
+activate DTRCP
+DTRCP --> ABP
+deactivate DTRCP
+
+ABP -> DTRCP : parse("u/123 u/456 n/Boss t/Important")
+activate DTRCP
+
+' DeleteTagFromRelationshipCommandParser parses arguments and creates the command object
+create DTRC
+DTRCP -> DTRC : new DeleteTagFromRelationshipCommand("123", "456", "Boss", tag)
+activate DTRC
+DTRC --> DTRCP
+deactivate DTRC
+
+DTRCP --> ABP : cmd
+deactivate DTRCP
+' Optional: destroy parser instance if needed
+' destroy DTRCP
+
+ABP --> LM : cmd
+deactivate ABP
+
+' LogicManager executes the command
+LM -> DTRC : execute(Model)
+activate DTRC
+
+' DeleteTagFromRelationshipCommand interacts with the Model
+DTRC -> Model : getRelationship("123", "456", "Boss")
+activate Model
+Model --> DTRC : originalRelationship
+deactivate Model
+
+' Check if the tag exists (implicit check within command or helper)
+DTRC -> OrigRel : getTags()
+activate OrigRel
+OrigRel --> DTRC : tagSet
+deactivate OrigRel
+' Assume tag exists
+
+' Create the updated Relationship object without the specified tag
+DTRC -> OrigRel : withRemovedTag(tag)
+activate OrigRel
+create UpdatedRel
+OrigRel -> UpdatedRel : new Relationship(...)
+activate UpdatedRel
+UpdatedRel --> OrigRel
+deactivate UpdatedRel
+OrigRel --> DTRC : updatedRelationship
+deactivate OrigRel
+
+' Update the relationship in the Model
+DTRC -> Model : updateRelationship(originalRelationship, updatedRelationship)
+activate Model
+' Internal Model interactions (e.g., calling AddressBook, UniqueRelationshipList.setRelationship)
+Model -> Model : internal list update
+Model --> DTRC
+deactivate Model
+
+' Create and return the CommandResult
+create CR
+DTRC -> CR : new CommandResult("Removed tag from relationship...")
+activate CR
+CR --> DTRC : r
+deactivate CR
+
+DTRC --> LM : r
+deactivate DTRC
+
+' LogicManager potentially saves the state (omitted for command-specific focus)
+' LM -> Storage : saveAddressBook(Model)
+
+[<-- LM : r
+deactivate LM
+
+@enduml
