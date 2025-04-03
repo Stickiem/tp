@@ -5,6 +5,6 @@ package seedu.address.model.relationship.exceptions;
  */
 public class DuplicateRelationshipException extends RuntimeException {
     public DuplicateRelationshipException() {
-        super("Operation would result in duplicate relationships");
+        super("Operation would result in duplicate relationships between the same users.");
     }
 }
