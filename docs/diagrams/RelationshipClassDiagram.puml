@@ -1,0 +1,37 @@
+@startuml
+!include style.puml
+skinparam classBackgroundColor RELATIONSHIP_COLOR
+
+class Relationship {
+  + {static} MESSAGE_CONSTRAINTS : String
+  + {static} VALIDATION_REGEX : String
+  - user1Id : String
+  - user2Id : String
+  - forwardName : String
+  - reverseName : String
+  - tags : Set<Tag>
+
+  + Relationship(user1Id : String, user2Id : String, forwardName : String, reverseName : String, tags : Set<Tag>)
+  + {static} isValidRelationshipName(test : String) : boolean
+  + getUser1Id() : String
+  + getUser2Id() : String
+  + getForwardName() : String
+  + getReverseName() : String
+  + getNameFromPerspective(userId : String) : String
+  + getTags() : Set<Tag>
+  + involvesUser(userId : String) : boolean
+  + isSameRelationship(userId1 : String, userId2 : String, relationshipName : String) : boolean
+  + isSameRelationship(other : Relationship) : boolean
+  + withAddedTag(tag : Tag) : Relationship
+  + withRemovedTag(tag : Tag) : Relationship
+  + equals(other : Object) : boolean
+  + hashCode() : int
+  + toString() : String
+}
+
+class Tag {
+  + tagName : String
+}
+
+Relationship o-- "*" Tag : contains >
+@enduml

@@ -1,0 +1,37 @@
+@startuml
+!include style.puml
+skinparam classBackgroundColor RELATIONSHIP_COLOR
+
+class UniqueRelationshipList {
+  - internalList : ObservableList<Relationship>
+  - internalUnmodifiableList : ObservableList<Relationship>
+
+  + contains(toCheck : Relationship) : boolean
+  + contains(userId1 : String, userId2 : String, relationshipName : String) : boolean
+  + containsAnyRelationship(userId1 : String, userId2 : String) : boolean
+  + add(toAdd : Relationship) : void
+  + remove(userId1 : String, userId2 : String, relationshipName : String) : void
+  + asUnmodifiableObservableList() : ObservableList<Relationship>
+  + getRelationshipsInvolvingUser(userId : String) : List<Relationship>
+  + iterator() : Iterator<Relationship>
+  + equals(other : Object) : boolean
+  + hashCode() : int
+  + getRelationship(userId1 : String, userId2 : String, relationshipName : String) : Relationship
+  + setRelationship(target : Relationship, editedRelationship : Relationship) : void
+  + toString() : String
+}
+
+class Relationship RELATIONSHIP_COLOR {
+}
+
+class DuplicateRelationshipException RELATIONSHIP_COLOR_T2 {
+}
+
+class RelationshipNotFoundException RELATIONSHIP_COLOR_T2 {
+}
+
+UniqueRelationshipList "1" o-- "*" Relationship : contains >
+UniqueRelationshipList ..> DuplicateRelationshipException : throws >
+UniqueRelationshipList ..> RelationshipNotFoundException : throws >
+UniqueRelationshipList ..|> Iterable : implements >
+@enduml
