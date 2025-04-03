@@ -112,66 +112,7 @@ Examples:
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 *  `edit 1 s/@elmo` Edits the socials of the 1st person to be `@elmo`.
 
-### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Locating persons by phone: `findphone`
-
-Finds persons whose phone number contain any of the given keywords.
-
-Format: `findphone KEYWORD [MORE_KEYWORDS]`
-
-* Only the phone number is searched.
-
-Examples:
-* `findphone 123 456`
-
-### Locating persons by email: `findemail`
-
-Finds persons whose email contain any of the given keywords.
-
-Format: `findemail KEYWORD [MORE_KEYWORDS]`
-
-* Only the email is searched.
-
-Examples:
-* `findemail example1@example.com`
-
-### Locating persons by address: `findaddress`
-
-Finds persons whose address contain any of the given keywords.
-
-Format: `findaddress KEYWORD [MORE_KEYWORDS]`
-
-* Only the address is searched.
-
-Examples:
-* `findaddress street avenue park`
-
-### Locating persons by social: `findsocial`
-
-Finds persons whose social media handle contain any of the given keywords.
-
-Format: `findsocial KEYWORD [MORE_KEYWORDS]`
-
-* Only the social media handle is searched.
-
-Examples:
-* `findsocial facebook twitter linkedin`
 
 ### Deleting a person : `delete`
 
