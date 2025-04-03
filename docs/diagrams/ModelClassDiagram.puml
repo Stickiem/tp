@@ -3,6 +3,7 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
+hide members
 
 Package Model as ModelPackage <<Rectangle>> {
   Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
@@ -41,12 +42,15 @@ ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
+AddressBook *--> "1" UniqueRelationshipList
+
 UniquePersonList --> "~* all" Person
+UniqueRelationshipList --> "~* all" Relationship
+
 Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
-Person *--> "*" Tag
 Person *--> "*" Social
 
 AddressBook *--> "*" Event
@@ -66,4 +70,6 @@ Phone -[hidden]right-> Address
 Address -[hidden]right-> Email
 
 ModelManager --> "~* filtered" Person
+ModelManager --> "~* filtered" Relationship
+
 @enduml
