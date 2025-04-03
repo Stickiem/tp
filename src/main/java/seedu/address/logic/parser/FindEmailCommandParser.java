@@ -16,6 +16,7 @@ public class FindEmailCommandParser implements Parser<FindEmailCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindEmailCommand
      * and returns a FindEmailCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindEmailCommand parse(String args) throws ParseException {

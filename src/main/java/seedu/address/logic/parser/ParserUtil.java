@@ -30,6 +30,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -104,7 +105,7 @@ public class ParserUtil {
      * Parses a {@code String social} into a {@code Social}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Social parseSocial(String social) throws ParseException {
+    public static Social parseSocial(String social) {
         String trimmedSocial = social.trim();
         return new Social(trimmedSocial);
     }
@@ -112,7 +113,7 @@ public class ParserUtil {
     /**
      * Parses {@code Collection<String> socials} into a {@code Set<Social>}.
      */
-    public static Set<Social> parseSocials(Collection<String> socials) throws ParseException {
+    public static Set<Social> parseSocials(Collection<String> socials) {
         requireNonNull(socials);
         final Set<Social> socialSet = new HashSet<>();
         for (String socialName : socials) {

@@ -115,11 +115,10 @@ public class EditCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof EditCommand otherEditCommand)) {
             return false;
         }
 
-        EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
                 && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
     }
@@ -198,7 +197,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-
         /**
          * Sets {@code socials} to this object's {@code socials}.
          * A defensive copy of {@code socials} is used internally.
@@ -240,11 +238,10 @@ public class EditCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditPersonDescriptor otherEditPersonDescriptor)) {
                 return false;
             }
 
-            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)

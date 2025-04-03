@@ -52,9 +52,7 @@ class JsonAdaptedRelationship {
         user2Id = source.getSecondUserId();
         forwardName = source.getForwardName();
         reverseName = source.getReverseName();
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .toList());
+        tags.addAll(source.getTags().stream().map(JsonAdaptedTag::new).toList());
     }
 
     /**

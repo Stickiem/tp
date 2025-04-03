@@ -48,7 +48,7 @@ public class LogicManager implements Logic {
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
-        String previousCommandText = new String(commandText);
+        String previousCommandText = commandText;
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText, model);
         commandResult = command.execute(model);
@@ -80,6 +80,7 @@ public class LogicManager implements Logic {
     public ObservableList<Person> getSortedFilteredPersonList() {
         return model.getSortedFilteredPersonList();
     }
+
     @Override
     public ObservableList<Relationship> getFilteredRelationshipList() {
         return model.getFilteredRelationshipList();

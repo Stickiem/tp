@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
+
 /**
  * Tests that a {@code Person}'s {@code Phone} matches any of the keywords given.
  */
@@ -31,13 +32,11 @@ public class PhoneContainsKeywordsAsSubstringPredicate implements Predicate<Pers
             return true;
         }
 
-        if (!(other instanceof PhoneContainsKeywordsAsSubstringPredicate)) {
+        if (!(other instanceof PhoneContainsKeywordsAsSubstringPredicate otherPredicate)) {
             return false;
         }
 
-        PhoneContainsKeywordsAsSubstringPredicate otherPhoneContainsKeywordsAsSubstringPredicate =
-                (PhoneContainsKeywordsAsSubstringPredicate) other;
-        return keywords.equals(otherPhoneContainsKeywordsAsSubstringPredicate.keywords);
+        return keywords.equals(otherPredicate.keywords);
     }
 
     @Override

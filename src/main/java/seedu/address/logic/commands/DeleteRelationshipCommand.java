@@ -77,8 +77,7 @@ public class DeleteRelationshipCommand extends Command {
         try {
             model.deleteRelationship(firstUserId, secondUserId, relationshipName);
             logger.info(String.format("Deleted relationship between users %s and %s", firstUserId, secondUserId));
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    firstPerson.getName(), secondPerson.getName()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, firstPerson.getName(), secondPerson.getName()));
         } catch (RelationshipNotFoundException e) {
             logger.warning(String.format("Attempted to delete non-existent relationship between %s and %s",
                     firstUserId, secondUserId));

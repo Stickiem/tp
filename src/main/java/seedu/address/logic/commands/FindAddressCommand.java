@@ -40,18 +40,15 @@ public class FindAddressCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindAddressCommand)) {
+        if (!(other instanceof FindAddressCommand otherFindAddressCommand)) {
             return false;
         }
 
-        FindAddressCommand otherFindAddressCommand = (FindAddressCommand) other;
         return predicate.equals(otherFindAddressCommand.predicate);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return new ToStringBuilder(this).add("predicate", predicate).toString();
     }
 }

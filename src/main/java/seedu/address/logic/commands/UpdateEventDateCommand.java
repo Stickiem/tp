@@ -56,11 +56,9 @@ public class UpdateEventDateCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof UpdateEventDateCommand)) {
+        if (!(other instanceof UpdateEventDateCommand o)) {
             return false;
         }
-        UpdateEventDateCommand o = (UpdateEventDateCommand) other;
-        return eventIndex.equals(o.eventIndex)
-                && newDate.equals(o.newDate);
+        return eventIndex.equals(o.eventIndex) && newDate.equals(o.newDate);
     }
 }

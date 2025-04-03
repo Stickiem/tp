@@ -32,7 +32,6 @@ public class Address {
         } else {
             value = null;
         }
-
     }
 
     /**
@@ -54,11 +53,10 @@ public class Address {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Address)) {
+        if (!(other instanceof Address otherAddress)) {
             return false;
         }
 
-        Address otherAddress = (Address) other;
         return value.equals(otherAddress.value);
     }
 

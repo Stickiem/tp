@@ -40,18 +40,15 @@ public class FindSocialCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindSocialCommand)) {
+        if (!(other instanceof FindSocialCommand otherFindSocialCommand)) {
             return false;
         }
 
-        FindSocialCommand otherFindSocialCommand = (FindSocialCommand) other;
         return predicate.equals(otherFindSocialCommand.predicate);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return new ToStringBuilder(this).add("predicate", predicate).toString();
     }
 }
