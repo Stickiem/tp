@@ -90,7 +90,7 @@ public class TagContainsKeywordsAsSubstringPredicateTest {
         TagContainsKeywordsAsSubstringPredicate predicate =
                 new TagContainsKeywordsAsSubstringPredicate(Collections.singleton(new Tag("Part")));
 
-        assertFalse(predicate.test(new PersonBuilder().withTags("Partner").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Partner").build()));
 
         assertTrue(predicate.test(new PersonBuilder().withTags("Part").build()));
     }
