@@ -4,6 +4,11 @@ skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR
 skinparam classBackgroundColor STORAGE_COLOR
 
+' JsonAdaptedEvent needs to parse dates
+' This increases coupling but backwards compatibility is more important
+' This ensures users do not lose data
+class DateParserUtil
+
 package Storage as StoragePackage {
 
 package "UserPrefs Storage" #F4F6F6{
@@ -19,6 +24,8 @@ Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
 Class JsonAddressBookStorage
 Class JsonSerializableAddressBook
 Class JsonAdaptedPerson
+class JsonAdaptedRelationship
+class JsonAdaptedEvent
 Class JsonAdaptedTag
 }
 
@@ -38,6 +45,12 @@ JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonAddressBookStorage .up.|> AddressBookStorage
 JsonAddressBookStorage ..> JsonSerializableAddressBook
 JsonSerializableAddressBook --> "*" JsonAdaptedPerson
+JsonSerializableAddressBook --> "*" JsonAdaptedRelationship
+JsonSerializableAddressBook --> "*" JsonAdaptedEvent
 JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonAdaptedRelationship --> "*" JsonAdaptedTag
+JsonAdaptedEvent --> "*" JsonAdaptedTag
+JsonAdaptedEvent --> "*" JsonAdaptedPerson
+JsonAdaptedEvent ..> DateParserUtil
 
 @enduml
