@@ -169,6 +169,7 @@ Format: `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NA
 Example:
 * `addRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`
 
+---
 ### Deleting a relationship tag: `deleteRelationshipTag`
 
 Deletes a relationship tag from a relationship.
@@ -178,6 +179,7 @@ Format: `deleteRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE
 Example:
 * `deleteRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`
 
+---
 ### Adding an event: `addEvent`
 
 Adds an event to INcontact.
@@ -208,6 +210,29 @@ Format: `updateEventDesc INDEX desc/NEW_DESCRIPTION`
 Example:
 * `updateEventDesc 1 desc/New description for the event`
 
+---
+### Updating an event time: `updateEventTime`
+
+Updates the time of an event.
+
+**Format:**  
+`updateEventTime INDEX time/NEW_TIME`
+
+**Example:**
+* `updateEventTime 1 time/09:30`
+
+---
+### Updating an event location: `updateEventLoc`
+
+Updates the location of an event.
+
+**Format:**  
+`updateEventLoc INDEX l/NEW_LOCATION`
+
+**Example:**
+* `updateEventLoc 1 l/Conference Room`
+
+---
 ### Adding an event tag: `addEventTag`
 
 Adds a tag to an event.
@@ -217,6 +242,7 @@ Format: `addEventTag INDEX t/TAG_NAME`
 Example:
 * `addEventTag 1 t/Finance`
 
+---
 ### Deleting an event tag: `deleteEventTag`
 
 Deletes a tag from an event.
@@ -226,6 +252,7 @@ Format: `deleteEventTag INDEX t/TAG_NAME`
 Example:
 * `deleteEventTag 1 t/Finance`
 
+---
 ### Adding an event contact: `addEventContact`
 
 Adds a contact to an event.
@@ -235,6 +262,7 @@ Format: `addEventContact INDEX c/CONTACT_NAME`
 Example:
 * `addEventContact 1 c/John Doe`
 
+---
 ### Deleting an event contact: `deleteEventContact`
 
 Deletes a contact from an event.
@@ -244,6 +272,7 @@ Format: `deleteEventContact INDEX c/CONTACT_NAME`
 Example:
 * `deleteEventContact 1 c/John Doe`
 
+---
 ### Exiting the program : `exit`
 
 Exits the program.
