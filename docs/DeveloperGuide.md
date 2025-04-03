@@ -114,6 +114,14 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+#### Parser utilities
+
+* ParserUtil provides useful utilities for parsing each field
+* DateParserUtil uses Hawking to provide natural language date parsing
+  * JsonAdaptedEvent also makes use of DateParserUtil to parse dates from the data file
+    * This increases coupling but backwards compatibility is more important
+    * This ensures users do not lose data
+
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-T09-1/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
