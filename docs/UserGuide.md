@@ -304,7 +304,6 @@ Lists the last 10 commands in the command history.
 
 * This command provides a history of the last 10 commands, allowing you to track the sequence of executed commands.
 * If fewer than 10 commands exist, all available commands will be listed.
-* For demonstration purposes, it will always throw a `CommandException`.
 
 **Example**:
 * `redoList` lists the last 10 commands executed (or fewer if less than 10 exist).
@@ -351,6 +350,6 @@ _Details coming soon ..._
 | **Find by Social**           | `findSocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
 | **Find by Tag**              | `findTag KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                 |
 | **Find by Relationship**     | `findRelationship KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                        |
-| **Sort by Fields**           | `sort [-r] KEYWORD [MORE_KEYWORDS]`<br> e.g., `sort -r name tag`                                                                                                                                                  |
-| **Redo**                     | `redo KEYWORD`<br> e.g., `redo 3`                                                                                                                                                                                 |
+| **Sort by Fields**           | `sort [-r] FIELD [MORE_FIELDS]`<br> e.g., `sort -r name tag`                                                                                                                                                      |
+| **Redo**                     | `redo COMMAND_NUMBER`<br> e.g., `redo 3`                                                                                                                                                                          |
 | **Command History for Redo** | `redoList`                                                                                                                                                                                                        |
