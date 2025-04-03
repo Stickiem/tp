@@ -19,7 +19,7 @@ public class DeleteRelationshipCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRelationshipCommand.MESSAGE_USAGE);
+        String expectedMessage = "Exactly two user IDs must be provided";
 
         // Missing user ID prefixes
         assertParseFailure(parser, " n/Friend", expectedMessage);
@@ -28,7 +28,7 @@ public class DeleteRelationshipCommandParserTest {
         assertParseFailure(parser, " u/1 n/Friend", expectedMessage);
 
         // Missing name prefix
-        assertParseFailure(parser, " u/1 u/2", expectedMessage);
+        assertParseFailure(parser, " u/1 u/2", "Relationship name must be provided");
 
         // Missing all prefixes
         assertParseFailure(parser, "", expectedMessage);

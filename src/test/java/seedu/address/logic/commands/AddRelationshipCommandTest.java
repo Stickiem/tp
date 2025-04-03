@@ -68,7 +68,7 @@ public class AddRelationshipCommandTest {
         CommandResult commandResult = new AddRelationshipCommand(
                 person1.getId(), person2.getId(), "Boss of", "Reports to", new HashSet<>()).execute(modelStub);
 
-        assertEquals(AddRelationshipCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
+        assertEquals("New relationship created between Amy Bee and Bob", commandResult.getFeedbackToUser());
         assertEquals(validRelationship, modelStub.relationshipAdded);
     }
 
