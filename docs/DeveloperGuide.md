@@ -376,6 +376,319 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is `INcontact` and the **Actor** is the `startup founder`, unless specified otherwise)
 
+**Use case: UC1 - Find persons by name**
+
+**MSS**
+
+1. Startup founder requests to find persons by name in the address book
+2. INcontact parses the request to extract the specified keywords
+3. INcontact searches for persons whose names contain any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any keywords.
+
+    * 3a1. INcontact shows an error message indicating that keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC2 - Find persons by email**
+
+**Similar to UC1 but find by email**
+
+**MSS**
+
+1. Startup founder requests to find persons by email in the address book
+2. INcontact parses the request to extract the specified email keywords
+3. INcontact searches for persons whose email contains any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified email keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any email keywords.
+
+    * 3a1. INcontact shows an error message indicating that email keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC3 - Find persons by phone**
+
+**Similar to UC1 but find by phone**
+
+**MSS**
+
+1. Startup founder requests to find persons by phone in the address book
+2. INcontact parses the request to extract the specified phone number keywords
+3. INcontact searches for persons whose phone number contains any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified phone number keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any phone number keywords.
+
+    * 3a1. INcontact shows an error message indicating that phone number keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC4 - Find persons by address**
+
+**Similar to UC1 but find by address**
+
+**MSS**
+
+1. Startup founder requests to find persons by address in the address book
+2. INcontact parses the request to extract the specified address keywords
+3. INcontact searches for persons whose address contains any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified address keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any address keywords.
+
+    * 3a1. INcontact shows an error message indicating that address keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC5 - Find persons by relationship**
+
+**Similar to UC1 but find by relationship**
+
+**MSS**
+
+1. Startup founder requests to find persons by relationship in the address book
+2. INcontact parses the request to extract the specified relationship keywords
+3. INcontact searches for persons whose relationship contains any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified relationship keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any relationship keywords.
+
+    * 3a1. INcontact shows an error message indicating that relationship keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC6 - Find persons by social**
+
+**Similar to UC1 but find by social**
+
+**MSS**
+
+1. Startup founder requests to find persons by social media information in the address book
+2. INcontact parses the request to extract the specified social media keywords
+3. INcontact searches for persons whose social media information contains any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified social media keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any social media keywords.
+
+    * 3a1. INcontact shows an error message indicating that social media keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC7 - Find persons by tag**
+
+**Similar to UC1 but find by tag**
+
+**MSS**
+
+1. Startup founder requests to find persons by tag in the address book
+2. INcontact parses the request to extract the specified tag keywords
+3. INcontact searches for persons whose tags contain any of the specified keywords as a substring (case-insensitive)
+4. INcontact displays the list of persons matching the search criteria with index numbers
+5. Startup founder reviews the list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No persons match the specified tag keywords.
+
+    * 2a1. INcontact shows a message indicating no persons were found.
+
+  Use case ends.
+
+* 3a. The user does not specify any tag keywords.
+
+    * 3a1. INcontact shows an error message indicating that tag keywords are required.
+
+  Use case resumes at step 2.
+
+---
+
+**Use case: UC8 - Sort persons by specified fields**
+
+**MSS**
+
+1. Startup founder requests to sort persons in the address book
+2. INcontact parses the request to extract the sorting fields and reverse flag (if specified)
+3. INcontact validates the specified fields to ensure they are valid (name, phone, email, address, tags, socials)
+4. INcontact sorts the address book based on the specified fields
+5. INcontact displays the sorted list of persons with index numbers
+6. Startup founder reviews the sorted list of persons
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The user does not specify any sorting fields.
+
+    * 2a1. INcontact shows an error message indicating that sorting fields are required.
+
+  Use case ends.
+
+* 3a. An invalid field is specified.
+
+    * 3a1. INcontact shows an error message indicating the invalid field.
+
+  Use case ends.
+
+* 4a. The reverse flag is specified but no fields are provided.
+
+    * 4a1. INcontact shows an error message indicating that sorting fields are required along with the reverse flag.
+
+  Use case ends.
+
+* 5a. The user requests sorting by multiple fields.
+
+    * 5a1. INcontact sorts the address book first by the primary field, then by subsequent fields.
+
+  Use case resumes at step 4.
+---
+**Use case: UC9 - Redo a previously executed command**
+
+**MSS**
+
+1. Startup founder requests to redo a previously executed command by specifying its index in the command history
+2. INcontact parses the request to extract the command index
+3. INcontact validates that the command index is within the valid range (1 to 10)
+4. INcontact retrieves the specified command from the command history
+5. INcontact re-executes the specified command
+6. INcontact displays the result of the re-executed command
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The user does not specify a valid command index.
+
+    * 2a1. INcontact shows an error message indicating that the command index must be between 1 and 10.
+
+  Use case ends.
+
+* 3a. The command index is out of the valid range (less than 1 or greater than 10).
+
+    * 3a1. INcontact shows an error message indicating that the command index is invalid.
+
+  Use case ends.
+
+* 4a. The command index does not exist in the history (not enough command history).
+
+    * 4a1. INcontact shows an error message indicating that there are not enough commands in history to redo.
+
+  Use case ends.
+
+* 5a. An error occurs while re-executing the command.
+
+    * 5a1. INcontact shows an error message indicating that there was an issue re-executing the command.
+
+  Use case ends.
+---
+**Use case: UC10 - List the last 10 commands in the command history**
+
+**MSS**
+
+1. Startup founder requests to list the last 10 commands from the command history
+2. INcontact parses the request and recognizes the `redoList` command
+3. INcontact retrieves the last 10 commands from the command history
+4. INcontact displays the list of the last 10 commands, showing each with an index number
+5. Startup founder reviews the list of commands
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No commands exist in the history.
+
+    * 2a1. INcontact shows an error message indicating that no command history exists.
+
+  Use case ends.
+
+* 3a. An error occurs while retrieving the commands from the history.
+
+    * 3a1. INcontact shows an error message indicating that there was an issue retrieving the command history.
+
+  Use case ends.
+---
+
 **Use Case: UC-AddRel - Add a Relationship**
 
 **MSS**
@@ -551,32 +864,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 *(Use cases for adding/deleting event tags and updating event properties follow a similar pattern to relationship tag management and event contact management, involving parsing, finding the event, performing the modification, and updating the model.)*
-
----
-
-**Use case: UC5 - Find persons by relationship**
-
-**MSS**
-
-1. Startup founder requests to find persons involved in relationships matching specific keywords.
-1. INcontact parses the request to extract the relationship keywords.
-1. INcontact uses the keywords to filter the list of *relationships*.
-1. INcontact identifies all unique `Person` IDs involved in the filtered relationships.
-1. INcontact updates the displayed person list to show only those persons whose IDs were identified in step 4.
-1. INcontact displays the list of persons matching the search criteria with index numbers.
-1. Startup founder reviews the list of persons.
-
-   Use case ends.
-
-**Extensions**
-
-* 3a. No relationships match the specified keywords.
-    * 3a1. INcontact shows a message indicating no persons were found (as no relationships matched).
-      Use case ends.
-
-* 2a. The user does not specify any relationship keywords.
-    * 2a1. INcontact shows an error message indicating that relationship keywords are required.
-      Use case ends.
 
 ---
 
