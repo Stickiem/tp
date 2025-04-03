@@ -43,7 +43,7 @@ public class RelationshipTest {
         assertTrue(relationship.isSameRelationship(relationship));
 
         // null -> returns false
-        assertFalse(relationship.isSameRelationship((Relationship) null));
+        assertFalse(relationship.isSameRelationship(null));
 
         // different forward name -> returns false
         Relationship editedRelationship = new RelationshipBuilder().withForwardName("Different").build();
