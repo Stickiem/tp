@@ -42,7 +42,7 @@ public class DeleteRelationshipCommandTest {
         CommandResult commandResult = new DeleteRelationshipCommand(
                 person1.getId(), person2.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME).execute(modelStub);
 
-        assertEquals(DeleteRelationshipCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
+        assertEquals("Successfully deleted relationship between Amy Bee and Bob", commandResult.getFeedbackToUser());
         assertTrue(modelStub.relationshipDeleted);
     }
 
@@ -72,7 +72,7 @@ public class DeleteRelationshipCommandTest {
                 person1.getId(), person2.getId(), "");
 
         assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_MISSING_PARAMETERS, () ->
+                DeleteRelationshipCommand.MESSAGE_EMPTY_PARAMETERS, () ->
                         deleteRelationshipCommand.execute(modelStub));
     }
 

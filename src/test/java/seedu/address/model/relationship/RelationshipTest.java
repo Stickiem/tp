@@ -43,7 +43,7 @@ public class RelationshipTest {
         assertTrue(relationship.isSameRelationship(relationship));
 
         // null -> returns false
-        assertFalse(relationship.isSameRelationship((Relationship) null));
+        assertFalse(relationship.isSameRelationship(null));
 
         // different forward name -> returns false
         Relationship editedRelationship = new RelationshipBuilder().withForwardName("Different").build();
@@ -161,13 +161,13 @@ public class RelationshipTest {
     public void toStringMethod() {
         Relationship relationship = new RelationshipBuilder().build();
         String expected = "[Forward: " + relationship.getForwardName() + ", Reverse: " + relationship.getReverseName()
-                + "] Between: " + relationship.getUser1Id() + " and " + relationship.getUser2Id();
+                + "] Between: " + relationship.getFirstUserId() + " and " + relationship.getSecondUserId();
         assertEquals(expected, relationship.toString());
 
         // with tags
         relationship = new RelationshipBuilder().withTags("Tag1", "Tag2").build();
         expected = "[Forward: " + relationship.getForwardName() + ", Reverse: " + relationship.getReverseName()
-                + "] Between: " + relationship.getUser1Id() + " and " + relationship.getUser2Id()
+                + "] Between: " + relationship.getFirstUserId() + " and " + relationship.getSecondUserId()
                 + " Tags: [Tag1][Tag2]";
         assertEquals(expected, relationship.toString());
     }

@@ -4,11 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
 
@@ -18,6 +18,7 @@ import seedu.address.model.relationship.exceptions.RelationshipNotFoundException
  * Supports a minimal set of list operations.
  */
 public class UniqueRelationshipList implements Iterable<Relationship> {
+    private static final Logger logger = LogsCenter.getLogger(UniqueRelationshipList.class);
 
     private final ObservableList<Relationship> internalList = FXCollections.observableArrayList();
     private final ObservableList<Relationship> internalUnmodifiableList =
@@ -31,33 +32,51 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
      * @return True if the list contains an equivalent relationship, False otherwise.
      */
     public boolean contains(Relationship toCheck) {
-        requireNonNull(toCheck);
+        requireNonNull(toCheck, "Relationship to check cannot be null");
         return internalList.stream().anyMatch(toCheck::isSameRelationship);
     }
 
     /**
      * Checks if the list contains a relationship with the given user IDs and name.
      *
-     * @param userId1 The user ID of the first user in the relationship.
-     * @param userId2 The user ID of the second user in the relationship.
+     * @param firstUserId The user ID of the first user in the relationship.
+     * @param secondUserId The user ID of the second user in the relationship.
      * @param relationshipName The name of the relationship.
      * @return True if the list contains a relationship with the given user IDs and name, False otherwise.
      */
-    public boolean contains(String userId1, String userId2, String relationshipName) {
+    public boolean contains(String firstUserId, String secondUserId, String relationshipName) {
+        requireAllNonNull(firstUserId, secondUserId, relationshipName);
+
         return internalList.stream()
-                .anyMatch(r -> r.isSameRelationship(userId1, userId2, relationshipName));
+                .anyMatch(r -> r.isSameRelationship(firstUserId, secondUserId, relationshipName));
     }
 
     /**
      * Checks if the list contains any relationship between the given users, regardless of the relationship names.
-     * @param userId1 The user ID of the first user.
-     * @param userId2 The user ID of the second user.
+     * @param firstUserId The user ID of the first user.
+     * @param secondUserId The user ID of the second user.
      * @return True if the list contains any relationship between the given users, False otherwise.
      */
-    public boolean containsAnyRelationship(String userId1, String userId2) {
+    public boolean hasAnyRelationshipBetween(String firstUserId, String secondUserId) {
+        requireAllNonNull(firstUserId, secondUserId);
+
         return internalList.stream()
-                .anyMatch(r -> (r.getUser1Id().equals(userId1) && r.getUser2Id().equals(userId2))
-                        || (r.getUser1Id().equals(userId2) && r.getUser2Id().equals(userId1)));
+                .anyMatch(r -> isRelationshipBetweenUsers(r, firstUserId, secondUserId));
+    }
+
+    /**
+     * Checks if the given relationship is between the two specified users.
+     *
+     * @param relationship The relationship to check.
+     * @param firstUserId The user ID of the first user.
+     * @param secondUserId The user ID of the second user.
+     * @return True if the relationship is between the two specified users, False otherwise.
+     */
+    private boolean isRelationshipBetweenUsers(Relationship relationship, String firstUserId, String secondUserId) {
+        return (relationship.getFirstUserId().equals(firstUserId)
+                && relationship.getSecondUserId().equals(secondUserId))
+                || (relationship.getFirstUserId().equals(secondUserId)
+                && relationship.getSecondUserId().equals(firstUserId));
     }
 
     /**
@@ -68,34 +87,38 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
      * @throws DuplicateRelationshipException If the relationship already exists in the list.
      */
     public void add(Relationship toAdd) {
-        requireNonNull(toAdd);
+        requireNonNull(toAdd, "Relationship to add cannot be null");
+
         if (contains(toAdd)) {
             throw new DuplicateRelationshipException();
         }
+
         internalList.add(toAdd);
+        logger.fine("Added relationship: " + toAdd);
     }
 
     /**
      * Removes the relationship with the given user IDs and name from the list.
      * The relationship must exist in the list.
      *
-     * @param userId1 The user ID of the first user.
-     * @param userId2 The user ID of the second user.
+     * @param firstUserId The user ID of the first user.
+     * @param secondUserId The user ID of the second user.
      * @param relationshipName The name of the relationship.
      * @throws RelationshipNotFoundException If no such relationship could be found in the list.
      */
-    public void remove(String userId1, String userId2, String relationshipName) {
-        requireAllNonNull(userId1, userId2, relationshipName);
+    public void remove(String firstUserId, String secondUserId, String relationshipName) {
+        requireAllNonNull(firstUserId, secondUserId, relationshipName);
 
-        for (int i = 0; i < internalList.size(); i++) {
-            Relationship relationship = internalList.get(i);
-            if (relationship.isSameRelationship(userId1, userId2, relationshipName)) {
-                internalList.remove(i);
-                return;
-            }
+        boolean wasRemoved = internalList.removeIf(relationship ->
+                relationship.isSameRelationship(firstUserId, secondUserId, relationshipName));
+
+        if (!wasRemoved) {
+            throw new RelationshipNotFoundException();
         }
-        throw new RelationshipNotFoundException();
+
+        logger.fine(String.format("Removed relationship between %s and %s", firstUserId, secondUserId));
     }
+
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
@@ -104,18 +127,6 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
      */
     public ObservableList<Relationship> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
-    }
-
-    /**
-     * Returns a list of relationships involving the given user ID.
-     *
-     * @param userId The user ID to search for.
-     * @return A list of relationships that involve the given user ID.
-     */
-    public List<Relationship> getRelationshipsInvolvingUser(String userId) {
-        return internalList.stream()
-                .filter(r -> r.involvesUser(userId))
-                .collect(Collectors.toList());
     }
 
     /**

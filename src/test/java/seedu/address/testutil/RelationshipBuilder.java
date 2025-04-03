@@ -38,8 +38,8 @@ public class RelationshipBuilder {
      * Initializes the RelationshipBuilder with the data of {@code relationshipToCopy}.
      */
     public RelationshipBuilder(Relationship relationshipToCopy) {
-        user1Id = relationshipToCopy.getUser1Id();
-        user2Id = relationshipToCopy.getUser2Id();
+        user1Id = relationshipToCopy.getFirstUserId();
+        user2Id = relationshipToCopy.getSecondUserId();
         forwardName = relationshipToCopy.getForwardName();
         reverseName = relationshipToCopy.getReverseName();
         tags = new HashSet<>(relationshipToCopy.getTags());

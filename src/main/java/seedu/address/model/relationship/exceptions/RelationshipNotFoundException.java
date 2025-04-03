@@ -5,6 +5,6 @@ package seedu.address.model.relationship.exceptions;
  */
 public class RelationshipNotFoundException extends RuntimeException {
     public RelationshipNotFoundException() {
-        super("Relationship not found");
+        super("No relationship found matching the specified criteria.");
     }
 }

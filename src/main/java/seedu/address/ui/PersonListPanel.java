@@ -85,14 +85,14 @@ public class PersonListPanel extends UiPart<Region> {
 
         // Collect IDs of persons affected by added relationships
         added.forEach(relationship -> {
-            affectedPersonIds.add(relationship.getUser1Id());
-            affectedPersonIds.add(relationship.getUser2Id());
+            affectedPersonIds.add(relationship.getFirstUserId());
+            affectedPersonIds.add(relationship.getSecondUserId());
         });
 
         // Collect IDs of persons affected by removed relationships
         removed.forEach(relationship -> {
-            affectedPersonIds.add(relationship.getUser1Id());
-            affectedPersonIds.add(relationship.getUser2Id());
+            affectedPersonIds.add(relationship.getFirstUserId());
+            affectedPersonIds.add(relationship.getSecondUserId());
         });
 
         // Refresh the affected person cards

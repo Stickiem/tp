@@ -143,7 +143,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasAnyRelationship(String userId1, String userId2) {
         requireAllNonNull(userId1, userId2);
-        return relationships.containsAnyRelationship(userId1, userId2);
+        return relationships.hasAnyRelationshipBetween(userId1, userId2);
     }
 
     /**

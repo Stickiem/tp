@@ -8,8 +8,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddRelationshipCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
@@ -18,44 +20,77 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddRelationshipCommand object
  */
 public class AddRelationshipCommandParser implements Parser<AddRelationshipCommand> {
+    private static final Logger logger = LogsCenter.getLogger(AddRelationshipCommandParser.class);
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddRelationshipCommand
      * and returns an AddRelationshipCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public AddRelationshipCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_USERID, PREFIX_FORWARD_RELATIONSHIP_NAME,
-                        PREFIX_REVERSE_RELATIONSHIP_NAME, PREFIX_TAG);
+        ArgumentMultimap argMultimap = tokenizeArguments(args);
+        validateRequiredArguments(argMultimap);
 
-        // Check if we have both user IDs and both relationship names
-        if (!arePrefixesPresent(argMultimap, PREFIX_USERID, PREFIX_FORWARD_RELATIONSHIP_NAME,
-                PREFIX_REVERSE_RELATIONSHIP_NAME)
-                || argMultimap.getAllValues(PREFIX_USERID).size() != 2
-                || !argMultimap.getPreamble().isEmpty()) {
+        try {
+            String firstUserId = extractFirstUserId(argMultimap);
+            String secondUserId = extractSecondUserId(argMultimap);
+            String forwardName = extractForwardName(argMultimap);
+            String reverseName = extractReverseName(argMultimap);
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+            logger.fine(String.format("Parsed relationship command: %s-%s->%s, %s-%s->%s",
+                    firstUserId, forwardName, secondUserId, secondUserId, reverseName, firstUserId));
+
+            return new AddRelationshipCommand(firstUserId, secondUserId, forwardName, reverseName, tagList);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
+    }
+
+    private ArgumentMultimap tokenizeArguments(String args) {
+        return ArgumentTokenizer.tokenize(args, PREFIX_USERID, PREFIX_FORWARD_RELATIONSHIP_NAME,
+                PREFIX_REVERSE_RELATIONSHIP_NAME, PREFIX_TAG);
+    }
+
+    private void validateRequiredArguments(ArgumentMultimap argMultimap) throws ParseException {
+        if (!areAllRequiredPrefixesPresent(argMultimap)
+                || !hasExactlyTwoUserIds(argMultimap)
+                || !hasEmptyPreamble(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddRelationshipCommand.MESSAGE_USAGE));
         }
-
-        // Get the user IDs
-        List<String> userIds = argMultimap.getAllValues(PREFIX_USERID);
-        String userId1 = userIds.get(0);
-        String userId2 = userIds.get(1);
-
-        // Get the relationship names
-        String forwardName = argMultimap.getValue(PREFIX_FORWARD_RELATIONSHIP_NAME).get();
-        String reverseName = argMultimap.getValue(PREFIX_REVERSE_RELATIONSHIP_NAME).get();
-
-        // Get the tags, if any
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-        return new AddRelationshipCommand(userId1, userId2, forwardName, reverseName, tagList);
     }
 
-    /**
-     * Returns true if all required prefixes are present and have non-empty values.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    private boolean areAllRequiredPrefixesPresent(ArgumentMultimap argumentMultimap) {
+        return Stream.of(PREFIX_USERID, PREFIX_FORWARD_RELATIONSHIP_NAME, PREFIX_REVERSE_RELATIONSHIP_NAME)
+                .allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    private boolean hasExactlyTwoUserIds(ArgumentMultimap argMultimap) {
+        return argMultimap.getAllValues(PREFIX_USERID).size() == 2;
+    }
+
+    private boolean hasEmptyPreamble(ArgumentMultimap argMultimap) {
+        return argMultimap.getPreamble().isEmpty();
+    }
+
+    private String extractFirstUserId(ArgumentMultimap argMultimap) {
+        List<String> userIds = argMultimap.getAllValues(PREFIX_USERID);
+        return userIds.get(0);
+    }
+
+    private String extractSecondUserId(ArgumentMultimap argMultimap) {
+        List<String> userIds = argMultimap.getAllValues(PREFIX_USERID);
+        return userIds.get(1);
+    }
+
+    private String extractForwardName(ArgumentMultimap argMultimap) {
+        return argMultimap.getValue(PREFIX_FORWARD_RELATIONSHIP_NAME)
+                .orElseThrow(() -> new IllegalArgumentException("Forward relationship name is required"));
+    }
+
+    private String extractReverseName(ArgumentMultimap argMultimap) {
+        return argMultimap.getValue(PREFIX_REVERSE_RELATIONSHIP_NAME)
+                .orElseThrow(() -> new IllegalArgumentException("Reverse relationship name is required"));
     }
 }
