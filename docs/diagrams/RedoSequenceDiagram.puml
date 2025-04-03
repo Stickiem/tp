@@ -1,0 +1,90 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":RedoCommandParser" as RedoCommandParser LOGIC_COLOR
+participant "s:RedoCommand" as RedoCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+participant ":CommandHistory" as CommandHistory LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("redo 3")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("redo 3")
+activate AddressBookParser
+
+create RedoCommandParser
+AddressBookParser -> RedoCommandParser
+activate RedoCommandParser
+
+RedoCommandParser --> AddressBookParser
+deactivate RedoCommandParser
+
+AddressBookParser -> RedoCommandParser : parse("3")
+activate RedoCommandParser
+
+create RedoCommand
+RedoCommandParser -> RedoCommand
+activate RedoCommand
+
+RedoCommand --> RedoCommandParser :
+deactivate RedoCommand
+
+RedoCommandParser --> AddressBookParser : s
+deactivate RedoCommandParser
+' Hidden arrow to position the destroy marker below the end of the activation bar.
+RedoCommandParser -[hidden]-> AddressBookParser
+destroy RedoCommandParser
+
+AddressBookParser --> LogicManager : s
+deactivate AddressBookParser
+
+LogicManager -> CommandHistory : getCommandFromHistory(3)
+activate CommandHistory
+
+CommandHistory --> LogicManager
+deactivate CommandHistory
+
+LogicManager -> RedoCommand : execute(m)
+activate RedoCommand
+
+RedoCommand -> CommandHistory : getCommandFromHistory(3)
+activate CommandHistory
+
+CommandHistory --> RedoCommand : return commandToRedo
+deactivate CommandHistory
+
+RedoCommand -> AddressBookParser : parseCommand(commandToRedo)
+activate AddressBookParser
+
+AddressBookParser --> RedoCommand
+deactivate AddressBookParser
+
+RedoCommand -> Model : updateModelBasedOnCommand(commandToRedo)
+activate Model
+
+Model --> RedoCommand
+deactivate Model
+
+create CommandResult
+RedoCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> RedoCommand
+deactivate CommandResult
+
+RedoCommand --> LogicManager : r
+deactivate RedoCommand
+
+[<-- LogicManager
+deactivate LogicManager
+
+@enduml
