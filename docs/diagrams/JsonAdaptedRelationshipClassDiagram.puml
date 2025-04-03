@@ -1,0 +1,26 @@
+@startuml
+!include style.puml
+skinparam classBackgroundColor RELATIONSHIP_COLOR
+
+class JsonAdaptedRelationship {
+  + {static} MISSING_FIELD_MESSAGE_FORMAT : String
+  - user1Id : String
+  - user2Id : String
+  - forwardName : String
+  - reverseName : String
+  - tags : List<JsonAdaptedTag>
+
+  + JsonAdaptedRelationship(user1Id : String, user2Id : String, forwardName : String, reverseName : String, tags : List<JsonAdaptedTag>)
+  + JsonAdaptedRelationship(source : Relationship)
+  + toModelType() : Relationship
+}
+
+class Relationship RELATIONSHIP_COLOR {
+}
+
+class JsonAdaptedTag RELATIONSHIP_COLOR_T1 {
+}
+
+JsonAdaptedRelationship ..> Relationship : converts to/from >
+JsonAdaptedRelationship "1" o-- "*" JsonAdaptedTag : contains >
+@enduml

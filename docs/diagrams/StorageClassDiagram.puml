@@ -3,6 +3,7 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR
 skinparam classBackgroundColor STORAGE_COLOR
+hide members
 
 ' JsonAdaptedEvent needs to parse dates
 ' This increases coupling but backwards compatibility is more important
@@ -27,6 +28,7 @@ Class JsonAdaptedPerson
 class JsonAdaptedRelationship
 class JsonAdaptedEvent
 Class JsonAdaptedTag
+Class JsonAdaptedEvent
 }
 
 }
