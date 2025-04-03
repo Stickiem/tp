@@ -3,8 +3,30 @@ layout: page
 title: Developer Guide
 ---
 
-* Table of Contents
-{:toc}
+## Table of Contents
+* [Acknowledgements](#acknowledgements)
+* [Setting up, getting started](#setting-up-getting-started)
+* [Design](#design)
+  * [Architecture](#architecture)
+  * [UI component](#ui-component)
+  * [Logic component](#logic-component)
+  * [Model component](#model-component)
+  * [Storage component](#storage-component)
+  * [Common classes](#common-classes)
+* [Implementation](#implementation)
+  * [Relationship Feature: Linking Contacts](#relationship-feature-linking-contacts)
+  * [Event Feature: Managing Events](#event-feature-managing-events)
+  * [Find Commands with Substring Matching](#find-commands-with-substring-matching)
+  * [Sort Command](#sort-command)
+  * [Redo Command](#redo-command)
+* [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+* [Appendix: Requirements](#appendix-requirements)
+  * [Product scope](#product-scope)
+  * [User stories](#user-stories)
+  * [Use cases](#use-cases)
+  * [Non-Functional Requirements](#non-functional-requirements)
+  * [Glossary](#glossary)
+* [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
 
 --------------------------------------------------------------------------------------------------------------------
 
