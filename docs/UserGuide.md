@@ -399,11 +399,6 @@ Lists the last 10 commands in the command history.
 **Example**:
 * `redoList` lists the last 10 commands executed (or fewer if less than 10 exist).
 
----
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
