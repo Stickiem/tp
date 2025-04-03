@@ -163,6 +163,28 @@ public class Event {
     }
 
     /**
+     * Returns a new {@code Event} with an updated location.
+     *
+     * @param newLocation the new location to set.
+     * @return a new {@code Event} instance with the updated location.
+     */
+    public Event withUpdatedLocation(String newLocation) {
+        requireNonNull(newLocation);
+        return new Event(this.id, this.name, this.date, newLocation, this.description, this.tags, this.contacts);
+    }
+
+    /**
+     * Returns a new {@code Event} with an updated date.
+     *
+     * @param newDate the new date to set.
+     * @return a new {@code Event} instance with the updated date.
+     */
+    public Event withUpdatedDate(LocalDateTime newDate) {
+        requireNonNull(newDate);
+        return new Event(this.id, this.name, newDate, this.location, this.description, this.tags, this.contacts);
+    }
+
+    /**
      * Returns an immutable set of tags associated with this event.
      * <p>
      * The returned set is unmodifiable and any attempt to modify it will result in an

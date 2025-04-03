@@ -36,7 +36,9 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RedoListCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.UpdateEventDateCommand;
 import seedu.address.logic.commands.UpdateEventDescriptionCommand;
+import seedu.address.logic.commands.UpdateEventLocationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 
@@ -94,6 +96,10 @@ public class AddressBookParser {
             case DeleteTagFromEventCommand.COMMAND_WORD -> new DeleteTagFromEventCommandParser().parse(arguments);
             case UpdateEventDescriptionCommand.COMMAND_WORD ->
                     new UpdateEventDescriptionCommandParser().parse(arguments);
+            case UpdateEventLocationCommand.COMMAND_WORD ->
+                    new UpdateEventLocationCommandParser().parse(arguments);
+            case UpdateEventDateCommand.COMMAND_WORD ->
+                    new UpdateEventDateCommandParser().parse(arguments);
             case AddTagToRelationshipCommand.COMMAND_WORD -> new AddTagToRelationshipCommandParser().parse(arguments);
             case DeleteTagFromRelationshipCommand.COMMAND_WORD ->
                     new DeleteTagFromRelationshipCommandParser().parse(arguments);
