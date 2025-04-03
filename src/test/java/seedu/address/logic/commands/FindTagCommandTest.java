@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersonsTestSet2.ALICE;
 import static seedu.address.testutil.TypicalPersonsTestSet2.BENSON;
 import static seedu.address.testutil.TypicalPersonsTestSet2.DANIEL;
 import static seedu.address.testutil.TypicalPersonsTestSet2.PHUNG_KHANH_LINH;
@@ -105,32 +106,32 @@ public class FindTagCommandTest {
 
     @Test
     public void execute_partialKeywords_personsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         TagContainsKeywordsAsSubstringPredicate predicate = preparePredicate("owes");
         FindTagCommand command = new FindTagCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(BENSON), model.getFilteredPersonList());
     }
 
     @Test
     public void execute_partialKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
         TagContainsKeywordsAsSubstringPredicate predicate = preparePredicate("COM");
         FindTagCommand command = new FindTagCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(TRAN_KHOI_NGUYEN, PHUNG_KHANH_LINH, BENSON, DANIEL), model.getFilteredPersonList());
     }
 
     @Test
     public void execute_multiplePartialKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         TagContainsKeywordsAsSubstringPredicate predicate = preparePredicate("friend Vietn");
         FindTagCommand command = new FindTagCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getFilteredPersonList());
     }
 
     @Test

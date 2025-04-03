@@ -21,7 +21,8 @@ public class TagContainsKeywordsAsSubstringPredicate implements Predicate<Person
     public boolean test(Person person) {
         return person.getTags().stream()
                 .anyMatch(tag -> keywords.stream()
-                        .anyMatch(keyword -> tag.tagName.equalsIgnoreCase(keyword.tagName)));
+                        .anyMatch(keyword -> tag.tagName.toLowerCase()
+                                .contains(keyword.tagName.toLowerCase())));
     }
 
     private boolean containsSubstringIgnoreCase(String tagName, String keyword) {
