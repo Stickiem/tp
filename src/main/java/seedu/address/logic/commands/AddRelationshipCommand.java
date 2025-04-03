@@ -7,7 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -37,14 +39,16 @@ public class AddRelationshipCommand extends Command {
             + PREFIX_TAG + "Work" + "\n"
             + "Note: You can find a person's ID displayed in the contact card.";
 
-    public static final String MESSAGE_SUCCESS = "Relationship successfully added.";
+    public static final String MESSAGE_SUCCESS = "New relationship created between %s and %s";
     public static final String MESSAGE_DUPLICATE_RELATIONSHIP = "Error: Relationship already exists.";
     public static final String MESSAGE_PERSONS_NOT_FOUND = "Error: One or both contacts do not exist.";
     public static final String MESSAGE_SAME_PERSON = "Error: A contact cannot have a relationship with itself.";
     public static final String MESSAGE_EMPTY_NAME = "Error: Relationship name cannot be empty.";
 
-    private final String userId1;
-    private final String userId2;
+    private static final Logger logger = LogsCenter.getLogger(AddRelationshipCommand.class);
+
+    private final String firstUserId;
+    private final String secondUserId;
     private final String forwardName;
     private final String reverseName;
     private final Set<Tag> tags;
@@ -52,16 +56,16 @@ public class AddRelationshipCommand extends Command {
     /**
      * Creates an AddRelationshipCommand to add the specified relationship.
      */
-    public AddRelationshipCommand(String userId1, String userId2, String forwardName, String reverseName,
+    public AddRelationshipCommand(String firstUserId, String secondUserId, String forwardName, String reverseName,
                                   Set<Tag> tags) {
-        requireNonNull(userId1);
-        requireNonNull(userId2);
-        requireNonNull(forwardName);
-        requireNonNull(reverseName);
-        requireNonNull(tags);
+        requireNonNull(firstUserId, "First user ID cannot be null");
+        requireNonNull(secondUserId, "Second user ID cannot be null");
+        requireNonNull(forwardName, "Forward relationship name cannot be null");
+        requireNonNull(reverseName, "Reverse relationship name cannot be null");
+        requireNonNull(tags, "Tags set cannot be null");
 
-        this.userId1 = userId1;
-        this.userId2 = userId2;
+        this.firstUserId = firstUserId;
+        this.secondUserId = secondUserId;
         this.forwardName = forwardName;
         this.reverseName = reverseName;
         this.tags = tags;
@@ -69,9 +73,9 @@ public class AddRelationshipCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        requireNonNull(model);
+        requireNonNull(model, "Model cannot be null");
 
-        if (userId1.equals(userId2)) {
+        if (firstUserId.equals(secondUserId)) {
             throw new CommandException(MESSAGE_SAME_PERSON);
         }
 
@@ -80,22 +84,33 @@ public class AddRelationshipCommand extends Command {
         }
 
         // Check if both persons exist
-        Person person1 = model.getPersonById(userId1);
-        Person person2 = model.getPersonById(userId2);
+        Person firstPerson = model.getPersonById(firstUserId);
+        Person secondPerson = model.getPersonById(secondUserId);
 
-        if (person1 == null || person2 == null) {
+        if (firstPerson == null || secondPerson == null) {
             throw new CommandException(MESSAGE_PERSONS_NOT_FOUND);
         }
 
-        // Check if the same relationship already exists
-        if (model.hasRelationship(userId1, userId2, forwardName)
-                || model.hasRelationship(userId2, userId1, reverseName)) {
+        if (hasExistingRelationship(model)) {
             throw new CommandException(MESSAGE_DUPLICATE_RELATIONSHIP);
         }
 
-        Relationship relationship = new Relationship(userId1, userId2, forwardName, reverseName, tags);
+        Relationship relationship = new Relationship(firstUserId, secondUserId, forwardName, reverseName, tags);
         model.addRelationship(relationship);
-        return new CommandResult(MESSAGE_SUCCESS);
+
+        logger.info(String.format("Created relationship between users %s and %s", firstUserId, secondUserId));
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                firstPerson.getName(), secondPerson.getName()));
+    }
+
+    /**
+     * Checks if the relationship already exists in the model.
+     * @param model The model to check against.
+     * @return True if the relationship already exists, false otherwise.
+     */
+    private boolean hasExistingRelationship(Model model) {
+        return model.hasRelationship(firstUserId, secondUserId, forwardName)
+                || model.hasRelationship(secondUserId, firstUserId, reverseName);
     }
 
     @Override
@@ -109,8 +124,8 @@ public class AddRelationshipCommand extends Command {
             return false;
         }
 
-        return userId1.equals(otherCommand.userId1)
-                && userId2.equals(otherCommand.userId2)
+        return firstUserId.equals(otherCommand.firstUserId)
+                && secondUserId.equals(otherCommand.secondUserId)
                 && forwardName.equals(otherCommand.forwardName)
                 && reverseName.equals(otherCommand.reverseName)
                 && tags.equals(otherCommand.tags);
@@ -119,8 +134,8 @@ public class AddRelationshipCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("userId1", userId1)
-                .add("userId2", userId2)
+                .add("userId1", firstUserId)
+                .add("userId2", secondUserId)
                 .add("forwardName", forwardName)
                 .add("reverseName", reverseName)
                 .add("tags", tags)

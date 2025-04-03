@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Social;
 import seedu.address.model.relationship.Relationship;
 
 /**
@@ -60,7 +61,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         this.addressBook = addressBook;
-        String socialsDisplay = person.getSocials().stream().map(s -> s.toString()).collect(Collectors.joining(","));
+        String socialsDisplay = person.getSocials().stream().map(Social::toString).collect(Collectors.joining(","));
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText("Phone: " + person.getPhone().value);
@@ -98,8 +99,8 @@ public class PersonCard extends UiPart<Region> {
             relationshipLabel.getStyleClass().add("relationship-name");
 
             // Get the other person's details
-            String otherId = person.getId().equals(relationship.getUser1Id())
-                    ? relationship.getUser2Id() : relationship.getUser1Id();
+            String otherId = person.getId().equals(relationship.getFirstUserId())
+                    ? relationship.getSecondUserId() : relationship.getFirstUserId();
             String otherPersonName = getOtherPersonName(otherId);
             Label otherPersonLabel = new Label(otherPersonName);
             otherPersonLabel.getStyleClass().add("relationship-person");

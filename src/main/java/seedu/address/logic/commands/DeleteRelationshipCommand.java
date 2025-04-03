@@ -4,75 +4,101 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
-import seedu.address.commons.util.ToStringBuilder;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
 
 /**
- * Deletes a relationship between two persons in the address book.
+ * Deletes an existing relationship between two persons in the address book.
  */
 public class DeleteRelationshipCommand extends Command {
-
     public static final String COMMAND_WORD = "deleteRelationship";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a relationship between two persons. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes an existing relationship between two persons.\n"
             + "Parameters: "
-            + PREFIX_USERID + "USER_ID_1 "
-            + PREFIX_USERID + "USER_ID_2 "
+            + PREFIX_USERID + "FIRST_USER_ID "
+            + PREFIX_USERID + "SECOND_USER_ID "
             + PREFIX_NAME + "RELATIONSHIP_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_USERID + "12345678 "
             + PREFIX_USERID + "87654321 "
-            + PREFIX_NAME + "Business Partner" + "\n"
-            + "Note: You can use either the forward or reverse relationship name to identify the relationship.\n"
-            + "You can find a person's ID displayed in the contact card.";
+            + PREFIX_NAME + "Business Partner\n"
+            + "Note: You can use either the forward or reverse relationship name.\n"
+            + "The person's ID is shown in their contact card.";
 
-    public static final String MESSAGE_SUCCESS = "Relationship successfully deleted.";
-    public static final String MESSAGE_RELATIONSHIP_NOT_FOUND = "Error: Relationship not found.";
-    public static final String MESSAGE_PERSONS_NOT_FOUND = "Error: One or both contacts do not exist.";
-    public static final String MESSAGE_MISSING_PARAMETERS = "Error: Missing required parameters";
+    public static final String MESSAGE_SUCCESS = "Successfully deleted relationship between %s and %s";
+    public static final String MESSAGE_RELATIONSHIP_NOT_FOUND = "No relationship found with the specified details";
+    public static final String MESSAGE_PERSONS_NOT_FOUND = "One or both persons could not be found";
+    public static final String MESSAGE_EMPTY_PARAMETERS = "User IDs and relationship name cannot be empty";
 
-    private final String userId1;
-    private final String userId2;
+    private static final Logger logger = LogsCenter.getLogger(DeleteRelationshipCommand.class);
+
+    private final String firstUserId;
+    private final String secondUserId;
     private final String relationshipName;
 
     /**
-     * Creates a DeleteRelationshipCommand to delete the specified relationship.
+     * Creates a command to delete the specified relationship.
+     *
+     * @param firstUserId First person's user ID
+     * @param secondUserId Second person's user ID
+     * @param relationshipName Name of the relationship to delete
+     * @throws NullPointerException if any parameter is null
      */
-    public DeleteRelationshipCommand(String userId1, String userId2, String relationshipName) {
-        requireNonNull(userId1);
-        requireNonNull(userId2);
-        requireNonNull(relationshipName);
+    public DeleteRelationshipCommand(String firstUserId, String secondUserId, String relationshipName) {
+        requireNonNull(firstUserId, "First user ID cannot be null");
+        requireNonNull(secondUserId, "Second user ID cannot be null");
+        requireNonNull(relationshipName, "Relationship name cannot be null");
 
-        this.userId1 = userId1;
-        this.userId2 = userId2;
+        this.firstUserId = firstUserId;
+        this.secondUserId = secondUserId;
         this.relationshipName = relationshipName;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        requireNonNull(model);
+        requireNonNull(model, "Model cannot be null");
 
-        if (userId1.trim().isEmpty() || userId2.trim().isEmpty() || relationshipName.trim().isEmpty()) {
-            throw new CommandException(MESSAGE_MISSING_PARAMETERS);
-        }
+        validateParameters();
 
-        // Check if both persons exist
-        Person person1 = model.getPersonById(userId1);
-        Person person2 = model.getPersonById(userId2);
+        Person firstPerson = findPerson(model, firstUserId);
+        Person secondPerson = findPerson(model, secondUserId);
 
-        if (person1 == null || person2 == null) {
+        if (firstPerson == null || secondPerson == null) {
+            logger.warning("Attempted to delete relationship with non-existent person(s)");
             throw new CommandException(MESSAGE_PERSONS_NOT_FOUND);
         }
 
         try {
-            model.deleteRelationship(userId1, userId2, relationshipName);
-            return new CommandResult(MESSAGE_SUCCESS);
+            model.deleteRelationship(firstUserId, secondUserId, relationshipName);
+            logger.info(String.format("Deleted relationship between users %s and %s", firstUserId, secondUserId));
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    firstPerson.getName(), secondPerson.getName()));
         } catch (RelationshipNotFoundException e) {
+            logger.warning(String.format("Attempted to delete non-existent relationship between %s and %s",
+                    firstUserId, secondUserId));
             throw new CommandException(MESSAGE_RELATIONSHIP_NOT_FOUND);
         }
+    }
+
+    private void validateParameters() throws CommandException {
+        if (hasEmptyParameter(firstUserId) || hasEmptyParameter(secondUserId)
+                || hasEmptyParameter(relationshipName)) {
+            throw new CommandException(MESSAGE_EMPTY_PARAMETERS);
+        }
+    }
+
+    private boolean hasEmptyParameter(String parameter) {
+        return parameter.trim().isEmpty();
+    }
+
+    private Person findPerson(Model model, String userId) {
+        return model.getPersonById(userId);
     }
 
     @Override
@@ -81,22 +107,18 @@ public class DeleteRelationshipCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof DeleteRelationshipCommand otherCommand)) {
             return false;
         }
 
-        return userId1.equals(otherCommand.userId1)
-                && userId2.equals(otherCommand.userId2)
+        return firstUserId.equals(otherCommand.firstUserId)
+                && secondUserId.equals(otherCommand.secondUserId)
                 && relationshipName.equals(otherCommand.relationshipName);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("userId1", userId1)
-                .add("userId2", userId2)
-                .add("relationshipName", relationshipName)
-                .toString();
+        return String.format("DeleteRelationshipCommand: Deleting relationship '%s' between %s and %s",
+                relationshipName, firstUserId, secondUserId);
     }
 }

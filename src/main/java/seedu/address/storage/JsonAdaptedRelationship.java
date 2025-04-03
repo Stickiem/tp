@@ -48,8 +48,8 @@ class JsonAdaptedRelationship {
      * Converts a given {@code Relationship} into this class for Jackson use.
      */
     public JsonAdaptedRelationship(Relationship source) {
-        user1Id = source.getUser1Id();
-        user2Id = source.getUser2Id();
+        user1Id = source.getFirstUserId();
+        user2Id = source.getSecondUserId();
         forwardName = source.getForwardName();
         reverseName = source.getReverseName();
         tags.addAll(source.getTags().stream()
