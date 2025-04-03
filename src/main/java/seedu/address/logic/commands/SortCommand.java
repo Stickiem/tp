@@ -18,7 +18,7 @@ public class SortCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the address book by one or more fields.\n"
             + "Parameters: [-r] [FIELD]...\n"
             + "  -r: Reverse the order\n"
-            + "  FIELD: one or more fields to sort by (e.g., name, phone, email, address, tags)\n"
+            + "  FIELD: one or more fields to sort by (e.g., name, phone, email, address, tags, socials)\n"
             + "Example: " + COMMAND_WORD + " -r name phone";
 
     private final boolean isReverse;
