@@ -1,9 +1,10 @@
 ---
-layout: page
+layout: default.md
 title: Developer Guide
+pageNav: 3
 ---
-* Table of Contents
-  {:toc}
+<!-- * Table of Contents -->
+<page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
 
