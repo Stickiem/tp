@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":AddEventCommandParser" as AECP LOGIC_COLOR
+participant "cmd:AddEventCommand" as AEC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LM : execute("addEvent en/Meeting d/2025-03-15 l/Room1 desc/Annual meeting t/Business c/John Doe c/Jane Smith")
+activate LM
+LM -> ABP : parseCommand("addEvent en/Meeting d/2025-03-15 l/Room1 desc/Annual meeting t/Business c/John Doe c/Jane Smith")
+activate ABP
+create AECP
+ABP -> AECP : parse("en/Meeting d/2025-03-15 l/Room1 desc/Annual meeting t/Business c/John Doe c/Jane Smith")
+activate AECP
+AECP --> ABP : AddEventCommand
+deactivate AECP
+ABP --> LM : AddEventCommand
+deactivate ABP
+
+LM -> AEC : execute(Model)
+activate AEC
+AEC -> Model : addEvent(event)
+activate Model
+Model --> AEC : event added
+deactivate Model
+AEC -> Model : addPerson(contact) [for each contact if needed]
+activate Model
+Model --> AEC
+deactivate Model
+AEC --> LM : CommandResult
+deactivate AEC
+LM --> CR : return result
+deactivate LM
+@enduml

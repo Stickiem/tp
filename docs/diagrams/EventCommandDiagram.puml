@@ -1,0 +1,212 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+' ==============================
+' Add Event Command (with contacts)
+' ==============================
+box "Add Event Command" #ADD_COLOR_T1
+participant ":LogicManager" as LM
+participant ":AddressBookParser" as ABP
+participant ":AddEventCommandParser" as AECP
+participant "cmd:AddEventCommand" as AEC
+participant "r:CommandResult" as CR
+end box
+
+LM -> ABP : parseCommand("addEvent en/Meeting d/2025-03-15 l/Room1 desc/Annual meeting t/Business c/John Doe c/Jane Smith")
+activate LM
+ABP -> AECP : parse("en/Meeting d/2025-03-15 l/Room1 desc/Annual meeting t/Business c/John Doe c/Jane Smith")
+activate AECP
+AECP --> ABP : AddEventCommand
+deactivate AECP
+ABP --> LM : AddEventCommand
+deactivate ABP
+
+LM -> AEC : execute(Model)
+activate AEC
+AEC -> Model : addEvent(event)
+activate Model
+Model --> AEC : event added
+deactivate Model
+AEC -> Model : addPerson(contact) [for each contact if needed]
+activate Model
+Model --> AEC
+deactivate Model
+AEC --> LM : CommandResult
+deactivate AEC
+LM --> CR
+deactivate LM
+
+' ==============================
+' Update Event Description Command
+' ==============================
+box "Update Event Description Command" #UPDATE_COLOR_T1
+participant ":UpdateEventDescriptionCommandParser" as UEDCP
+participant "cmd:UpdateEventDescriptionCommand" as UEDC
+end box
+
+LM -> ABP : parseCommand("updateEventDesc 1 desc/Updated meeting description")
+activate LM
+ABP -> UEDCP : parse("updateEventDesc 1 desc/Updated meeting description")
+activate UEDCP
+UEDCP --> ABP : UpdateEventDescriptionCommand
+deactivate UEDCP
+ABP --> LM : UpdateEventDescriptionCommand
+deactivate ABP
+
+LM -> UEDC : execute(Model)
+activate UEDC
+UEDC -> Model : updateEvent(original, updated)
+activate Model
+Model --> UEDC : event updated
+deactivate Model
+UEDC --> LM : CommandResult
+deactivate UEDC
+LM --> CR
+deactivate LM
+
+' ==============================
+' Add Tag to Event Command
+' ==============================
+box "Add Tag to Event Command" #TAG_COLOR_T1
+participant ":AddTagToEventCommandParser" as ATCP
+participant "cmd:AddTagToEventCommand" as ATC
+end box
+
+LM -> ABP : parseCommand("addEventTag 1 t/Important")
+activate LM
+ABP -> ATCP : parse("addEventTag 1 t/Important")
+activate ATCP
+ATCP --> ABP : AddTagToEventCommand
+deactivate ATCP
+ABP --> LM : AddTagToEventCommand
+deactivate ABP
+
+LM -> ATC : execute(Model)
+activate ATC
+ATC -> Model : updateEvent(event, updated)
+activate Model
+Model --> ATC : event updated
+deactivate Model
+ATC --> LM : CommandResult
+deactivate ATC
+LM --> CR
+deactivate LM
+
+' ==============================
+' Delete Tag from Event Command
+' ==============================
+box "Delete Tag from Event Command" #TAG_COLOR_T1
+participant ":DeleteTagFromEventCommandParser" as DTCP
+participant "cmd:DeleteTagFromEventCommand" as DTC
+end box
+
+LM -> ABP : parseCommand("deleteEventTag 1 t/Important")
+activate LM
+ABP -> DTCP : parse("deleteEventTag 1 t/Important")
+activate DTCP
+DTCP --> ABP : DeleteTagFromEventCommand
+deactivate DTCP
+ABP --> LM : DeleteTagFromEventCommand
+deactivate ABP
+
+LM -> DTC : execute(Model)
+activate DTC
+DTC -> Model : updateEvent(event, updated)
+activate Model
+Model --> DTC : event updated
+deactivate Model
+DTC --> LM : CommandResult
+deactivate DTC
+LM --> CR
+deactivate LM
+
+' ==============================
+' Add Contact to Event Command
+' ==============================
+box "Add Contact to Event Command" #CONTACT_COLOR_T1
+participant ":AddContactToEventCommandParser" as ACTCP
+participant "cmd:AddContactToEventCommand" as ACTC
+end box
+
+LM -> ABP : parseCommand("addEventContact 1 c/John Doe")
+activate LM
+ABP -> ACTCP : parse("addEventContact 1 c/John Doe")
+activate ACTCP
+ACTCP --> ABP : AddContactToEventCommand
+deactivate ACTCP
+ABP --> LM : AddContactToEventCommand
+deactivate ABP
+
+LM -> ACTC : execute(Model)
+activate ACTC
+ACTC -> Model : updateEvent(event, updated)
+activate Model
+Model --> ACTC : event updated
+deactivate Model
+ACTC --> LM : CommandResult
+deactivate ACTC
+LM --> CR
+deactivate LM
+
+' ==============================
+' Delete Contact from Event Command
+' ==============================
+box "Delete Contact from Event Command" #CONTACT_COLOR_T1
+participant ":DeleteContactFromEventCommandParser" as DCTCP
+participant "cmd:DeleteContactFromEventCommand" as DCTC
+end box
+
+LM -> ABP : parseCommand("deleteEventContact 1 c/John Doe")
+activate LM
+ABP -> DCTCP : parse("deleteEventContact 1 c/John Doe")
+activate DCTCP
+DCTCP --> ABP : DeleteContactFromEventCommand
+deactivate DCTCP
+ABP --> LM : DeleteContactFromEventCommand
+deactivate ABP
+
+LM -> DCTC : execute(Model)
+activate DCTC
+DCTC -> Model : updateEvent(event, updated)
+activate Model
+Model --> DCTC : event updated
+deactivate Model
+DCTC --> LM : CommandResult
+deactivate DCTC
+LM --> CR
+deactivate LM
+
+' ==============================
+' Delete Event Command
+' ==============================
+box "Delete Event Command" #DELETE_COLOR_T1
+participant ":DeleteEventCommandParser" as DECP
+participant "cmd:DeleteEventCommand" as DEC
+end box
+
+LM -> ABP : parseCommand("deleteEvent u/98765432")
+activate LM
+ABP -> DECP : parse("u/98765432")
+activate DECP
+DECP --> ABP : DeleteEventCommand
+deactivate DECP
+ABP --> LM : DeleteEventCommand
+deactivate ABP
+
+LM -> DEC : execute(Model)
+activate DEC
+DEC -> Model : getEventById("98765432")
+activate Model
+Model --> DEC : event found
+deactivate Model
+DEC -> Model : deleteEvent(event)
+activate Model
+Model --> DEC : event deleted
+deactivate Model
+DEC --> LM : CommandResult
+deactivate DEC
+LM --> CR
+deactivate LM
+
+@enduml

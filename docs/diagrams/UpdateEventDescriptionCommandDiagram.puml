@@ -1,0 +1,39 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":UpdateEventDescriptionCommandParser" as UEDCP LOGIC_COLOR
+participant "cmd:UpdateEventDescriptionCommand" as UEDC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LM : execute("updateEventDesc 1 desc/Updated meeting description")
+activate LM
+LM -> ABP : parseCommand("updateEventDesc 1 desc/Updated meeting description")
+activate ABP
+create UEDCP
+ABP -> UEDCP : parse("updateEventDesc 1 desc/Updated meeting description")
+activate UEDCP
+UEDCP --> ABP : UpdateEventDescriptionCommand
+deactivate UEDCP
+ABP --> LM : UpdateEventDescriptionCommand
+deactivate ABP
+
+LM -> UEDC : execute(Model)
+activate UEDC
+UEDC -> Model : updateEvent(original, updated)
+activate Model
+Model --> UEDC : event updated
+deactivate Model
+UEDC --> LM : CommandResult
+deactivate UEDC
+LM --> CR : return result
+deactivate LM
+@enduml
