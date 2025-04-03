@@ -56,6 +56,9 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Social
+Person *--> "*" Tag
+
+Relationship *--> "*" Tag
 
 AddressBook *--> "*" Event
 
