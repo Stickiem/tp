@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,7 +24,6 @@ import seedu.address.model.tag.Tag;
 public class Event {
 
     public static final String MESSAGE_CONSTRAINTS_NAME = "Event name cannot be blank.";
-    public static final String MESSAGE_CONSTRAINTS_DATE = "Date must be a valid absolute or relative date.";
 
     private static final AtomicInteger COUNTER = new AtomicInteger(1);
 
@@ -104,7 +104,7 @@ public class Event {
      * @return the event date.
      */
     public String getDate() {
-        return date.toString();
+        return date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
     /**
@@ -226,27 +226,14 @@ public class Event {
         contacts.remove(person);
     }
 
-    /**
-     * Returns true if both events have the same id.
-     */
-    public boolean isSameEvent(Event otherEvent) {
-        if (otherEvent == this) {
-            return true;
-        }
-
-        return otherEvent != null
-                && otherEvent.getId().equals(getId());
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Event)) {
+        if (!(other instanceof Event otherEvent)) {
             return false;
         }
-        Event otherEvent = (Event) other;
         return id.equals(otherEvent.id)
                 && name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
