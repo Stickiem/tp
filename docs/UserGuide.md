@@ -199,18 +199,61 @@ Example:
 * `deleteEvent u/98765432`
 
 ---
+### Updating an event description: `updateEventDesc`
+
+Updates the description of an event.
+
+Format: `updateEventDesc INDEX desc/NEW_DESCRIPTION`
+
+Example:
+* `updateEventDesc 1 desc/New description for the event`
+
+### Adding an event tag: `addEventTag`
+
+Adds a tag to an event.
+
+Format: `addEventTag INDEX t/TAG_NAME`
+
+Example:
+* `addEventTag 1 t/Finance`
+
+### Deleting an event tag: `deleteEventTag`
+
+Deletes a tag from an event.
+
+Format: `deleteEventTag INDEX t/TAG_NAME`
+
+Example:
+* `deleteEventTag 1 t/Finance`
+
+### Adding an event contact: `addEventContact`
+
+Adds a contact to an event.
+
+Format: `addEventContact INDEX c/CONTACT_NAME`
+
+Example:
+* `addEventContact 1 c/John Doe`
+
+### Deleting an event contact: `deleteEventContact`
+
+Deletes a contact from an event.
+
+Format: `deleteEventContact INDEX c/CONTACT_NAME`
+
+Example:
+* `deleteEventContact 1 c/John Doe`
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
----
 ### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
----
 ### Editing the data file
 
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
