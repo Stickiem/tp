@@ -3,6 +3,7 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR
 skinparam classBackgroundColor STORAGE_COLOR
+hide members
 
 package Storage as StoragePackage {
 
@@ -19,7 +20,9 @@ Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
 Class JsonAddressBookStorage
 Class JsonSerializableAddressBook
 Class JsonAdaptedPerson
+Class JsonAdaptedRelationship
 Class JsonAdaptedTag
+Class JsonAdaptedEvent
 }
 
 }
@@ -38,6 +41,10 @@ JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonAddressBookStorage .up.|> AddressBookStorage
 JsonAddressBookStorage ..> JsonSerializableAddressBook
 JsonSerializableAddressBook --> "*" JsonAdaptedPerson
+JsonSerializableAddressBook --> "*" JsonAdaptedRelationship
+JsonSerializableAddressBook --> "*" JsonAdaptedEvent
+
 JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonAdaptedRelationship --> "*" JsonAdaptedTag
 
 @enduml
