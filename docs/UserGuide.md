@@ -64,6 +64,7 @@ INcontact is a **desktop app for managing business contacts, optimized for use v
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+---
 ### Viewing help : `help`
 
 Shows a message explaning how to access the help page.
@@ -73,6 +74,7 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 
+---
 ### Adding a person: `add`
 
 Adds a person to INcontact.
@@ -88,12 +90,14 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Caroly Wilcox`
 
+---
 ### Listing all persons : `list`
 
 Shows a list of all persons in INcontact.
 
 Format: `list`
 
+---
 ### Editing a person : `edit`
 
 Edits an existing person in INcontact.
@@ -112,8 +116,7 @@ Examples:
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 *  `edit 1 s/@elmo` Edits the socials of the 1st person to be `@elmo`.
 
-
-
+---
 ### Deleting a person : `delete`
 
 Deletes the specified person from INcontact.
@@ -128,12 +131,14 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in INcontact.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+---
 ### Clearing all entries : `clear`
 
 Clears all entries from INcontact.
 
 Format: `clear`
 
+---
 ### Adding a relationship: `addRelationship`
 
 Adds a relationship to INcontact.
@@ -143,6 +148,7 @@ Format: `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`
 Example:
 * `addRelationship u/12345678 u/87654321 n/Business Partner t/Investment`
 
+---
 ### Deleting a relationship: `deleteRelationship`
 
 Deletes a relationship from INcontact.
@@ -152,6 +158,7 @@ Format: `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`
 Example:
 * `deleteRelationship u/12345678 u/87654321 n/Business Partner`
 
+---
 ### Adding an event: `addEvent`
 
 Adds an event to INcontact.
@@ -162,6 +169,7 @@ Examples:
 * `addEvent n/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance`
 * `addEvent n/Tech Conference d/2025-06-20`
 
+---
 ### Deleting an event: `deleteEvent`
 
 Deletes an event from INcontact.
@@ -171,16 +179,19 @@ Format: `deleteEvent u/EVENT_ID`
 Example:
 * `deleteEvent u/98765432`
 
+---
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
+---
 ### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
+---
 ### Editing the data file
 
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
@@ -190,6 +201,115 @@ If your changes to the data file makes its format invalid, INcontact will discar
 Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
+---
+### Locating persons by name: `findName`
+Finds persons whose names contain any of the given keywords as a substring.  
+Format: `findName KEYWORD [MORE_KEYWORDS]`
+* The search is case-insensitive. e.g., `hans` will match `Hans`
+* Only the name field is searched.
+* Persons matching at least one keyword will be returned (i.e., `OR` search). e.g., `Han Ya` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `findName Joh` returns `john` and `John Doe`
+* `findName ale david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+---
+### Locating persons by phone: `findPhone`
+Finds persons whose phone numbers contain any of the given keywords as a substring.  
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+* Only the phone number field is searched.
+
+Examples:
+* `findPhone 123 456`
+
+---
+### Locating persons by email: `findEmail`
+Finds persons whose emails contain any of the given keywords as a substring.  
+Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+* Only the email field is searched.
+
+Examples:
+* `findEmail example1@example.com`
+
+---
+### Locating persons by address: `findAddress`
+Finds persons whose addresses contain any of the given keywords as a substring.  
+Format: `findAddress KEYWORD [MORE_KEYWORDS]`
+* Only the address field is searched.
+
+Examples:
+* `findAddress street avenue park`
+
+---
+### Locating persons by social: `findSocial`
+Finds persons whose social media handles contain any of the given keywords as a substring.  
+Format: `findSocial KEYWORD [MORE_KEYWORDS]`
+* Only the social media handle field is searched.
+
+Examples:
+* `findSocial facebook twitter linkedin`
+
+---
+### Locating persons by relationship: `findRelationship`
+Finds persons whose relationships contain any of the given keywords as a substring.  
+Format: `findRelationship KEYWORD [MORE_KEYWORDS]`
+* Only the relationship field is searched.
+* The search is case-insensitive.
+
+Examples:
+* `findRelationship family friend`
+
+---
+### Locating persons by tag: `findTag`
+Finds persons whose tags contain any of the given keywords as a substring.  
+Format: `findTag KEYWORD [MORE_KEYWORDS]`
+* Only the tags field is searched.
+* The search is case-insensitive.
+
+Examples:
+* `findTag colleague important`
+
+---
+### Sorting the Address Book: `sort`
+Sorts the address book by one or more fields.
+
+**Format**: `sort [-r] FIELD [MORE_FIELDS]`
+
+* The `-r` flag reverses the sorting order.
+* You can sort by multiple fields (e.g., name, phone, email, address, tags).
+* Only the specified fields will be considered in the sort.
+
+**Examples**:
+* `sort -r name phone` sorts the address book by name and phone in reverse order.
+* `sort email` sorts the address book by email.
+
+---
+### Redoing a Previous Command: `redo`
+Re-executes the x-th last command.
+
+**Format**: `redo COMMAND_NUMBER`
+
+* The `COMMAND_NUMBER` must be between 1 and 10, indicating the position of the command in the history.
+* This command allows you to quickly redo previous actions.
+
+**Examples**:
+* `redo 3` re-executes the third last command.
+
+---
+### Listing the Last 10 Commands: `redoList`
+Lists the last 10 commands in the command history.
+
+**Format**: `redoList`
+
+* This command provides a history of the last 10 commands, allowing you to track the sequence of executed commands.
+* If fewer than 10 commands exist, all available commands will be listed.
+* For demonstration purposes, it will always throw a `CommandException`.
+
+**Example**:
+* `redoList` lists the last 10 commands executed (or fewer if less than 10 exist).
+
+---
 ### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
@@ -212,20 +332,25 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                  | Format, Examples                                                                                                                                                                                                  |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                 | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
-| **Clear**               | `clear`                                                                                                                                                                                                           |
-| **Delete**              | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                               |
-| **Edit**                | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                        |
-| **Find**                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                        |
-| **Find by Phone**       | `findphone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
-| **Find by Email**       | `findemail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
-| **Find by Address**     | `findaddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                             |
-| **Find by Social**      | `findsocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
-| **List**                | `list`                                                                                                                                                                                                            |
-| **Add Relationship**    | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                            |
-| **Delete Relationship** | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                  |
-| **Add Event**           | `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                            |
-| **Delete Event**        | `deleteEvent u/EVENT_ID`                                                                                                                                                                                          |
-| **Help**                | `help`                                                                                                                                                                                                            |
+| Action                       | Format, Examples                                                                                                                                                                                                  |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                      | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
+| **Clear**                    | `clear`                                                                                                                                                                                                           |
+| **Delete**                   | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                               |
+| **Edit**                     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                        |
+| **List**                     | `list`                                                                                                                                                                                                            |
+| **Add Relationship**         | `addRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME [t/TAG]…`                                                                                                                                            |
+| **Delete Relationship**      | `deleteRelationship u/USER_1_ID u/USER_2_ID n/RELATIONSHIP_NAME`                                                                                                                                                  |
+| **Add Event**                | `addEvent n/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]`                                                                                                                                            |
+| **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                          |
+| **Help**                     | `help`                                                                                                                                                                                                            |
+| **Find by Name**             | `findName KEYWORD [MORE_KEYWORDS]`<br> e.g., `findName James Jake`                                                                                                                                                |
+| **Find by Phone**            | `findPhone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
+| **Find by Email**            | `findEmail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
+| **Find by Address**          | `findAddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                             |
+| **Find by Social**           | `findSocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
+| **Find by Tag**              | `findTag KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                 |
+| **Find by Relationship**     | `findRelationship KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                        |
+| **Sort by Fields**           | `sort [-r] KEYWORD [MORE_KEYWORDS]`<br> e.g., `sort -r name tag`                                                                                                                                                  |
+| **Redo**                     | `redo KEYWORD`<br> e.g., `redo 3`                                                                                                                                                                                 |
+| **Command History for Redo** | `redoList`                                                                                                                                                                                                        |
