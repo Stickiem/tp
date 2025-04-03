@@ -1,0 +1,39 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box "Logic" LOGIC_COLOR_T1
+participant ":LogicManager" as LM LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":UpdateEventLocationCommandParser" as UELCP LOGIC_COLOR
+participant "cmd:UpdateEventLocationCommand" as UELC LOGIC_COLOR
+participant "r:CommandResult" as CR LOGIC_COLOR
+end box
+
+box "Model" MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LM : execute("updateEventLoc 1 l/Conference Room")
+activate LM
+LM -> ABP : parseCommand("updateEventLoc 1 l/Conference Room")
+activate ABP
+create UELCP
+ABP -> UELCP : parse("updateEventLoc 1 l/Conference Room")
+activate UELCP
+UELCP --> ABP : UpdateEventLocationCommand
+deactivate UELCP
+ABP --> LM : UpdateEventLocationCommand
+deactivate ABP
+
+LM -> UELC : execute(Model)
+activate UELC
+UELC -> Model : updateEvent(original, updated)
+activate Model
+Model --> UELC : event updated
+deactivate Model
+UELC --> LM : CommandResult
+deactivate UELC
+LM --> CR : return result
+deactivate LM
+@enduml
