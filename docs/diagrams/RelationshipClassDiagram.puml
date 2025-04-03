@@ -5,16 +5,16 @@ skinparam classBackgroundColor RELATIONSHIP_COLOR
 class Relationship {
   + {static} MESSAGE_CONSTRAINTS : String
   + {static} VALIDATION_REGEX : String
-  - user1Id : String
-  - user2Id : String
+  - firstUserId : String
+  - secondUserId : String
   - forwardName : String
   - reverseName : String
   - tags : Set<Tag>
 
   + Relationship(user1Id : String, user2Id : String, forwardName : String, reverseName : String, tags : Set<Tag>)
   + {static} isValidRelationshipName(test : String) : boolean
-  + getUser1Id() : String
-  + getUser2Id() : String
+  + getFirstUserId() : String
+  + getSecondUserId() : String
   + getForwardName() : String
   + getReverseName() : String
   + getNameFromPerspective(userId : String) : String
@@ -33,5 +33,9 @@ class Tag {
   + tagName : String
 }
 
-Relationship o-- "*" Tag : contains >
+Relationship "1" -- "1" Tag : contains >
+Relationship "1" -- "1" firstUserId :  User 1 >
+Relationship "1" -- "1" secondUserId : User 2 >
+Relationship "1" -- "1" forwardName : Name from User 1 to User 2 >
+Relationship "1" -- "1" reverseName : Name from User 2 to User 1 >
 @enduml
