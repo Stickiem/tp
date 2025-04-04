@@ -70,8 +70,7 @@ public class LogsCenter {
      * Removes all handlers from the {@code logger}.
      */
     private static void removeHandlers(Logger logger) {
-        Arrays.stream(logger.getHandlers())
-                .forEach(logger::removeHandler);
+        Arrays.stream(logger.getHandlers()).forEach(logger::removeHandler);
     }
 
     /**
@@ -101,6 +100,5 @@ public class LogsCenter {
             logger.warning("Error adding file handler for logger.");
         }
     }
-
 
 }

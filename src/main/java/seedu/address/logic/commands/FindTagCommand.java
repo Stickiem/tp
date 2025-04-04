@@ -40,18 +40,15 @@ public class FindTagCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindTagCommand)) {
+        if (!(other instanceof FindTagCommand otherFindTagCommand)) {
             return false;
         }
 
-        FindTagCommand otherFindTagCommand = (FindTagCommand) other;
         return predicate.equals(otherFindTagCommand.predicate);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return new ToStringBuilder(this).add("predicate", predicate).toString();
     }
 }

@@ -61,11 +61,9 @@ public class DeleteTagFromEventCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof DeleteTagFromEventCommand)) {
+        if (!(other instanceof DeleteTagFromEventCommand otherCommand)) {
             return false;
         }
-        DeleteTagFromEventCommand otherCommand = (DeleteTagFromEventCommand) other;
-        return eventIndex.equals(otherCommand.eventIndex)
-                && tag.equals(otherCommand.tag);
+        return eventIndex.equals(otherCommand.eventIndex) && tag.equals(otherCommand.tag);
     }
 }

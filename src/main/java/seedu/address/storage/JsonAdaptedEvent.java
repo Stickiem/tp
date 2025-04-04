@@ -64,12 +64,8 @@ class JsonAdaptedEvent {
         this.date = source.getDate();
         this.location = source.getLocation();
         this.description = source.getDescription();
-        this.tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .toList());
-        this.contacts.addAll(source.getContacts().stream()
-                .map(JsonAdaptedPerson::new)
-                .toList());
+        this.tags.addAll(source.getTags().stream().map(JsonAdaptedTag::new).toList());
+        this.contacts.addAll(source.getContacts().stream().map(JsonAdaptedPerson::new).toList());
     }
 
     /**

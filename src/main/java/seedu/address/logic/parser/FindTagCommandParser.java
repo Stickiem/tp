@@ -18,6 +18,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindTagCommand
      * and returns a FindTagCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindTagCommand parse(String args) throws ParseException {

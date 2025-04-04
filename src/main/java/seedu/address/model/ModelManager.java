@@ -30,6 +30,7 @@ public class ModelManager implements Model {
     private final FilteredList<Event> filteredEvents;
 
     private Comparator<Person> sortComparator;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */

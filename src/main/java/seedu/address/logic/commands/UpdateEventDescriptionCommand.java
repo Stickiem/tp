@@ -54,10 +54,9 @@ public class UpdateEventDescriptionCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof UpdateEventDescriptionCommand)) {
+        if (!(other instanceof UpdateEventDescriptionCommand otherCommand)) {
             return false;
         }
-        UpdateEventDescriptionCommand o = (UpdateEventDescriptionCommand) other;
-        return eventIndex.equals(o.eventIndex) && newDescription.equals(o.newDescription);
+        return eventIndex.equals(otherCommand.eventIndex) && newDescription.equals(otherCommand.newDescription);
     }
 }

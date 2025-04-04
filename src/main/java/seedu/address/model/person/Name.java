@@ -38,7 +38,6 @@ public class Name {
         return test.matches(VALIDATION_REGEX);
     }
 
-
     @Override
     public String toString() {
         return fullName;
@@ -51,11 +50,10 @@ public class Name {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Name)) {
+        if (!(other instanceof Name otherName)) {
             return false;
         }
 
-        Name otherName = (Name) other;
         return fullName.equals(otherName.fullName);
     }
 

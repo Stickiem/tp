@@ -64,11 +64,9 @@ public class AddContactToEventCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof AddContactToEventCommand)) {
+        if (!(other instanceof AddContactToEventCommand otherCommand)) {
             return false;
         }
-        AddContactToEventCommand otherCommand = (AddContactToEventCommand) other;
-        return eventIndex.equals(otherCommand.eventIndex)
-                && contact.equals(otherCommand.contact);
+        return eventIndex.equals(otherCommand.eventIndex) && contact.equals(otherCommand.contact);
     }
 }

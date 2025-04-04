@@ -97,6 +97,7 @@ public class DateParserUtil {
 
     /**
      * Converts the {@code DatesFound} object into a {@code DateTime} object.
+     *
      * @param date The date string to be parsed.
      * @param datesFound The {@code DatesFound} object containing the parsed date information.
      * @return The {@code DateTime} object parsed from the {@code DatesFound} object.

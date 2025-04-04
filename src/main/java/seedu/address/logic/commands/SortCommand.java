@@ -7,7 +7,6 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
-
 /**
  * Sorts the address book by one or more fields.
  */
@@ -26,6 +25,7 @@ public class SortCommand extends Command {
 
     /**
      * Creates a SortCommand to sort the address book by the specified fields.
+     *
      * @param isReverse Whether to reverse the sorting order
      * @param fields The fields by which to sort
      */
@@ -49,6 +49,7 @@ public class SortCommand extends Command {
 
     /**
      * Creates a comparator based on the fields provided.
+     *
      * @param fields The fields to sort by
      * @return A comparator for sorting
      */

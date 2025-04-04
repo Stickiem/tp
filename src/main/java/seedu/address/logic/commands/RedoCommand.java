@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -49,6 +48,7 @@ public class RedoCommand extends Command {
 
         return command.execute(model);
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -60,6 +60,7 @@ public class RedoCommand extends Command {
         RedoCommand other = (RedoCommand) obj;
         return commandIndex == other.commandIndex;
     }
+
     @Override
     public String toString() {
         return "RedoCommand{commandIndex=" + commandIndex + "}";

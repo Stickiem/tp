@@ -64,11 +64,9 @@ public class DeleteContactFromEventCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof DeleteContactFromEventCommand)) {
+        if (!(other instanceof DeleteContactFromEventCommand otherCommand)) {
             return false;
         }
-        DeleteContactFromEventCommand otherCommand = (DeleteContactFromEventCommand) other;
-        return eventIndex.equals(otherCommand.eventIndex)
-                && contact.equals(otherCommand.contact);
+        return eventIndex.equals(otherCommand.eventIndex) && contact.equals(otherCommand.contact);
     }
 }

@@ -41,18 +41,15 @@ public class FindNameCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindNameCommand)) {
+        if (!(other instanceof FindNameCommand otherFindNameCommand)) {
             return false;
         }
 
-        FindNameCommand otherFindNameCommand = (FindNameCommand) other;
         return predicate.equals(otherFindNameCommand.predicate);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return new ToStringBuilder(this).add("predicate", predicate).toString();
     }
 }

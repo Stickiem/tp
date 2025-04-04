@@ -36,9 +36,13 @@ class JsonAdaptedPerson {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("social") List<String> socials, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(
+            @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("address") String address,
+            @JsonProperty("social") List<String> socials,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
 
         this.name = name;
         this.phone = phone;
@@ -63,11 +67,9 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
 
-        socials = source.getSocials().stream().map(s -> s.toString()).collect(Collectors.joining(","));
+        socials = source.getSocials().stream().map(Social::toString).collect(Collectors.joining(","));
 
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .toList());
+        tags.addAll(source.getTags().stream().map(JsonAdaptedTag::new).toList());
     }
 
     /**
@@ -106,13 +108,10 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-
         if (address != null && !Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
-
-
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, personSocials, modelTags);

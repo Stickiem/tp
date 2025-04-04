@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -25,18 +25,16 @@ public class RedoListCommand extends Command {
         int index = 1;
         Deque<String> commandHistory = CommandHistory.getAllCommands();
         for (String command : commandHistory) {
-            history.append(index++)
-                    .append(". ")
-                    .append(command)
-                    .append("\n");
+            history.append(index++).append(". ").append(command).append("\n");
         }
 
-        if (history.length() == 0) {
+        if (history.isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY);
         }
 
-        throw new CommandException(String.format(MESSAGE_SUCCESS, history.toString()));
+        throw new CommandException(String.format(MESSAGE_SUCCESS, history));
     }
+
     @Override
     public String toString() {
         return "RedoListCommand{}";
@@ -47,9 +45,6 @@ public class RedoListCommand extends Command {
         if (this == obj) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        return true;
+        return obj != null && getClass() == obj.getClass();
     }
 }

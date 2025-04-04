@@ -21,47 +21,47 @@ public class AddTagToRelationshipCommandParser implements Parser<AddTagToRelatio
     /**
      * Parses the given {@code String} of arguments in the context of the AddTagToRelationshipCommand
      * and returns an AddTagToRelationshipCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform to the expected format
      */
     @Override
     public AddTagToRelationshipCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_USERID, PREFIX_NAME, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_USERID, PREFIX_NAME, PREFIX_TAG);
 
         // Check if all required prefixes are present
         if (!arePrefixesPresent(argMultimap, PREFIX_USERID, PREFIX_NAME, PREFIX_TAG)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddTagToRelationshipCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagToRelationshipCommand.MESSAGE_USAGE));
         }
 
         // Get and validate user IDs
         List<String> userIds = argMultimap.getAllValues(PREFIX_USERID);
         if (userIds.size() != 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddTagToRelationshipCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagToRelationshipCommand.MESSAGE_USAGE));
         }
 
         // Get relationship name
         Optional<String> relationshipNameOpt = argMultimap.getValue(PREFIX_NAME);
         if (relationshipNameOpt.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddTagToRelationshipCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagToRelationshipCommand.MESSAGE_USAGE));
         }
         String relationshipName = relationshipNameOpt.get();
 
         // Get tag
         Optional<String> tagOpt = argMultimap.getValue(PREFIX_TAG);
         if (tagOpt.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddTagToRelationshipCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagToRelationshipCommand.MESSAGE_USAGE));
         }
         Tag tag;
         try {
             tag = ParserUtil.parseTag(tagOpt.get());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddTagToRelationshipCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagToRelationshipCommand.MESSAGE_USAGE), pe);
         }
 
         return new AddTagToRelationshipCommand(userIds.get(0), userIds.get(1), relationshipName, tag);

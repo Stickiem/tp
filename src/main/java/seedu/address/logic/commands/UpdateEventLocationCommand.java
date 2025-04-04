@@ -54,11 +54,9 @@ public class UpdateEventLocationCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof UpdateEventLocationCommand)) {
+        if (!(other instanceof UpdateEventLocationCommand o)) {
             return false;
         }
-        UpdateEventLocationCommand o = (UpdateEventLocationCommand) other;
-        return eventIndex.equals(o.eventIndex)
-                && newLocation.equals(o.newLocation);
+        return eventIndex.equals(o.eventIndex) && newLocation.equals(o.newLocation);
     }
 }

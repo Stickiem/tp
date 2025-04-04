@@ -45,6 +45,7 @@ public class DeleteTagFromRelationshipCommand extends Command {
     /**
      * Creates a {@code DeleteTagFromRelationshipCommand} to delete the specified tag from the relationship between two
      * persons.
+     *
      * @param userId1 The user ID of the first person in the relationship.
      * @param userId2 The user ID of the second person in the relationship.
      * @param relationshipName The name of the relationship.

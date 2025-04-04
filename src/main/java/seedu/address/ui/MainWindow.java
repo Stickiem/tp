@@ -80,6 +80,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -116,10 +117,7 @@ public class MainWindow extends UiPart<Stage> {
                 logic.getAddressBook());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        eventListPanel = new EventListPanel(
-                logic.getFilteredEventList(),
-                logic.getAddressBook()
-        );
+        eventListPanel = new EventListPanel(logic.getFilteredEventList(), logic.getAddressBook());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();

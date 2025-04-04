@@ -39,13 +39,13 @@ public class FindRelationshipCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindRelationshipCommand)) {
+        if (!(other instanceof FindRelationshipCommand otherFindRelationshipCommand)) {
             return false;
         }
 
-        FindRelationshipCommand otherFindRelationshipCommand = (FindRelationshipCommand) other;
         return predicate.equals(otherFindRelationshipCommand.predicate);
     }
+
     @Override
     public String toString() {
         return "FindRelationshipCommand{" + "predicate=" + predicate + "}";

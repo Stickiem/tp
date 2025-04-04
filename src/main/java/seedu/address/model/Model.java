@@ -17,8 +17,10 @@ import seedu.address.model.relationship.exceptions.RelationshipNotFoundException
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
     /** {@code Predicate} that always evaluate to true for events */
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
+
     /** {@code Predicate} that always evaluate to true for relationships */
     Predicate<Relationship> PREDICATE_SHOW_ALL_RELATIONSHIPS = unused -> true;
 
@@ -94,14 +96,17 @@ public interface Model {
      * @return an observable list of sorted and filtered persons.
      */
     ObservableList<Person> getSortedFilteredPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
      * Updates the sorting order of the filtered person list.
+     *
      * @throws NullPointerException if {@code comparator} is null.
      */
     void updateSortedPersonList(Comparator<Person> comparator);
@@ -169,6 +174,7 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredEventList(Predicate<Event> predicate);
@@ -196,6 +202,7 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered relationship list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredRelationshipList(Predicate<Relationship> predicate);

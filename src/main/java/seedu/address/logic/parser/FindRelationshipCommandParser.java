@@ -23,9 +23,11 @@ public class FindRelationshipCommandParser implements Parser<FindRelationshipCom
         throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindRelationshipCommand.MESSAGE_USAGE));
     }
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindRelationshipCommand
      * and returns a FindRelationshipCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform to the expected format
      */
     public FindRelationshipCommand parse(String args, Model model) throws ParseException {
