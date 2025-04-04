@@ -12,15 +12,36 @@ INcontact is a **desktop app for managing business contacts, optimized for use v
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure that you have Java 17 or above installed. If Java is not installed or the `java` command is not available in the command line, follow the [Java installation guide](https://se-education.org/guides/tutorials/javaInstallation.html).<br>
+   **Mac users:** Ensure you have installed the precise Java version prescribed in the [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T09-1/tp/releases).
+1. Download the [latest `INcontact.jar` file](https://github.com/AY2425S2-CS2103T-T09-1/tp/releases/latest/download/INcontact.jar).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Move `INcontact.jar` to the folder you want to use as the _home folder_ for INcontact.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   <div markdown="block" class="alert alert-info">
+
+   **:information_source: The _home folder_ contains `INcontact.jar` and user data.**
+
+   </div>
+
+1. Open the _home folder_ in a command terminal and run INcontact with `java -jar INcontact.jar`.
+
+   <div markdown="block" class="alert alert-info">
+
+   **:information_source: Opening a folder in a terminal**
+
+   Right-click the folder and select `open in terminal` or `new terminal at folder`.
+
+   ![open in terminal](images/openInTerminal.png)
+
+   If this is not available, you can use the `cd` (change directory) command. Open a terminal, type `cd` followed by a space, then drag the _home folder_ into the terminal. The path to the _home folder_ should appear, and you can press enter.
+
+   If this does not work, you can specify the path manually, e.g. `cd /Users/johndoe/INcontact`
+
+   </div>
+
+1. A window similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
