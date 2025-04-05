@@ -290,7 +290,9 @@ The `findName`, `findEmail`, `findPhone`, `findAddress`, `findSocial`, `findTag`
 *   **Mechanism:** Each `findXYZ` command uses a corresponding `XYZContainsKeywordsAsSubstringPredicate` (e.g., `NameContainsKeywordsAsSubstringPredicate`).
 *   **Predicate Logic:** Inside the `test` method of each predicate, it streams through the user-provided keywords. For each keyword, it checks if the relevant field in the `Person` object (e.g., `person.getName().fullName`) contains the keyword as a substring, ignoring case (`toLowerCase().contains(keyword.toLowerCase())`). The predicate returns `true` if *any* keyword matches as a substring within the field.
 *   **Example (`findName`):** If a person's name is "Alex Yeoh", `findName Alex` will match, `findName Yeoh` will match, and `findName lex` will also match.
-*   **Rationale:** Substring matching provides more flexibility for users who may not remember the exact full name, email, etc., allowing for partial matches.
+* **Rationale:** Substring matching provides more flexibility for users who may not remember the exact full name, email, etc., allowing for partial matches.
+*   **Special Note for `findRelationship`:** The current implementation of `RelationshipContainsKeywordsAsSubstringPredicate` checks whether the role name in the relationship matches the specified keyword. It should filter persons based on their specific role name in the relationship matching the keyword
+*   **Example (`findRelationship`):** In a relationship where Person A has role "Boss" and Person B has role "Employee", `findRelationship Boss` should return only Person A and `findRelationship Employee` should return only Person B
 
 **Sequence Diagram Example (`findName`):**
 
@@ -1066,10 +1068,10 @@ testers are expected to do more *exploratory* testing.
     1.  Prerequisites: Add relationships: `addRelationship u/ID1 u/ID2 fn/Business Partner rn/Business Partner t/Tech`, `addRelationship u/ID1 u/ID3 fn/Investor rn/Investee t/Finance`.
     2.  Test case: `findRelationship Partner`
         Expected: Persons with ID1 and ID2 are listed.
-    3.  Test case: `findRelationship Invest`
-        Expected: Persons with ID1 and ID3 are listed.
+    3.  Test case: `findRelationship Investor`
+        Expected: Persons with ID1 are listed.
     4.  Test case: `findRelationship Tech` (finding by relationship tag - *verify if this is supported by the predicate*)
-        Expected: *If supported:* Persons ID1 and ID2 listed. *If not supported:* 0 persons listed or only matches relationship name. **(Note: The current `RelationshipContainsKeywordsAsSubstringPredicate` only checks if the person is *involved* in *any* relationship when the command is run, not if the relationship *itself* matches the keyword. This needs correction in the predicate or command logic to be useful.)**
+        Expected: 0 persons listed **(Note: The current `RelationshipContainsKeywordsAsSubstringPredicate` only checks if the person is *involved* in *any* relationship name role when the command is run, not if the relationship *itself* matches the keyword.)**
 
 ### Sort Command
 

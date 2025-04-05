@@ -364,7 +364,7 @@ Examples:
 
 ### Locating persons by relationship: `findRelationship`
 
-Finds persons involved in relationships whose role name contains any of the given keywords as a substring.
+Finds persons involved in relationships where their role in any relationship contains any of the given keywords as a substring.
 
 **Format**: `findRelationship KEYWORD [MORE_KEYWORDS]`
 
@@ -374,7 +374,7 @@ Finds persons involved in relationships whose role name contains any of the give
 * For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because their role contains the keyword "Boss".
 
 **Examples**:
-* `findRelationship family friend` returns all persons who are involved in relationships containing "family" or "friend" as substrings in their role name.
+* `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings.
 
 ---
 ### Locating persons by tag: `findTag`
