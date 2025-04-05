@@ -341,15 +341,19 @@ Format: `findSocial KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `findSocial facebook twitter linkedin`
 
----
 ### Locating persons by relationship: `findRelationship`
-Finds persons whose relationships contain any of the given keywords as a substring.  
-Format: `findRelationship KEYWORD [MORE_KEYWORDS]`
-* Only the relationship field is searched.
-* The search is case-insensitive.
 
-Examples:
-* `findRelationship family friend`
+Finds persons involved in relationships whose role name contains any of the given keywords as a substring.
+
+**Format**: `findRelationship KEYWORD [MORE_KEYWORDS]`
+
+* Only the role names in relationships are searched.
+* The search is case-insensitive.
+* **Important**: The command returns **only the person whose role** in the relationship contains the search keyword.
+* For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because their role contains the keyword "Boss".
+
+**Examples**:
+* `findRelationship family friend` returns all persons who are involved in relationships containing "family" or "friend" as substrings in their role name.
 
 ---
 ### Locating persons by tag: `findTag`
@@ -376,29 +380,32 @@ Sorts the address book by one or more fields.
 * `sort email` sorts the address book by email.
 
 ---
-### Redoing a Previous Command: `redo`
-Re-executes the x-th last command.
+### Re-executing Commands: `redo`
+
+Re-executes a command from your command history.
 
 **Format**: `redo COMMAND_NUMBER`
-
-* The `COMMAND_NUMBER` must be between 1 and 10, indicating the position of the command in the history.
+* The *`COMMAND_NUMBER`* must be between 1 and 10, indicating the position of the command in the history.
 * This command allows you to quickly redo previous actions.
+* Command history is session-based and will be cleared when the application is terminated.
 
 **Examples**:
-* `redo 3` re-executes the third last command.
+* *`redo 3`* re-executes the third last command.
 
 ---
-### Listing the Last 10 Commands: `redoList`
-Lists the last 10 commands in the command history.
+
+### Listing the Command History: `redoList`
+
+Lists your command history from the current session.
 
 **Format**: `redoList`
-
-* This command provides a history of the last 10 commands, allowing you to track the sequence of executed commands.
-* If fewer than 10 commands exist, all available commands will be listed.
+* This command displays a numbered list of successfully executed commands from your current session.
+* Only stores up to 10 most recent commands.
+* Command history is reset when you close the application.
+* `redo` commands themselves do not appear in this history.
 
 **Example**:
-* `redoList` lists the last 10 commands executed (or fewer if less than 10 exist).
-
+* `redoList` lists the most recent commands executed (up to 10)
 ---
 ### Archiving data files `[coming in v2.0]`
 

@@ -277,23 +277,23 @@ The `findName`, `findEmail`, `findPhone`, `findAddress`, `findSocial`, `findTag`
 
 ### Sort Command
 
-The `sort` command allows sorting the displayed person list based on one or more fields (`name`, `phone`, `email`, `address`, `tags`, `socials`).
+The `sort` command allows sorting the displayed person list based on one or more fields (`name`, `phone`, `email`, `address`, `tags`, `socials`). Field names are case-insensitive, so both `sort name` and `sort Name` will work the same way.
 
 *   **Mechanism:** The `SortCommandParser` parses the field names and an optional `-r` flag for reverse order. The `SortCommand` then creates a `Comparator<Person>` based on the specified fields.
-*   **Comparator Creation:** It starts with a comparator for the first field. For subsequent fields, it uses `thenComparing` to chain the sorting criteria. Sorting for `tags` and `socials` is currently based on the *number* of tags/socials. String fields (`name`, `phone`, `email`, `address`) use case-insensitive comparison.
+*   **Comparator Creation:** It starts with a comparator for the first field. For subsequent fields, it uses `thenComparing` to chain the sorting criteria. String fields (`name`, `phone`, `email`, `address`) use case-insensitive comparison. Collection fields (`tags`, `socials`) are compared using their string representation (HashSet's `toString()` method), which means sorting is based on the lexicographical comparison of their string values rather than individual elements or properties of the sets.
 *   **Execution:** The `SortCommand` calls `Model.updateSortedPersonList(comparator)`, which in turn calls `AddressBook.sortPersons(comparator)`. This sorts the underlying `UniquePersonList` within the `AddressBook`. Since the `FilteredList` in `ModelManager` wraps the `ObservableList` from `AddressBook`, changes in the source list's order are reflected in the filtered/sorted list displayed in the UI.
 
 **Sequence Diagram:**
 
 <img src="images/SortSequenceDiagram.png" alt="SortSequenceDiagram"/>
 
-### Redo Command
+### Redo Command and Redo List Command
 
 The `redo` and `redoList` commands allow users to re-execute or view recently executed commands.
 
-*   **`CommandHistory` Class:** A static class (`seedu.address.model.commandhistory.CommandHistory`) maintains a `Deque<String>` (double-ended queue) called `lastCommands`.
+*   **`CommandHistory` Class:** A static class (`seedu.address.model.commandhistory.CommandHistory`) maintains a `Deque<String>` (double-ended queue) called `lastCommands`. This history is session-based and does not persist between program executions; it is initialized as empty when the application starts and cleared when the application is terminated.
 *   **Adding Commands:** After a command is successfully parsed and *before* it's executed by `LogicManager`, the original command string is added to the front of the `lastCommands` deque using `CommandHistory.addCommandToHistory(userInput)`. If the deque size exceeds 10, the oldest command (at the end) is removed. Commands like `redo` itself are not added to the history to prevent recursive loops.
-*   **`redoList` Command:** This command retrieves all commands from the `CommandHistory` deque and formats them into a numbered list for display to the user via a `CommandResult` (currently thrown as a `CommandException` for display).
+*   **`redoList` Command:** This command retrieves all commands from the `CommandHistory` deque and formats them into a numbered list for display to the user (currently thrown as a `CommandException` for display). The list only shows successfully executed commands from the current session, up to a maximum of 10 commands.
 *   **`redo N` Command:**
     1.  Parses the integer `N`.
     2.  Validates `N` (must be between 1 and 10).
@@ -301,6 +301,12 @@ The `redo` and `redoList` commands allow users to re-execute or view recently ex
     4.  Creates a *new* `AddressBookParser` instance.
     5.  Calls `parseCommand` on the retrieved command string.
     6.  Executes the resulting `Command` object. The result of *this* execution is returned to the user.
+
+Sequence Diagram for Redo Command:
+<img src="images/RedoSequenceDiagram.png" alt="RedoSequenceDiagram"/>
+
+Sequence Diagram for Redo List Command:
+<img src="images/RedoListSequenceDiagram.png" alt="RedoListSequenceDiagram"/>
 
 **Design Considerations:**
 
@@ -1060,12 +1066,13 @@ testers are expected to do more *exploratory* testing.
     1.  Test case: `sort invalidField`
         Expected: Error message "Invalid field: invalidField".
 
-### Redo Commands
+### Redo and Redo List Commands
 
 1.  List command history
     1.  Prerequisites: Execute several valid commands (e.g., `list`, `add n/Test`, `delete 1`).
     2.  Test case: `redoList`
         Expected: A numbered list of the recently executed commands (up to 10) is displayed in the result area (possibly as an error message, based on current implementation). `redo` commands themselves should not appear.
+    **Note: redoList only keeps track of the command history of the last 10 commands, and this history will be cleared when the program is terminated.**
 2.  Redo a command
     1.  Prerequisites: Execute `add n/RedoTestPerson`. Then execute `list`. The `add` command should be at index 2 in `redoList`.
     2.  Test case: `redo 2`
