@@ -19,7 +19,6 @@ public class FindRelationshipCommand extends Command {
             + "numbers.\n" + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " family friend";
 
-
     private final RelationshipContainsKeywordsAsSubstringPredicate predicate;
 
     public FindRelationshipCommand(RelationshipContainsKeywordsAsSubstringPredicate predicate) {

@@ -395,6 +395,7 @@ Sorts the address book by one or more fields.
 * The `-r` flag reverses the sorting order.
 * You can sort by multiple fields (e.g., name, phone, email, address, tags).
 * Only the specified fields will be considered in the sort.
+* Sorting is performed lexicographically by the first field first, then by the second field for entries with identical first field values, and so on.
 
 **Examples**:
 * `sort -r name phone` sorts the address book by name and phone in reverse order.
