@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.relationship.Relationship;
@@ -104,7 +105,7 @@ public interface Model {
      * Updates the sorting order of the filtered person list.
      * @throws NullPointerException if {@code comparator} is null.
      */
-    void updateSortedPersonList(Comparator<Person> comparator);
+    void updateSortedPersonList(Comparator<Person> comparator) throws CommandException;
 
     /**
      * Returns the person with the given ID, or null if not found.
