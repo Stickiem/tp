@@ -361,7 +361,7 @@ Format: `findSocial KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `findSocial facebook twitter linkedin`
-
+---
 ### Locating persons by relationship: `findRelationship`
 
 Finds persons involved in relationships where their role in any relationship contains any of the given keywords as a substring.
@@ -375,7 +375,6 @@ Finds persons involved in relationships where their role in any relationship con
 
 **Examples**:
 * `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings.
-
 ---
 ### Locating persons by tag: `findTag`
 Finds persons whose tags contain any of the given keywords as a substring.  
@@ -385,6 +384,14 @@ Format: `findTag KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `findTag colleague important`
+---
+### Important Note on Character Encoding for Find Commands
+
+**Note:** All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected.
+
+**Example:** Searching for names with special characters might return more or fewer results than expected.
+
+**Recommendation:** For best results, use standard English characters in your your contact information.
 
 ---
 ### Sorting the Address Book: `sort`
@@ -400,6 +407,13 @@ Sorts the address book by one or more fields.
 **Examples**:
 * `sort -r name phone` sorts the address book by name and phone in reverse order.
 * `sort email` sorts the address book by email.
+---
+
+### Important Note on Character Encoding for Sort Commands
+
+**Note:** The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules.
+
+**Recommendation:** For predictable sorting results, use standard English characters in your contact information.
 
 ---
 ### Re-executing Commands: `redo`
