@@ -14,6 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -68,7 +69,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByName_success() {
+    public void execute_sortByName_success() throws CommandException {
         List<String> fields = Arrays.asList("name");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -90,7 +91,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByNameReversed_success() {
+    public void execute_sortByNameReversed_success() throws CommandException {
         List<String> fields = Arrays.asList("name");
         SortCommand command = new SortCommand(true, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -112,7 +113,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByPhone_success() {
+    public void execute_sortByPhone_success() throws CommandException {
         List<String> fields = Arrays.asList("phone");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -134,7 +135,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByEmail_success() {
+    public void execute_sortByEmail_success() throws CommandException {
         List<String> fields = Arrays.asList("email");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -156,7 +157,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByAddress_success() {
+    public void execute_sortByAddress_success() throws CommandException {
         List<String> fields = Arrays.asList("address");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -178,7 +179,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByTags_success() {
+    public void execute_sortByTags_success() throws CommandException {
         List<String> fields = Arrays.asList("tags");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -199,7 +200,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortBySocials_success() {
+    public void execute_sortBySocials_success() throws CommandException {
         List<String> fields = Arrays.asList("socials");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -220,7 +221,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByMultipleFields_success() {
+    public void execute_sortByMultipleFields_success() throws CommandException {
         List<String> fields = Arrays.asList("name", "phone");
         SortCommand command = new SortCommand(false, fields);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
