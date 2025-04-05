@@ -18,7 +18,7 @@ public class RedoCommandParserTest {
 
         assertParseSuccess(parser, "1", new RedoCommand(1));
         assertParseSuccess(parser, "3", new RedoCommand(3));
-        assertParseSuccess(parser, "5", new RedoCommand(5));
+        assertParseSuccess(parser, "8", new RedoCommand(8));
 
         // Valid index with leading/trailing spaces
         assertParseSuccess(parser, " 2 ", new RedoCommand(2));
@@ -40,8 +40,8 @@ public class RedoCommandParserTest {
         assertParseFailure(parser, "-1",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
 
-        // Index out of range (> 5)
-        assertParseFailure(parser, "6",
+        // Index out of range (> 10)
+        assertParseFailure(parser, "11",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
     }
 }

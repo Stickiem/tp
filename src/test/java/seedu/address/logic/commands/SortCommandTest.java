@@ -177,7 +177,6 @@ public class SortCommandTest {
             assertEquals(expectedList.get(i), modelList.get(i));
         }
     }
-
     @Test
     public void execute_sortByTags_success() throws CommandException {
         List<String> fields = Arrays.asList("tags");
@@ -185,9 +184,10 @@ public class SortCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
                 expectedModel.getFilteredPersonList().size());
 
-        Comparator<Person> tagsComparator = Comparator.comparingInt(p -> p.getTags().size());
-        expectedModel.updateSortedPersonList(tagsComparator);
+        Comparator<Person> tagsComparator = (
+                p1, p2) -> p1.getTags().toString().compareToIgnoreCase(p2.getTags().toString());
 
+        expectedModel.updateSortedPersonList(tagsComparator);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
         // Verify that the lists are sorted the same way
@@ -206,9 +206,10 @@ public class SortCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
                 expectedModel.getFilteredPersonList().size());
 
-        Comparator<Person> socialsComparator = Comparator.comparingInt(p -> p.getSocials().size());
-        expectedModel.updateSortedPersonList(socialsComparator);
+        Comparator<Person> socialsComparator = (
+                p1, p2) -> p1.getSocials().toString().compareToIgnoreCase(p2.getSocials().toString());
 
+        expectedModel.updateSortedPersonList(socialsComparator);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
         // Verify that the lists are sorted the same way
