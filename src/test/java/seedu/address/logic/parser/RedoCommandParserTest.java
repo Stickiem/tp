@@ -44,6 +44,13 @@ public class RedoCommandParserTest {
         assertParseFailure(parser, "11",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
     }
+    @Test
+    public void toString_returnsCorrectString() {
+        // Test that toString returns the expected string
+        String expected = "RedoCommandParser{}";
+        String actual = parser.toString();
+        assert(actual.equals(expected));
+    }
 }
 
 
