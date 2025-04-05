@@ -39,12 +39,12 @@ public class Email {
      * @param email A valid email address.
      */
     public Email(String email) {
-        if (!(email == null)) {
+        if (!(email.equals("~"))) {
             requireNonNull(email);
             checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
             value = email;
         } else {
-            value = null;
+            value = "~";
         }
     }
 

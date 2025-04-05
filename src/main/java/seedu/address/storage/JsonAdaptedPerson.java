@@ -97,18 +97,18 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        if (phone != null && !Phone.isValidPhone(phone)) {
+        if (!(phone.equals("~")) && !Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
 
         final Phone modelPhone = new Phone(phone);
 
-        if (email != null && !Email.isValidEmail(email)) {
+        if (!(email.equals("~")) && !Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
 
-        if (address != null && !Address.isValidAddress(address)) {
+        if (!(address.equals("~")) && !Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
