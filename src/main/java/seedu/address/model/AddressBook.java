@@ -114,6 +114,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Sorts the person list using the provided comparator.
+     *
      * @param comparator The comparator to use for sorting.
      */
     public void sortPersons(Comparator<? super Person> comparator) throws CommandException {

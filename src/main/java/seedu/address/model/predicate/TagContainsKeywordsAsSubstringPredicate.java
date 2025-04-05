@@ -35,13 +35,11 @@ public class TagContainsKeywordsAsSubstringPredicate implements Predicate<Person
             return true;
         }
 
-        if (!(other instanceof TagContainsKeywordsAsSubstringPredicate)) {
+        if (!(other instanceof TagContainsKeywordsAsSubstringPredicate otherPredicate)) {
             return false;
         }
 
-        TagContainsKeywordsAsSubstringPredicate otherTagContainsKeywordsAsSubstringPredicate =
-                (TagContainsKeywordsAsSubstringPredicate) other;
-        return keywords.equals(otherTagContainsKeywordsAsSubstringPredicate.keywords);
+        return keywords.equals(otherPredicate.keywords);
     }
 
     @Override

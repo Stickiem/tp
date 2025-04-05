@@ -99,12 +99,12 @@ public class AddRelationshipCommand extends Command {
         model.addRelationship(relationship);
 
         logger.info(String.format("Created relationship between users %s and %s", firstUserId, secondUserId));
-        return new CommandResult(String.format(MESSAGE_SUCCESS,
-                firstPerson.getName(), secondPerson.getName()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, firstPerson.getName(), secondPerson.getName()));
     }
 
     /**
      * Checks if the relationship already exists in the model.
+     *
      * @param model The model to check against.
      * @return True if the relationship already exists, false otherwise.
      */

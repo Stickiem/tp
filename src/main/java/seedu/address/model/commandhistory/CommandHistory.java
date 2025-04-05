@@ -12,17 +12,17 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
-
 /**
  * A class to manage the history of commands.
  */
 public class CommandHistory {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
     /**
      * Deque to store the last 10 user inputs.
      */
     private static final Deque<String> lastCommands = new LinkedList<>();
+
     /**
      * Adds the given command input to the history of last 10 commands.
      * If the list exceeds 10, removes the oldest command.

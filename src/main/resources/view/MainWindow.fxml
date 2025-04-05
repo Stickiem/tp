@@ -8,7 +8,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
@@ -37,20 +39,38 @@
           </Menu>
         </MenuBar>
 
-        <!-- Command box -->
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+        <!-- Top panel -->
+        <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
 
-        <!-- Result display -->
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+          <!-- App logo -->
+          <VBox>
+            <ImageView fitWidth="190" fitHeight="190" preserveRatio="true">
+              <image>
+                <Image url="@/images/INcontact_logo.png" />
+              </image>
+            </ImageView>
+          </VBox>
+
+          <!-- Command section -->
+          <VBox maxWidth="Infinity" HBox.hgrow="ALWAYS">
+
+            <!-- Command box -->
+            <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+              <padding>
+                <Insets top="5" right="10" bottom="5" left="10" />
+              </padding>
+            </StackPane>
+
+            <!-- Result display -->
+            <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+                       minHeight="100" prefHeight="100" maxHeight="100">
+              <padding>
+                <Insets top="5" right="10" bottom="5" left="10" />
+              </padding>
+            </StackPane>
+
+          </VBox>
+        </HBox>
 
         <!-- Main split view: Event list and Person list -->
         <SplitPane VBox.vgrow="ALWAYS">

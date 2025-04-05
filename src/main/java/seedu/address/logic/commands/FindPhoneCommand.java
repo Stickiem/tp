@@ -40,18 +40,15 @@ public class FindPhoneCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindPhoneCommand)) {
+        if (!(other instanceof FindPhoneCommand otherFindPhoneCommand)) {
             return false;
         }
 
-        FindPhoneCommand otherFindPhoneCommand = (FindPhoneCommand) other;
         return predicate.equals(otherFindPhoneCommand.predicate);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return new ToStringBuilder(this).add("predicate", predicate).toString();
     }
 }

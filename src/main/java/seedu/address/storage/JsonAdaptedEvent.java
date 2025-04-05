@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.DateParserUtil;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -65,12 +64,8 @@ class JsonAdaptedEvent {
         this.date = source.getDate();
         this.location = source.getLocation();
         this.description = source.getDescription();
-        this.tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .toList());
-        this.contacts.addAll(source.getContacts().stream()
-                .map(JsonAdaptedPerson::new)
-                .toList());
+        this.tags.addAll(source.getTags().stream().map(JsonAdaptedTag::new).toList());
+        this.contacts.addAll(source.getContacts().stream().map(JsonAdaptedPerson::new).toList());
     }
 
     /**
@@ -88,7 +83,7 @@ class JsonAdaptedEvent {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Date"));
         }
 
-        LocalDateTime parsedDate = DateParserUtil.parseDate(date);
+        LocalDateTime parsedDate = LocalDateTime.parse(date);
 
         final List<Tag> eventTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {

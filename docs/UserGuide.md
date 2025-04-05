@@ -12,15 +12,36 @@ INcontact is a **desktop app for managing business contacts, optimized for use v
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure that you have Java 17 or above installed. If Java is not installed or the `java` command is not available in the command line, follow the [Java installation guide](https://se-education.org/guides/tutorials/javaInstallation.html).<br>
+   **Mac users:** Ensure you have installed the precise Java version prescribed in the [Java installation guide for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T09-1/tp/releases).
+1. Download the [latest `INcontact.jar` file](https://github.com/AY2425S2-CS2103T-T09-1/tp/releases/latest/download/INcontact.jar).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Move `INcontact.jar` to the folder you want to use as the _home folder_ for INcontact.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   <div markdown="block" class="alert alert-info">
+
+   **:information_source: The _home folder_ contains `INcontact.jar` and user data.**
+
+   </div>
+
+1. Open the _home folder_ in a command terminal and run INcontact with `java -jar INcontact.jar`.
+
+   <div markdown="block" class="alert alert-info">
+
+   **:information_source: Opening a folder in a terminal**
+
+   Right-click the folder and select `open in terminal` or `new terminal at folder`.
+
+   ![open in terminal](images/openInTerminal.png)
+
+   If this is not available, you can use the `cd` (change directory) command. Open a terminal, type `cd` followed by a space, then drag the _home folder_ into the terminal. The path to the _home folder_ should appear, and you can press enter.
+
+   If this does not work, you can specify the path manually, e.g. `cd /Users/johndoe/INcontact`
+
+   </div>
+
+1. A window similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -211,15 +232,15 @@ Example:
 * `updateEventDesc 1 desc/New description for the event`
 
 ---
-### Updating an event time: `updateEventTime`
+### Updating an event time: `updateEventDate`
 
-Updates the time of an event.
+Updates the date of an event.
 
 **Format:**  
-`updateEventTime INDEX time/NEW_TIME`
+`updateEventDate INDEX d/NEW_DATE`
 
 **Example:**
-* `updateEventTime 1 time/09:30`
+* `updateEventDate 1 d/2025-03-15T09:30`
 
 ---
 ### Updating an event location: `updateEventLoc`
@@ -429,32 +450,34 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action                       | Format, Examples                                                                                                                                                                                                  |
-|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                      | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [s/SOCIAL]… [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
-| **Clear**                    | `clear`                                                                                                                                                                                                           |
-| **Delete**                   | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                               |
-| **Edit**                     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                        |
-| **List**                     | `list`                                                                                                                                                                                                            |
-| **Add Relationship**         | `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`                                                                                                                              |
-| **Delete Relationship**      | `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`                                                                                                                                       |
-| **Add Relationship Tag**     | `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`                                                                                                                                 |
-| **Delete Relationship Tag**  | `deleteRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`                                                                                                                                      |
-| **Add Event**                | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`                                                                                                                    |
-| **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                          |
-| **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                      |
-| **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                    |
-| **Delete Event Tag**         | `deleteEventTag INDEX t/TAG_NAME`                                                                                                                                                                                 |
-| **Add Event Contact**        | `addEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                            |
-| **Delete Event Contact**     | `deleteEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                         |
-| **Help**                     | `help`                                                                                                                                                                                                            |
-| **Find by Name**             | `findName KEYWORD [MORE_KEYWORDS]`<br> e.g., `findName James Jake`                                                                                                                                                |
-| **Find by Phone**            | `findPhone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
-| **Find by Email**            | `findEmail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                               |
-| **Find by Address**          | `findAddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                             |
-| **Find by Social**           | `findSocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
-| **Find by Tag**              | `findTag KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                 |
-| **Find by Relationship**     | `findRelationship KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                        |
-| **Sort by Fields**           | `sort [-r] FIELD [MORE_FIELDS]`<br> e.g., `sort -r name tag`                                                                                                                                                      |
-| **Redo**                     | `redo COMMAND_NUMBER`<br> e.g., `redo 3`                                                                                                                                                                          |
-| **Command History for Redo** | `redoList`                                                                                                                                                                                                        |
+| Action                       | Format, Examples                                                                                                                                                                                                        |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                      | `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [s/SOCIAL]… [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/@social1 s/social2 /t investor t/friend t/colleague` |
+| **Clear**                    | `clear`                                                                                                                                                                                                                 |
+| **Delete**                   | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                     |
+| **Edit**                     | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                              |
+| **List**                     | `list`                                                                                                                                                                                                                  |
+| **Add Relationship**         | `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`                                                                                                                                    |
+| **Delete Relationship**      | `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`                                                                                                                                             |
+| **Add Relationship Tag**     | `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`                                                                                                                                       |
+| **Delete Relationship Tag**  | `deleteRelationshipTag u/12345678 u/87654321 n/Business Partner t/Important`                                                                                                                                            |
+| **Add Event**                | `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`                                                                                                                          |
+| **Delete Event**             | `deleteEvent u/EVENT_ID`                                                                                                                                                                                                |
+| **Update Event Description** | `updateEventDesc INDEX desc/NEW_DESCRIPTION`                                                                                                                                                                            |
+| **Update Event Location**    | `updateEventLoc INDEX l/NEW_LOCATION`                                                                                                                                                                                   |
+| **Update Event Time**        | `updateEventDate INDEX d/NEW_DATE`                                                                                                                                                                                      |
+| **Add Event Tag**            | `addEventTag INDEX t/TAG_NAME`                                                                                                                                                                                          |
+| **Delete Event Tag**         | `deleteEventTag INDEX t/TAG_NAME`                                                                                                                                                                                       |
+| **Add Event Contact**        | `addEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                                  |
+| **Delete Event Contact**     | `deleteEventContact INDEX c/CONTACT_NAME`                                                                                                                                                                               |
+| **Help**                     | `help`                                                                                                                                                                                                                  |
+| **Find by Name**             | `findName KEYWORD [MORE_KEYWORDS]`<br> e.g., `findName James Jake`                                                                                                                                                      |
+| **Find by Phone**            | `findPhone KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                     |
+| **Find by Email**            | `findEmail KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                     |
+| **Find by Address**          | `findAddress KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                   |
+| **Find by Social**           | `findSocial KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                    |
+| **Find by Tag**              | `findTag KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                                       |
+| **Find by Relationship**     | `findRelationship KEYWORD [MORE_KEYWORDS]`                                                                                                                                                                              |
+| **Sort by Fields**           | `sort [-r] FIELD [MORE_FIELDS]`<br> e.g., `sort -r name tag`                                                                                                                                                            |
+| **Redo**                     | `redo COMMAND_NUMBER`<br> e.g., `redo 3`                                                                                                                                                                                |
+| **Command History for Redo** | `redoList`                                                                                                                                                                                                              |

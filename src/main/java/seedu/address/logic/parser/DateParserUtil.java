@@ -72,15 +72,38 @@ public class DateParserUtil {
     public static LocalDateTime parseDate(String date) throws ParseException {
         requireNonNull(date);
 
-        Date referenceDate = new Date();
+        try {
+            // First try to parse as ISO date-time
+            return LocalDateTime.parse(date);
+        } catch (Exception e) {
+            // If that fails, try natural language parsing
+            try {
+                Date referenceDate = new Date();
+                DatesFound datesFound = HAWKING_TIME_PARSER.parse(
+                        date,
+                        referenceDate,
+                        HAWKING_CONFIGURATION,
+                        HAWKING_LANGUAGE
+                );
 
-        DatesFound datesFound = HAWKING_TIME_PARSER.parse(
-                date,
-                referenceDate,
-                HAWKING_CONFIGURATION,
-                HAWKING_LANGUAGE
-        );
+                DateTime jodaDateTime = getJodaDateTime(date, datesFound);
 
+                return LocalDateTime.parse(jodaDateTime.toString(), DateTimeFormatter.ISO_DATE_TIME);
+            } catch (Exception ex) {
+                throw new ParseException("Unable to parse date/time: " + date);
+            }
+        }
+    }
+
+    /**
+     * Converts the {@code DatesFound} object into a {@code DateTime} object.
+     *
+     * @param date The date string to be parsed.
+     * @param datesFound The {@code DatesFound} object containing the parsed date information.
+     * @return The {@code DateTime} object parsed from the {@code DatesFound} object.
+     * @throws ParseException If the {@code DatesFound} object does not contain any parsed date information.
+     */
+    private static DateTime getJodaDateTime(String date, DatesFound datesFound) throws ParseException {
         List<ParserOutput> parserOutputs = datesFound.getParserOutputs();
 
         if (parserOutputs.isEmpty()) {
@@ -88,29 +111,12 @@ public class DateParserUtil {
         }
 
         ParserOutput parserOutput = parserOutputs.get(0);
-
         DateRange hawkingDateRange = parserOutput.getDateRange();
-
-        // If the date is in the future,
-        // start = now
-        // end = the date
         DateTime jodaDateTime = hawkingDateRange.getEnd();
 
-        // If the date is in the past,
-        // start = the date
-        // end = null
         if (jodaDateTime == null) {
             jodaDateTime = hawkingDateRange.getStart();
         }
-
-        // Hawking gives a joda DateTime object, but we want a java LocalDateTime object,
-
-        // so we convert it to its string representation,
-        String dateTimeString = jodaDateTime.toString();
-
-        // and convert that into a java LocalDateTime object
-        LocalDateTime javaLocalDateTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME);
-
-        return javaLocalDateTime;
+        return jodaDateTime;
     }
 }

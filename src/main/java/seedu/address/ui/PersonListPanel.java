@@ -77,6 +77,7 @@ public class PersonListPanel extends UiPart<Region> {
 
     /**
      * Refreshes the person cards that are affected by relationship changes.
+     *
      * @param added List of added relationships.
      * @param removed List of removed relationships.
      */

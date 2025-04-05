@@ -135,6 +135,7 @@ public class Relationship {
             return this.reverseName.equals(relationshipName) || this.forwardName.equals(relationshipName);
         }
     }
+
     /**
      * Checks if this relationship is the same as the given relationship.
      *
@@ -167,6 +168,7 @@ public class Relationship {
 
     /**
      * Returns a new relationship with the given tag added to it.
+     *
      * @param tag The tag to add.
      * @return A new relationship with the given tag added to it.
      */
@@ -178,6 +180,7 @@ public class Relationship {
 
     /**
      * Returns a new relationship with the given tag removed from it.
+     *
      * @param tag The tag to remove.
      * @return A new relationship with the given tag removed from it.
      */
@@ -203,14 +206,14 @@ public class Relationship {
             return false;
         }
 
-        return isSameRelationship(otherRelationship)
-                && tags.equals(otherRelationship.tags);
+        return isSameRelationship(otherRelationship) && tags.equals(otherRelationship.tags);
     }
 
     /**
      * Returns the hash code of this relationship.
      * The hash code is based on the user IDs of the two users in the relationship, the name of the relationship,
      * and the tags associated with the relationship.
+     *
      * @return The hash code of this relationship.
      */
     @Override

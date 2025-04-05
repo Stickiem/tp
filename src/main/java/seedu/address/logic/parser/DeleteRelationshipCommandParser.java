@@ -54,8 +54,8 @@ public class DeleteRelationshipCommandParser implements Parser<DeleteRelationshi
      */
     private void validateArguments(ArgumentMultimap argMultimap) throws ParseException {
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    DeleteRelationshipCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRelationshipCommand.MESSAGE_USAGE));
         }
 
         validateUserIdCount(argMultimap);

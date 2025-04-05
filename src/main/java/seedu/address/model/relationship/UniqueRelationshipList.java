@@ -53,6 +53,7 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
 
     /**
      * Checks if the list contains any relationship between the given users, regardless of the relationship names.
+     *
      * @param firstUserId The user ID of the first user.
      * @param secondUserId The user ID of the second user.
      * @return True if the list contains any relationship between the given users, False otherwise.
@@ -119,7 +120,6 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
         logger.fine(String.format("Removed relationship between %s and %s", firstUserId, secondUserId));
     }
 
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      *
@@ -171,6 +171,7 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
 
     /**
      * Returns the relationship with the given user IDs and name.
+     *
      * @param userId1 The user ID of the first user.
      * @param userId2 The user ID of the second user.
      * @param relationshipName The name of the relationship.
@@ -185,6 +186,7 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
 
     /**
      * Replaces the relationship {@code target} in the list with {@code editedRelationship}.
+     *
      * @param target The relationship to replace.
      * @param editedRelationship The edited relationship.
      */

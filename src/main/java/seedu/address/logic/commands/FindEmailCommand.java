@@ -40,18 +40,15 @@ public class FindEmailCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof FindEmailCommand)) {
+        if (!(other instanceof FindEmailCommand otherFindEmailCommand)) {
             return false;
         }
 
-        FindEmailCommand otherFindEmailCommand = (FindEmailCommand) other;
         return predicate.equals(otherFindEmailCommand.predicate);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("predicate", predicate)
-                .toString();
+        return new ToStringBuilder(this).add("predicate", predicate).toString();
     }
 }

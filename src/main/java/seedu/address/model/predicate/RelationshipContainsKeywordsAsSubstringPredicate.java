@@ -16,6 +16,7 @@ public class RelationshipContainsKeywordsAsSubstringPredicate implements Predica
     private final List<String> keywords;
 
     private final Model model;
+
     /**
      * Constructs a {@code RelationshipContainsKeywordsAsSubstringPredicate}.
      *
@@ -53,13 +54,11 @@ public class RelationshipContainsKeywordsAsSubstringPredicate implements Predica
             return true;
         }
 
-        if (!(other instanceof RelationshipContainsKeywordsAsSubstringPredicate)) {
+        if (!(other instanceof RelationshipContainsKeywordsAsSubstringPredicate otherPredicate)) {
             return false;
         }
 
-        RelationshipContainsKeywordsAsSubstringPredicate otherRelationshipContainsKeywordsAsSubstringPredicate =
-                (RelationshipContainsKeywordsAsSubstringPredicate) other;
-        return keywords.equals(otherRelationshipContainsKeywordsAsSubstringPredicate.keywords);
+        return keywords.equals(otherPredicate.keywords);
     }
 
     @Override

@@ -51,11 +51,10 @@ public class AppParameters {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AppParameters)) {
+        if (!(other instanceof AppParameters otherAppParameters)) {
             return false;
         }
 
-        AppParameters otherAppParameters = (AppParameters) other;
         return Objects.equals(configPath, otherAppParameters.configPath);
     }
 
@@ -66,8 +65,6 @@ public class AppParameters {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("configPath", configPath)
-                .toString();
+        return new ToStringBuilder(this).add("configPath", configPath).toString();
     }
 }

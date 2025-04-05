@@ -61,11 +61,9 @@ public class AddTagToEventCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof AddTagToEventCommand)) {
+        if (!(other instanceof AddTagToEventCommand otherCommand)) {
             return false;
         }
-        AddTagToEventCommand otherCommand = (AddTagToEventCommand) other;
-        return eventIndex.equals(otherCommand.eventIndex)
-                && tag.equals(otherCommand.tag);
+        return eventIndex.equals(otherCommand.eventIndex) && tag.equals(otherCommand.tag);
     }
 }
