@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import java.util.Comparator;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
