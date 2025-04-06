@@ -25,12 +25,12 @@ public class Address {
      * @param address A valid address.
      */
     public Address(String address) {
-        if (!(address == null)) {
+        if (!(address.equals("~"))) {
             requireNonNull(address);
             checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
             value = address;
         } else {
-            value = null;
+            value = "~";
         }
     }
 
