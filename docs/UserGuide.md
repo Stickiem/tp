@@ -358,7 +358,7 @@ Finds persons involved in relationships where their role in any relationship con
 * Only the role names in relationships are searched.
 * The search is case-insensitive.
 * **Important**: The command returns **only the person whose role** in the relationship contains the search keyword.
-* For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because their role contains the keyword "Boss".
+* For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because only Person A's role contains the keyword "Boss".
 
 **Examples**:
 * `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings. <br>
