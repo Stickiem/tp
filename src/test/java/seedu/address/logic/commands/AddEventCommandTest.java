@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.DateParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -38,7 +37,7 @@ class AddEventCommandTest {
         CommandResult commandResult = new AddEventCommand(validEvent, List.of()).execute(modelStub);
 
         assertEquals(
-                String.format(AddEventCommand.MESSAGE_SUCCESS, Messages.format(validEvent)),
+                String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent),
                 commandResult.getFeedbackToUser());
         assertEquals(List.of(validEvent), modelStub.events);
     }
