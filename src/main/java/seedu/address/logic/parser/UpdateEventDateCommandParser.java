@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UpdateEventDateCommand;
@@ -33,10 +34,11 @@ public class UpdateEventDateCommandParser implements Parser<UpdateEventDateComma
         }
         Index eventIndex = ParserUtil.parseIndex(preamble);
 
-        if (!argMultimap.getValue(PREFIX_DATE).isPresent()) {
-            throw new ParseException("New date is required.");
+        List<String> dateStrings = argMultimap.getAllValues(PREFIX_DATE);
+        if (dateStrings.size() != 1) {
+            throw new ParseException("Please provide exactly one new date.");
         }
-        String dateString = argMultimap.getValue(PREFIX_DATE).get();
+        String dateString = dateStrings.get(0);
         LocalDateTime newDate;
         try {
             newDate = LocalDateTime.parse(dateString);

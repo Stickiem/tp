@@ -101,7 +101,7 @@ Examples:
 ---
 ### Adding a person: `add`
 
-Adds a person to INcontact.
+Adds a person to INcontact. Duplicates are allowed.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
@@ -180,7 +180,7 @@ Examples:
 ---
 ### Adding a relationship: `addRelationship`
 
-Adds a relationship between contacts in INcontact.
+Adds a relationship between contacts to INcontact. You must specify both a forward and reverse name for this relationship.
 
 Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
 
@@ -312,26 +312,7 @@ Example:
 * `deleteEventContact 1 c/John Doe`
 
 ---
-### Exiting the program : `exit`
 
-Exits the program.
-
-Format: `exit`
-
-### Saving the data
-
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Editing the data file
-
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, INcontact will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</div>
-
----
 ### Locating persons by name: `findName`
 Finds persons whose names contain any of the given keywords as a substring.  
 Format: `findName KEYWORD [MORE_KEYWORDS]`
@@ -345,6 +326,7 @@ Examples:
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ---
+
 ### Locating persons by phone: `findPhone`
 Finds persons whose phone numbers contain any of the given keywords as a substring.  
 Format: `findPhone KEYWORD [MORE_KEYWORDS]`
@@ -354,6 +336,7 @@ Examples:
 * `findPhone 123 456`
 
 ---
+
 ### Locating persons by email: `findEmail`
 Finds persons whose emails contain any of the given keywords as a substring.  
 Format: `findEmail KEYWORD [MORE_KEYWORDS]`
@@ -363,6 +346,7 @@ Examples:
 * `findEmail example1@example.com`
 
 ---
+
 ### Locating persons by address: `findAddress`
 Finds persons whose addresses contain any of the given keywords as a substring.  
 Format: `findAddress KEYWORD [MORE_KEYWORDS]`
@@ -372,14 +356,17 @@ Examples:
 * `findAddress street avenue park`
 
 ---
+
 ### Locating persons by social: `findSocial`
 Finds persons whose social media handles contain any of the given keywords as a substring.  
 Format: `findSocial KEYWORD [MORE_KEYWORDS]`
 * Only the social media handle field is searched.
 
 Examples:
-* `findSocial facebook twitter linkedin`
+* `findSocial facebook twitter linkedin` <br>
+
 ---
+
 ### Locating persons by relationship: `findRelationship`
 
 Finds persons involved in relationships where their role in any relationship contains any of the given keywords as a substring.
@@ -392,8 +379,10 @@ Finds persons involved in relationships where their role in any relationship con
 * For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because their role contains the keyword "Boss".
 
 **Examples**:
-* `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings.
+* `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings. <br>
+
 ---
+
 ### Locating persons by tag: `findTag`
 Finds persons whose tags contain any of the given keywords as a substring.  
 Format: `findTag KEYWORD [MORE_KEYWORDS]`
@@ -401,17 +390,10 @@ Format: `findTag KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive.
 
 Examples:
-* `findTag colleague important`
----
-### Important Note on Character Encoding for Find Commands
-
-**Note:** All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected.
-
-**Example:** Searching for names with special characters might return more or fewer results than expected.
-
-**Recommendation:** For best results, use standard English characters in your your contact information.
+* `findTag colleague important` <br>
 
 ---
+
 ### Sorting the Address Book: `sort`
 Sorts the address book by one or more fields.
 
@@ -424,16 +406,10 @@ Sorts the address book by one or more fields.
 
 **Examples**:
 * `sort -r name phone` sorts the address book by name and phone in reverse order.
-* `sort email` sorts the address book by email.
----
-
-### Important Note on Character Encoding for Sort Commands
-
-**Note:** The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules.
-
-**Recommendation:** For predictable sorting results, use standard English characters in your contact information.
+* `sort email` sorts the address book by email. <br>
 
 ---
+
 ### Re-executing Commands: `redo`
 
 Re-executes a command from your command history.
@@ -444,7 +420,7 @@ Re-executes a command from your command history.
 * Command history is session-based and will be cleared when the application is terminated.
 
 **Examples**:
-* *`redo 3`* re-executes the third last command.
+* `redo 3` re-executes the third last command.
 
 ---
 
@@ -460,24 +436,48 @@ Lists your command history from the current session.
 
 **Example**:
 * `redoList` lists the most recent commands executed (up to 10)
----
-### Archiving data files `[coming in v2.0]`
 
-_Details coming soon ..._
+---
+
+### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
+
+---
+
+### Saving the data
+
+INcontact data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+### Editing the data file
+
+INcontact data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+If your changes to the data file makes its format invalid, INcontact will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous INcontact home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
-
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **Character Encoding for Find Commands**: All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected. Searching for names with special characters might return more or fewer results than expected. For best results, use standard English characters in your contact information.
+4. **Character Encoding for Sort Commands**: The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules. For predictable sorting results, use standard English characters in your contact information.
+5. **Uncommon Redo Implementation**: The `redo` command in this application differs from common redo implementations. Rather than reversing an undo action, it re-executes a specific command from your history (e.g., `redo 3` re-executes the third last command from the history list). Should use `redoList` to view your command history (up to 10 most recent commands) before using the `redo` command.
+
+## Planned enhancements
+1. **Use a simpler specifier for relationships**: Relationships currently work via specifying unique User IDs, since INcontact has a very permissive policy regarding similar or duplicate contact details. In future implementations, we will allow for specifying relationships by GUI number, as well as multistep selection (i.e. INcontact finds all matching users, and asks you to choose the specific user).
 
 --------------------------------------------------------------------------------------------------------------------
 
