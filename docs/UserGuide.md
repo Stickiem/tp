@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-INcontact is a **desktop app for managing business contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, INcontact can get your contact management tasks done faster than traditional GUI apps.
+INcontact is a **desktop app targeted towards early startup founders for managing business contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, INcontact can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -90,9 +90,12 @@ INcontact is a **desktop app for managing business contacts, optimized for use v
 
 Shows a message explaning how to access the help page.
 
-![help message](images/helpMessage.png)
 
 Format: `help`
+
+Examples:
+* `help`
+![help message](images/helpMessage.png)
 
 
 ---
@@ -103,13 +106,17 @@ Adds a person to INcontact.
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have any number of tags/socials (including 0). <br>
+If person have no phone, email or address, system would indicate as a "~" instead. 
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/social2 t/Investor`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/@social2 t/Investor`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Caroly Wilcox` Adds a contact with name only
+* `add n/Caroly Wilcox` 
+![add person](images/addPerson.png)
+
+
 
 ---
 ### Listing all persons : `list`
@@ -117,6 +124,10 @@ Examples:
 Shows a list of all persons in INcontact.
 
 Format: `list`
+
+Examples:
+* `list`
+![list persons](images/list.png)
 
 ---
 ### Editing a person : `edit`
@@ -137,6 +148,7 @@ Examples:
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 *  `edit 1 p/91234567 s/@john`
 *  `edit 1 s/@elmo` Edits the socials of the 1st person to be `@elmo`.
+![edit person](images/editPerson.png)
 
 ---
 ### Deleting a person : `delete`
@@ -151,7 +163,8 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in INcontact.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `findName Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+![delete person](images/deletePerson.png)
 
 ---
 ### Clearing all entries : `clear`
@@ -160,20 +173,25 @@ Clears all entries from INcontact.
 
 Format: `clear`
 
+Examples:
+* `clear`
+![clear](images/clear.png)
+
 ---
 ### Adding a relationship: `addRelationship`
 
-Adds a relationship to INcontact.
+Adds a relationship between contacts in INcontact.
 
 Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
 
 Example:
-* `addRelationship u/12345678 u/87654321 fn/Boss of rn/Reports to t/Work`
+* `addRelationship u/-846010516 u/131288605 fn/Boss of rn/Reports to t/Work`
+![addRelationship](images/addRelationship.png)
 
 ---
 ### Deleting a relationship: `deleteRelationship`
 
-Deletes a relationship from INcontact.
+Deletes a relationship from INcontact. Either the forward or reverse name of the relationship will suffice.
 
 Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`
 
