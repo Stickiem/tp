@@ -442,6 +442,12 @@ If your changes to the data file makes its format invalid, INcontact will discar
 Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
+---
+
+### Find and Sort Interaction
+When using find commands (like `findName`, `findPhone`, etc.) followed by sort commands:
+- Find commands display a filtered subset of the address book based on your search criteria
+- Sort commands affect the entire address book, but only the previously filtered results will be displayed
 
 ---
 
@@ -464,7 +470,7 @@ _Details coming soon ..._
 3. **Character Encoding for Find Commands**: All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected. Searching for names with special characters might return more or fewer results than expected. For best results, use standard English characters in your contact information.
 4. **Character Encoding for Sort Commands**: The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules. For predictable sorting results, use standard English characters in your contact information.
 5. **Uncommon Redo Implementation**: The `redo` command in this application differs from common redo implementations. Rather than reversing an undo action, it re-executes a specific command from your history (e.g., `redo 3` re-executes the third last command from the history list). Should use `redoList` to view your command history (up to 10 most recent commands) before using the `redo` command.
-
+6. **UI Feedback with redoList Command**: When executing the `redoList` command, the command input bar is not cleared and turns red (similar to when there is an error). This is expected behavior as `redoList` returns command history information through exceptions rather than standard output.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
