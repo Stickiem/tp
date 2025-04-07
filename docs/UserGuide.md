@@ -90,13 +90,11 @@ INcontact is a **desktop app targeted towards early startup founders for managin
 
 Shows a message explaning how to access the help page.
 
-
 Format: `help`
 
 Examples:
 * `help`
 ![help message](images/helpMessage.png)
-
 
 ---
 ### Adding a person: `add`
@@ -113,10 +111,8 @@ If person have no phone, email or address, system would indicate as a "~" instea
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/@social2 t/Investor`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Caroly Wilcox` 
+* `add n/Caroly Wilcox`
 ![add person](images/addPerson.png)
-
-
 
 ---
 ### Listing all persons : `list`
@@ -141,7 +137,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]..
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags/socials by typing `t/` / `s/` without
-    specifying any tags/socials respectively after it.
+  specifying any tags/socials respectively after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -164,7 +160,7 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in INcontact.
 * `findName Betsy` followed by `delete 1` deletes the 1st person in the results of the `findName` command.
-![delete person](images/deletePerson.png)
+  ![delete person](images/deletePerson.png)
 
 ---
 ### Clearing all entries : `clear`
@@ -186,7 +182,7 @@ Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME
 
 Example:
 * `addRelationship u/-846010516 u/131288605 fn/Boss of rn/Reports to t/Work`
-![addRelationship](images/addRelationship.png)
+  ![addRelationship](images/addRelationship.png)
 
 ---
 ### Deleting a relationship: `deleteRelationship`
@@ -197,7 +193,6 @@ Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NA
 
 Example:
 * `deleteRelationship u/12345678 u/87654321 n/Business Partner`
-
 
 ---
 ### Adding a relationship tag: `addRelationshipTag`
@@ -461,6 +456,13 @@ If your changes to the data file makes its format invalid, INcontact will discar
 Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
+---
+
+### Find and Sort Interaction
+When using find commands (like `findName`, `findPhone`, etc.) followed by sort commands:
+- Find commands display a filtered subset of the address book based on your search criteria
+- Sort commands affect the entire address book, but only the previously filtered results will be displayed
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -476,6 +478,7 @@ Furthermore, certain edits can cause the INcontact to behave in unexpected ways 
 3. **Character Encoding for Find Commands**: All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected. Searching for names with special characters might return more or fewer results than expected. For best results, use standard English characters in your contact information.
 4. **Character Encoding for Sort Commands**: The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules. For predictable sorting results, use standard English characters in your contact information.
 5. **Uncommon Redo Implementation**: The `redo` command in this application differs from common redo implementations. Rather than reversing an undo action, it re-executes a specific command from your history (e.g., `redo 3` re-executes the third last command from the history list). Should use `redoList` to view your command history (up to 10 most recent commands) before using the `redo` command.
+6. **UI Feedback with redoList Command**: When executing the `redoList` command, the command input bar is not cleared and turns red (similar to when there is an error). This is expected behavior as `redoList` returns command history information through exceptions rather than standard output.
 
 ## Planned enhancements
 1. **Use a simpler specifier for relationships**: Relationships currently work via specifying unique User IDs, since INcontact has a very permissive policy regarding similar or duplicate contact details. In future implementations, we will allow for specifying relationships by GUI number, as well as multistep selection (i.e. INcontact finds all matching users, and asks you to choose the specific user).

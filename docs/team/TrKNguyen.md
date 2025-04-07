@@ -76,3 +76,6 @@ Given below are my contributions to the project.
   * Collaborated with team members on feature integration, fixed several serious bugs together including search and sort on null field
   * Brainstormed several features including search, sort, command history system, redo command, find relationship, import, export, timestamp tracking
 
+* **Reuse Declaration**:
+  * I asked ChatGPT to provide some corner cases to test for finding features. 
+
