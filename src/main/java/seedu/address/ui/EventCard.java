@@ -79,7 +79,7 @@ public class EventCard extends UiPart<Region> {
         contactsPane.getChildren().add(new Label("Contacts:"));
         event.getContacts().forEach(person -> {
             String contactName = person.getName().fullName;
-            Label contactLabel = new Label(contactName + " (ID: " + person.getId() + ")");
+            Label contactLabel = new Label(contactName);
             contactsPane.getChildren().add(contactLabel);
         });
     }
