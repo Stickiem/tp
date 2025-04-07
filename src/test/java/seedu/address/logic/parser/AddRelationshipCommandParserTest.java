@@ -63,4 +63,15 @@ public class AddRelationshipCommandParserTest {
         assertParseFailure(parser, " u/1 u/2 fn/Friend rn/Reports to t/*&",
                 Tag.MESSAGE_CONSTRAINTS);
     }
+
+    @Test
+    public void parse_invalidNameValues_throwsParseException() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE);
+
+        // Missing forward name value
+        assertParseFailure(parser, " u/1 u/2 rn/Reports to", expectedMessage);
+
+        // Missing reverse name value
+        assertParseFailure(parser, " u/1 u/2 fn/Boss of", expectedMessage);
+    }
 }
