@@ -28,9 +28,16 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null, except for ID.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Social> socials, Set<Tag> tags) {
+        this(name, phone, email, address, socials, tags, null);
+    }
+
+    /**
+     * Creates a Person with the given details. Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Social> socials, Set<Tag> tags, String id) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -38,7 +45,7 @@ public class Person {
         this.address = address;
         this.socials.addAll(socials);
         this.tags.addAll(tags);
-        this.id = generateId(name, phone);
+        this.id = id != null ? id : generateId(name, phone); // Use provided ID or generate one
     }
 
     public Name getName() {
