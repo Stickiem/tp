@@ -2,11 +2,13 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -41,33 +43,47 @@ public class JsonSerializableAddressBookTest {
 
     @Test
     public void toModelType_typicalPersonsFile_success() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(
+        Optional<JsonSerializableAddressBook> optionalData = JsonUtil.readJsonFile(
                 Path.of(TEST_DATA_FOLDER + "typicalPersonsAddressBook.json"),
-                JsonSerializableAddressBook.class).get();
-        AddressBook addressBookFromFile = dataFromFile.toModelType();
+                JsonSerializableAddressBook.class);
+
+        // Ensure data is present
+        assertTrue(optionalData.isPresent(), "Expected file to contain valid data");
+
+        AddressBook addressBookFromFile = optionalData.get().toModelType();
         AddressBook typicalPersonsAddressBook = TypicalPersons.getTypicalAddressBook();
         assertEquals(addressBookFromFile, typicalPersonsAddressBook);
     }
 
     @Test
     public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(
+        Optional<JsonSerializableAddressBook> optionalData = JsonUtil.readJsonFile(
                 Path.of(TEST_DATA_FOLDER + "invalidPersonAddressBook.json"),
-                JsonSerializableAddressBook.class).get();
+                JsonSerializableAddressBook.class);
+
+        // Ensure data is present
+        assertTrue(optionalData.isPresent(), "Expected file to contain data");
+
+        JsonSerializableAddressBook dataFromFile = optionalData.get();
         assertThrows(IllegalValueException.class, dataFromFile::toModelType);
     }
 
     @Test
     public void toModelType_duplicatePersons_throwsIllegalValueException() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(
+        Optional<JsonSerializableAddressBook> optionalData = JsonUtil.readJsonFile(
                 Path.of(TEST_DATA_FOLDER + "duplicatePersonAddressBook.json"),
-                JsonSerializableAddressBook.class).get();
+                JsonSerializableAddressBook.class);
+
+        // Ensure data is present
+        assertTrue(optionalData.isPresent(), "Expected file to contain data");
+
+        JsonSerializableAddressBook dataFromFile = optionalData.get();
         assertThrows(IllegalValueException.class,
                 JsonSerializableAddressBook.MESSAGE_DUPLICATE_PERSON, dataFromFile::toModelType);
     }
 
     @Test
-    public void toModelType_duplicateRelationships_throwsIllegalValueException() throws Exception {
+    public void toModelType_duplicateRelationships_throwsIllegalValueException() {
         // Create lists with a duplicate relationship
         List<JsonAdaptedPerson> persons = new ArrayList<>();
         List<JsonAdaptedRelationship> relationships = new ArrayList<>();
@@ -80,7 +96,7 @@ public class JsonSerializableAddressBookTest {
     }
 
     @Test
-    public void toModelType_duplicateEvents_throwsIllegalValueException() throws Exception {
+    public void toModelType_duplicateEvents_throwsIllegalValueException() {
         // Create lists with a duplicate event
         List<JsonAdaptedPerson> persons = new ArrayList<>();
         List<JsonAdaptedRelationship> relationships = new ArrayList<>();
