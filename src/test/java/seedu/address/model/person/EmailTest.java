@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 
 public class EmailTest {
 
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Email(null));
+    }
 
     @Test
     public void constructor_invalidEmail_throwsIllegalArgumentException() {
@@ -47,6 +51,7 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peterjack@-example.com")); // domain name starts with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.com-")); // domain name ends with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.c")); // top level domain has less than two chars
+        assertFalse(Email.isValidEmail("hi~@gmail.com")); // local part contains "~"
 
         // valid email
         assertTrue(Email.isValidEmail("PeterJack_1190@example.com")); // underscore in local part

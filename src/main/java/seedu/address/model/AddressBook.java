@@ -74,6 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         setPersons(newData.getPersonList());
         setEvents(newData.getEventList());
+        setRelationships(newData.getRelationshipList());
     }
 
     //// Person-level operations
@@ -110,6 +111,28 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+        deleteRelationshipsInvolvingPerson(key);
+        removePersonFromEvents(key);
+    }
+
+    /**
+     * Deletes all relationships that involve the given person.
+     *
+     * @param person The person whose relationships should be deleted.
+     */
+    private void deleteRelationshipsInvolvingPerson(Person person) {
+        relationships.removeRelationshipsInvolvingUser(person.getId());
+    }
+
+    /**
+     * Removes the given person from all events that reference them.
+     *
+     * @param person The person to remove from events.
+     */
+    private void removePersonFromEvents(Person person) {
+        for (Event event : events) {
+            event.deleteContact(person);
+        }
     }
 
     /**
@@ -275,5 +298,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void updateRelationship(Relationship target, Relationship updatedRelationship) {
         relationships.setRelationship(target, updatedRelationship);
+    }
+
+    public void setRelationships(List<Relationship> relationships) {
+        this.relationships.setRelationships(relationships);
     }
 }
