@@ -3,9 +3,9 @@ layout: page
 title: Tran Khoi Nguyen's Project Portfolio Page
 ---
 
-### Project: InContact
+### Project: INContact
 
-InContact is a desktop address book application used for managing business contacts and their relationships. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+INcontact is a desktop address book application used for managing business contacts and their relationships. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 
 Given below are my contributions to the project.
 
