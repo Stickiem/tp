@@ -463,12 +463,6 @@ When using find commands (like `findName`, `findPhone`, etc.) followed by sort c
 - Find commands display a filtered subset of the address book based on your search criteria
 - Sort commands affect the entire address book, but only the previously filtered results will be displayed
 
----
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
