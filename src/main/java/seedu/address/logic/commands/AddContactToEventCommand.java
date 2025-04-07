@@ -25,6 +25,9 @@ public class AddContactToEventCommand extends Command {
     public static final String MESSAGE_ADD_CONTACT_SUCCESS = "Contact added to event: %1$s";
     public static final String MESSAGE_CONTACT_ALREADY_EXISTS = "This contact already exists in the event";
     public static final String MESSAGE_EVENT_NOT_FOUND = "The event index provided is invalid.";
+    public static final String MESSAGE_CONTACT_NOT_FOUND =
+        "Contact %s does not exist in the address book. "
+        + "Please add the contact first.";
 
     private final Index eventIndex;
     private final Person contact;
@@ -48,6 +51,10 @@ public class AddContactToEventCommand extends Command {
         if (eventIndex.getZeroBased() >= model.getFilteredEventList().size()) {
             throw new CommandException(MESSAGE_EVENT_NOT_FOUND);
         }
+        // Check that the contact exists in the address book.
+        if (!model.hasPerson(contact)) {
+            throw new CommandException(String.format(MESSAGE_CONTACT_NOT_FOUND, contact.getName().fullName));
+        }
         Event event = model.getFilteredEventList().get(eventIndex.getZeroBased());
         // Check if the contact already exists in the event.
         if (event.getContacts().stream().anyMatch(p -> p.equals(contact))) {
@@ -64,9 +71,10 @@ public class AddContactToEventCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof AddContactToEventCommand otherCommand)) {
+        if (!(other instanceof AddContactToEventCommand)) {
             return false;
         }
+        AddContactToEventCommand otherCommand = (AddContactToEventCommand) other;
         return eventIndex.equals(otherCommand.eventIndex) && contact.equals(otherCommand.contact);
     }
 }

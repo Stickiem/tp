@@ -69,7 +69,7 @@ public class Event {
     /**
      * Private constructor used for creating an updated version of an event.
      */
-    private Event(String id, String name, LocalDateTime date, String location, String description, Set<Tag> tags,
+    public Event(String id, String name, LocalDateTime date, String location, String description, Set<Tag> tags,
                   UniquePersonList contacts) {
         this.id = id;
         this.name = name;
