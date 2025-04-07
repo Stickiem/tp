@@ -78,20 +78,9 @@ public class EventCard extends UiPart<Region> {
 
         contactsPane.getChildren().add(new Label("Contacts:"));
         event.getContacts().forEach(person -> {
-            String name = resolvePersonName(person.getId());
-            Label contactLabel = new Label(name + " (ID: " + person.getId() + ")");
+            String contactName = person.getName().fullName;
+            Label contactLabel = new Label(contactName);
             contactsPane.getChildren().add(contactLabel);
         });
-    }
-
-    /**
-     * Helper to resolve person's full name from AddressBook based on ID.
-     */
-    private String resolvePersonName(String personId) {
-        return addressBook.getPersonList().stream()
-                .filter(p -> p.getId().equals(personId))
-                .map(p -> p.getName().fullName)
-                .findFirst()
-                .orElse("Unknown");
     }
 }
