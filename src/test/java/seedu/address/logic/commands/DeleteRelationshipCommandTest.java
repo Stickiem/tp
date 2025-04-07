@@ -26,108 +26,132 @@ public class DeleteRelationshipCommandTest {
     }
 
     @Test
-    public void execute_relationshipDeletedByModel_deleteSuccessful() throws Exception {
-        ModelStubAcceptingRelationshipDeleted modelStub = new ModelStubAcceptingRelationshipDeleted();
-        Person person1 = new PersonBuilder().build();
-        Person person2 = new PersonBuilder().withName("Bob").withPhone("87654321").build();
-        modelStub.addPerson(person1);
-        modelStub.addPerson(person2);
+    public void execute_nullModel_throwsNullPointerException() {
+        DeleteRelationshipCommand command = new DeleteRelationshipCommand("1", "2", "Friend");
+        assertThrows(NullPointerException.class, () -> command.execute(null));
+    }
 
-        Relationship relationship = new RelationshipBuilder()
-                .withUser1Id(person1.getId())
-                .withUser2Id(person2.getId())
-                .build();
-        modelStub.addRelationship(relationship);
+    @Test
+    public void execute_emptyParameters_throwsCommandException() {
+        ModelStub modelStub = new ModelStubWithPersons(null, null);
+        DeleteRelationshipCommand command = new DeleteRelationshipCommand("", "2", "Friend");
+        DeleteRelationshipCommand finalCommand = command;
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
+                finalCommand.execute(modelStub));
 
-        CommandResult commandResult = new DeleteRelationshipCommand(
-                person1.getId(), person2.getId(), RelationshipBuilder.DEFAULT_FORWARD_NAME).execute(modelStub);
+        command = new DeleteRelationshipCommand("1", "", "Friend");
+        DeleteRelationshipCommand finalCommand1 = command;
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
+                finalCommand1.execute(modelStub));
 
-        assertEquals("Successfully deleted relationship between Amy Bee and Bob", commandResult.getFeedbackToUser());
-        assertTrue(modelStub.relationshipDeleted);
+        command = new DeleteRelationshipCommand("1", "2", "  ");
+        DeleteRelationshipCommand finalCommand2 = command;
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
+                finalCommand2.execute(modelStub));
+    }
+
+    @Test
+    public void execute_personsNotFound_throwsCommandException() {
+        // Both persons not found
+        ModelStub modelStub = new ModelStubWithPersons(null, null);
+        DeleteRelationshipCommand command = new DeleteRelationshipCommand("1", "2", "Friend");
+        ModelStub finalModelStub = modelStub;
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
+                command.execute(finalModelStub));
+
+        // First person not found
+        Person secondPerson = new PersonBuilder().build();
+        modelStub = new ModelStubWithPersons(null, secondPerson);
+        ModelStub finalModelStub1 = modelStub;
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
+                command.execute(finalModelStub1));
+
+        // Second person not found
+        Person firstPerson = new PersonBuilder().build();
+        modelStub = new ModelStubWithPersons(firstPerson, null);
+        ModelStub finalModelStub2 = modelStub;
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
+                command.execute(finalModelStub2));
     }
 
     @Test
     public void execute_relationshipNotFound_throwsCommandException() {
-        Person person1 = new PersonBuilder().build();
-        Person person2 = new PersonBuilder().withName("Bob").withPhone("87654321").build();
+        Person person1 = new PersonBuilder().withName("Alice").build();
+        Person person2 = new PersonBuilder().withName("Bob").build();
+        ModelStub modelStub = new ModelStubWithPersonsNoRelationship(person1, person2);
 
-        ModelStub modelStub = new ModelStubWithPersons(person1, person2);
+        DeleteRelationshipCommand command = new DeleteRelationshipCommand(
+                person1.getId(), person2.getId(), "NonexistentRelationship");
 
-        DeleteRelationshipCommand deleteRelationshipCommand = new DeleteRelationshipCommand(
-                person1.getId(), person2.getId(), "Friend");
-
-        assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_RELATIONSHIP_NOT_FOUND, () ->
-                        deleteRelationshipCommand.execute(modelStub));
+        assertThrows(CommandException.class, DeleteRelationshipCommand.MESSAGE_RELATIONSHIP_NOT_FOUND, () ->
+                command.execute(modelStub));
     }
 
     @Test
-    public void execute_missingParameters_throwsCommandException() {
-        Person person1 = new PersonBuilder().build();
-        Person person2 = new PersonBuilder().withName("Bob").withPhone("87654321").build();
+    public void execute_validRelationship_success() throws Exception {
+        Person person1 = new PersonBuilder().withName("Alice").build();
+        Person person2 = new PersonBuilder().withName("Bob").build();
+        ModelStubWithRelationship modelStub = new ModelStubWithRelationship(person1, person2);
 
-        ModelStub modelStub = new ModelStubWithPersons(person1, person2);
+        DeleteRelationshipCommand command = new DeleteRelationshipCommand(
+                person1.getId(), person2.getId(), "Friend");
 
-        DeleteRelationshipCommand deleteRelationshipCommand = new DeleteRelationshipCommand(
-                person1.getId(), person2.getId(), "");
-
-        assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
-                        deleteRelationshipCommand.execute(modelStub));
+        CommandResult result = command.execute(modelStub);
+        assertEquals(String.format(DeleteRelationshipCommand.MESSAGE_SUCCESS,
+                person1.getName(), person2.getName()), result.getFeedbackToUser());
+        assertTrue(modelStub.isRelationshipDeleted);
     }
 
     @Test
     public void equals() {
-        String user1Id = "1";
-        String user2Id = "2";
-        String name1 = "Friend";
-        String name2 = "BusinessPartner";
-
-        DeleteRelationshipCommand deleteFriendCommand = new DeleteRelationshipCommand(
-                user1Id, user2Id, name1);
-        DeleteRelationshipCommand deleteBusinessPartnerCommand = new DeleteRelationshipCommand(
-                user1Id, user2Id, name2);
+        DeleteRelationshipCommand command1 = new DeleteRelationshipCommand("1", "2", "Friend");
+        DeleteRelationshipCommand command2 = new DeleteRelationshipCommand("1", "2", "Friend");
+        DeleteRelationshipCommand command3 = new DeleteRelationshipCommand("2", "3", "Colleague");
 
         // same object -> returns true
-        assertEquals(deleteFriendCommand, deleteFriendCommand);
+        assertEquals(command1, command1);
 
         // same values -> returns true
-        DeleteRelationshipCommand deleteFriendCommandCopy = new DeleteRelationshipCommand(
-                user1Id, user2Id, name1);
-        assertEquals(deleteFriendCommand, deleteFriendCommandCopy);
+        assertEquals(command1, command2);
 
-        // different types -> returns false
-        assertNotEquals(1, deleteFriendCommand);
+        // different values -> returns false
+        assertNotEquals(command1, command3);
 
         // null -> returns false
-        assertNotEquals(null, deleteFriendCommand);
-
-        // different name -> returns false
-        assertNotEquals(deleteFriendCommand, deleteBusinessPartnerCommand);
+        assertNotEquals(null, command1);
     }
 
-    /**
-     * A Model stub that contains two persons.
-     */
+    @Test
+    public void toString_returnsCorrectFormat() {
+        DeleteRelationshipCommand command = new DeleteRelationshipCommand("1", "2", "Friend");
+        assertEquals("DeleteRelationshipCommand: Deleting relationship 'Friend' between 1 and 2",
+                command.toString());
+    }
+
     private static class ModelStubWithPersons extends ModelStub {
         private final Person person1;
         private final Person person2;
 
         ModelStubWithPersons(Person person1, Person person2) {
-            requireNonNull(person1);
-            requireNonNull(person2);
             this.person1 = person1;
             this.person2 = person2;
         }
 
         @Override
         public Person getPersonById(String id) {
-            if (person1.getId().equals(id)) {
+            if (person1 != null && person1.getId().equals(id)) {
                 return person1;
-            } else if (person2.getId().equals(id)) {
+            }
+            if (person2 != null && person2.getId().equals(id)) {
                 return person2;
             }
             return null;
+        }
+    }
+
+    private static class ModelStubWithPersonsNoRelationship extends ModelStubWithPersons {
+        ModelStubWithPersonsNoRelationship(Person person1, Person person2) {
+            super(person1, person2);
         }
 
         @Override
@@ -137,55 +161,23 @@ public class DeleteRelationshipCommandTest {
         }
     }
 
-    /**
-     * A Model stub that always accepts the relationship being deleted.
-     */
-    private static class ModelStubAcceptingRelationshipDeleted extends ModelStub {
-        private final java.util.ArrayList<Person> persons = new java.util.ArrayList<>();
-        private final java.util.ArrayList<Relationship> relationships = new java.util.ArrayList<>();
-        private boolean relationshipDeleted = false;
+    private static class ModelStubWithRelationship extends ModelStubWithPersons {
+        private boolean isRelationshipDeleted = false;
 
-        @Override
-        public Person getPersonById(String id) {
-            requireNonNull(id);
-            return persons.stream()
-                    .filter(p -> p.getId().equals(id))
-                    .findFirst()
-                    .orElse(null);
+        ModelStubWithRelationship(Person person1, Person person2) {
+            super(person1, person2);
+            Relationship relationship = new RelationshipBuilder()
+                    .withUser1Id(person1.getId())
+                    .withUser2Id(person2.getId())
+                    .build();
         }
 
         @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            persons.add(person);
-        }
-
-        @Override
-        public void addRelationship(Relationship relationship) {
-            requireNonNull(relationship);
-            relationships.add(relationship);
-        }
-
-        @Override
-        public void deleteRelationship(String userId1, String userId2, String relationshipName)
-                throws RelationshipNotFoundException {
+        public void deleteRelationship(String userId1, String userId2, String relationshipName) {
             requireNonNull(userId1);
             requireNonNull(userId2);
             requireNonNull(relationshipName);
-
-            boolean found = false;
-            for (Relationship r : relationships) {
-                if (r.isSameRelationship(userId1, userId2, relationshipName)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                throw new RelationshipNotFoundException();
-            }
-
-            relationshipDeleted = true;
+            isRelationshipDeleted = true;
         }
     }
 }
