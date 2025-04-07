@@ -13,14 +13,19 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.DateParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.exceptions.RelationshipNotFoundException;
@@ -34,8 +39,8 @@ public class AddressBookTest {
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
-        assertEquals(FXCollections.observableArrayList(), addressBook.getRelationshipList()); // Changed check
-        assertEquals(FXCollections.observableArrayList(), addressBook.getEventList()); // Changed check
+        assertEquals(FXCollections.observableArrayList(), addressBook.getRelationshipList());
+        assertEquals(FXCollections.observableArrayList(), addressBook.getEventList());
     }
 
     @Test
@@ -196,6 +201,136 @@ public class AddressBookTest {
     @Test
     public void getPersonById_nonExistingId_returnsNull() {
         assertNull(addressBook.getPersonById("nonexistent"));
+    }
+
+    @Test
+    public void sortPersons_withComparator_sortsList() throws CommandException {
+        AddressBook addressBook = new AddressBook();
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
+        addressBook.addPerson(bob);
+        addressBook.addPerson(alice);
+
+        // Sort by name
+        addressBook.sortPersons(Comparator.comparing(person -> person.getName().fullName));
+
+        assertEquals(alice, addressBook.getPersonList().get(0));
+        assertEquals(bob, addressBook.getPersonList().get(1));
+    }
+
+    @Test
+    public void sortPersons_nullComparator_throwsNullPointerException() {
+        AddressBook addressBook = new AddressBook();
+        assertThrows(NullPointerException.class, () -> addressBook.sortPersons(null));
+    }
+
+    @Test
+    public void removePersonFromEvents_personInEvents_removesPersonFromEvents() throws ParseException {
+        AddressBook addressBook = new AddressBook();
+        Person person = new PersonBuilder().withName("Alice").build();
+        Event event = new Event("Meeting", DateParserUtil.parseDate("2024-01-01"), null, null, null,
+                new UniquePersonList());
+        event.addContact(person);
+        addressBook.addEvent(event);
+        addressBook.addPerson(person);
+
+        addressBook.removePerson(person);
+        assertFalse(event.getContacts().contains(person));
+    }
+
+    @Test
+    public void setEvent_validTargetAndEditedEvent_success() throws ParseException {
+        AddressBook addressBook = new AddressBook();
+        Event originalEvent = new Event("Meeting", DateParserUtil.parseDate("2024-01-01"), null, null, null,
+                new UniquePersonList());
+        Event editedEvent = new Event("Updated Meeting", DateParserUtil.parseDate("2024-01-02"), null, null, null,
+                new UniquePersonList());
+
+        addressBook.addEvent(originalEvent);
+        addressBook.setEvent(originalEvent, editedEvent);
+
+        assertEquals(1, addressBook.getEventList().size());
+        assertEquals(editedEvent, addressBook.getEventList().get(0));
+    }
+
+    @Test
+    public void setEvent_targetEventNotFound_throwsIllegalArgumentException() throws ParseException {
+        AddressBook addressBook = new AddressBook();
+        Event originalEvent = new Event("Meeting", DateParserUtil.parseDate("2024-01-01"), null, null, null,
+                new UniquePersonList());
+        Event editedEvent = new Event("Updated Meeting", DateParserUtil.parseDate("2024-01-02"), null, null, null,
+                new UniquePersonList());
+
+        assertThrows(IllegalArgumentException.class, () -> addressBook.setEvent(originalEvent, editedEvent));
+    }
+
+    @Test
+    public void updateRelationship_validTargetAndUpdatedRelationship_success() {
+        AddressBook addressBook = new AddressBook();
+        Relationship originalRelationship = new RelationshipBuilder().build();
+        Relationship updatedRelationship = new RelationshipBuilder()
+                .withForwardName("UpdatedName")
+                .withTags("UpdatedTag")
+                .build();
+
+        addressBook.addRelationship(originalRelationship);
+        addressBook.updateRelationship(originalRelationship, updatedRelationship);
+
+        assertTrue(addressBook.hasRelationship(updatedRelationship));
+        assertFalse(addressBook.hasRelationship(originalRelationship));
+    }
+
+    @Test
+    public void setRelationships_validList_success() {
+        AddressBook addressBook = new AddressBook();
+        Relationship relationship1 = new RelationshipBuilder()
+                .withUser1Id("1")
+                .withUser2Id("2")
+                .build();
+        Relationship relationship2 = new RelationshipBuilder()
+                .withUser1Id("3")
+                .withUser2Id("4")
+                .build();
+        List<Relationship> relationships = Arrays.asList(relationship1, relationship2);
+
+        addressBook.setRelationships(relationships);
+
+        assertEquals(2, addressBook.getRelationshipList().size());
+        assertTrue(addressBook.hasRelationship(relationship1));
+        assertTrue(addressBook.hasRelationship(relationship2));
+    }
+
+    @Test
+    public void equals_sameEvents_returnsTrue() throws ParseException {
+        AddressBook addressBook1 = new AddressBook();
+        AddressBook addressBook2 = new AddressBook();
+        Event event = new Event("Meeting", DateParserUtil.parseDate("2024-01-01"), null, null, null,
+                new UniquePersonList());
+
+        addressBook1.addEvent(event);
+        addressBook2.addEvent(event);
+
+        assertEquals(addressBook1, addressBook2);
+    }
+
+    @Test
+    public void hashCode_sameContent_sameHashCode() throws ParseException {
+        AddressBook addressBook1 = new AddressBook();
+        AddressBook addressBook2 = new AddressBook();
+        Person person = new PersonBuilder().build();
+        Event event = new Event("Meeting", DateParserUtil.parseDate("2024-01-01"), null, null, null,
+                new UniquePersonList());
+        Relationship relationship = new RelationshipBuilder().build();
+
+        addressBook1.addPerson(person);
+        addressBook1.addEvent(event);
+        addressBook1.addRelationship(relationship);
+
+        addressBook2.addPerson(person);
+        addressBook2.addEvent(event);
+        addressBook2.addRelationship(relationship);
+
+        assertEquals(addressBook1.hashCode(), addressBook2.hashCode());
     }
 
     /**

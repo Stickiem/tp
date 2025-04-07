@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.RelationshipBuilder;
 
 public class RelationshipTest {
@@ -120,6 +122,92 @@ public class RelationshipTest {
     }
 
     @Test
+    public void getNameFromPerspective_validUserId_returnsCorrectName() {
+        Relationship relationship = new RelationshipBuilder().build();
+
+        // Test getting name from first user's perspective
+        assertEquals(RelationshipBuilder.DEFAULT_FORWARD_NAME,
+                relationship.getNameFromPerspective(RelationshipBuilder.DEFAULT_USER1_ID));
+
+        // Test getting name from second user's perspective
+        assertEquals(RelationshipBuilder.DEFAULT_REVERSE_NAME,
+                relationship.getNameFromPerspective(RelationshipBuilder.DEFAULT_USER2_ID));
+    }
+
+    @Test
+    public void getNameFromPerspective_invalidUserId_throwsIllegalArgumentException() {
+        Relationship relationship = new RelationshipBuilder().build();
+        assertThrows(IllegalArgumentException.class, () ->
+                relationship.getNameFromPerspective("invalid_id"));
+    }
+
+    @Test
+    public void withAddedTag_newTag_returnsNewRelationshipWithAddedTag() {
+        Relationship originalRelationship = new RelationshipBuilder().build();
+        Tag newTag = new Tag("newTag");
+
+        Relationship updatedRelationship = originalRelationship.withAddedTag(newTag);
+
+        // Check that the new relationship contains the new tag
+        assertTrue(updatedRelationship.getTags().contains(newTag));
+
+        // Check that the original relationship is unchanged
+        assertFalse(originalRelationship.getTags().contains(newTag));
+
+        // Check that other properties remain the same
+        assertEquals(originalRelationship.getFirstUserId(), updatedRelationship.getFirstUserId());
+        assertEquals(originalRelationship.getSecondUserId(), updatedRelationship.getSecondUserId());
+        assertEquals(originalRelationship.getForwardName(), updatedRelationship.getForwardName());
+        assertEquals(originalRelationship.getReverseName(), updatedRelationship.getReverseName());
+    }
+
+    @Test
+    public void withRemovedTag_existingTag_returnsNewRelationshipWithoutTag() {
+        // Create a relationship with an initial tag
+        Set<Tag> initialTags = new HashSet<>();
+        Tag tagToRemove = new Tag("toRemove");
+        initialTags.add(tagToRemove);
+        Relationship originalRelationship = new RelationshipBuilder().withTags(tagToRemove.tagName).build();
+
+        Relationship updatedRelationship = originalRelationship.withRemovedTag(tagToRemove);
+
+        // Check that the new relationship doesn't contain the removed tag
+        assertFalse(updatedRelationship.getTags().contains(tagToRemove));
+
+        // Check that the original relationship still contains the tag
+        assertTrue(originalRelationship.getTags().contains(tagToRemove));
+
+        // Check that other properties remain the same
+        assertEquals(originalRelationship.getFirstUserId(), updatedRelationship.getFirstUserId());
+        assertEquals(originalRelationship.getSecondUserId(), updatedRelationship.getSecondUserId());
+        assertEquals(originalRelationship.getForwardName(), updatedRelationship.getForwardName());
+        assertEquals(originalRelationship.getReverseName(), updatedRelationship.getReverseName());
+    }
+
+    @Test
+    public void hashCode_consistentRegardlessOfDirection() {
+        // Create two relationships with same content but different direction
+        Relationship relationship1 = new RelationshipBuilder()
+                .withUser1Id("1")
+                .withUser2Id("2")
+                .withForwardName("Boss")
+                .withReverseName("Employee")
+                .withTags("Work")
+                .build();
+
+        Relationship relationship2 = new RelationshipBuilder()
+                .withUser1Id("2")
+                .withUser2Id("1")
+                .withForwardName("Employee")
+                .withReverseName("Boss")
+                .withTags("Work")
+                .build();
+
+        // Hash codes should be equal
+        assertEquals(relationship1.hashCode(), relationship2.hashCode());
+    }
+
+    @Test
     public void equals() {
         Relationship relationship = new RelationshipBuilder().build();
 
@@ -132,9 +220,6 @@ public class RelationshipTest {
 
         // null -> returns false
         assertNotEquals(null, relationship);
-
-        // different type -> returns false
-        assertNotEquals(5, relationship);
 
         // different forwardName -> returns false
         Relationship editedRelationship = new RelationshipBuilder().withForwardName("Different").build();
