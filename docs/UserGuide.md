@@ -140,8 +140,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]..
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the person’s tags/socials by typing `t/` / `s/` without
+    specifying any tags/socials respectively after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -163,7 +163,7 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in INcontact.
-* `findName Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `findName Betsy` followed by `delete 1` deletes the 1st person in the results of the `findName` command.
 ![delete person](images/deletePerson.png)
 
 ---
@@ -197,6 +197,7 @@ Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NA
 
 Example:
 * `deleteRelationship u/12345678 u/87654321 n/Business Partner`
+
 
 ---
 ### Adding a relationship tag: `addRelationshipTag`
