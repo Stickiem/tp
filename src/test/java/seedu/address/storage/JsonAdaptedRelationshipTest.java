@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -84,5 +85,23 @@ public class JsonAdaptedRelationshipTest {
                 new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, VALID_FORWARD_NAME, VALID_REVERSE_NAME,
                         invalidTags);
         assertThrows(IllegalValueException.class, relationship::toModelType);
+    }
+
+    @Test
+    public void constructor_nullTags_createsEmptyTagList() {
+        JsonAdaptedRelationship relationship =
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, VALID_FORWARD_NAME,
+                        VALID_REVERSE_NAME, null);
+        // Convert to model type to verify tags list is empty
+        assertDoesNotThrow(relationship::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidBothNames_throwsIllegalValueException() {
+        JsonAdaptedRelationship relationship =
+                new JsonAdaptedRelationship(VALID_USER1_ID, VALID_USER2_ID, INVALID_NAME, INVALID_NAME,
+                        VALID_TAGS);
+        String expectedMessage = Relationship.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, relationship::toModelType);
     }
 }
