@@ -75,3 +75,4 @@ Given below are my contributions to the project.
   * Contributed to issue resolution and bug fixing
   * Collaborated with team members on feature integration, fixed several serious bugs together including search and sort on null field
   * Brainstormed several features including search, sort, command history system, redo command, find relationship, import, export, timestamp tracking
+
