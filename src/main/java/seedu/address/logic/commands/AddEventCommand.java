@@ -46,6 +46,8 @@ public class AddEventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
+    public static final String MESSAGE_CONTACT_NOT_FOUND = "Contact %s does not exist in the address book. "
+        + "Please add the contact first.";
 
     private final Event toAdd;
     private final List<Person> contactsToAdd;
@@ -70,14 +72,14 @@ public class AddEventCommand extends Command {
     /**
      * Executes the add event command.
      * <p>
-     * The command first checks if the event already exists. If not, it adds the event to the model and then iterates
-     * over the provided contacts. Each contact is added to the event via {@code addContact} and, if not already present
-     * in the model, is added to the person list.
+     * The command first checks if the event already exists. If not, it verifies that all provided contacts
+     * exist in the model. If any contact is missing, it warns the user and aborts the command.
+     * Otherwise, it adds the event to the model and associates the contacts with the event.
      * </p>
      *
      * @param model {@code Model} which the command should operate on.
      * @return the result of executing the command.
-     * @throws CommandException if the event already exists in the address book.
+     * @throws CommandException if the event already exists or a specified contact is not found.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
@@ -87,14 +89,18 @@ public class AddEventCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
 
+        // Check that all provided contacts exist in the model
+        for (Person contact : contactsToAdd) {
+            if (!model.hasPerson(contact)) {
+                throw new CommandException(String.format(MESSAGE_CONTACT_NOT_FOUND, contact.getName().fullName));
+            }
+        }
+
         model.addEvent(toAdd);
 
-        // Add each provided contact to the event using addContact, and ensure they exist in the model.
+        // Add each provided contact to the event
         for (Person contact : contactsToAdd) {
             toAdd.addContact(contact);
-            if (!model.hasPerson(contact)) {
-                model.addPerson(contact);
-            }
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
