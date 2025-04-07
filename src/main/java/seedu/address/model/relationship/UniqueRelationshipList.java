@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -199,6 +200,26 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
         }
 
         internalList.set(index, editedRelationship);
+    }
+
+    /**
+     * Sets the relationships in this list to the given list of relationships.
+     * @param relationships The list of relationships to set.
+     */
+    public void setRelationships(List<Relationship>relationships) {
+        requireNonNull(relationships);
+        internalList.setAll(relationships);
+    }
+
+    /**
+     * Removes all relationships that involve the given user ID.
+     *
+     * @param userId The ID of the user whose relationships should be removed.
+     * @return true if any relationships were removed, false otherwise.
+     */
+    public boolean removeRelationshipsInvolvingUser(String userId) {
+        return internalList.removeIf(relationship ->
+                relationship.getFirstUserId().equals(userId) || relationship.getSecondUserId().equals(userId));
     }
 
     @Override

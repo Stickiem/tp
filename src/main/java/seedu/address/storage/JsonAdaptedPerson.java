@@ -31,6 +31,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final String socials;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String id;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -42,7 +43,8 @@ class JsonAdaptedPerson {
             @JsonProperty("email") String email,
             @JsonProperty("address") String address,
             @JsonProperty("social") List<String> socials,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("id") String id) {
 
         this.name = name;
         this.phone = phone;
@@ -56,6 +58,7 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.id = id;
     }
 
     /**
@@ -66,10 +69,9 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-
         socials = source.getSocials().stream().map(Social::toString).collect(Collectors.joining(","));
-
         tags.addAll(source.getTags().stream().map(JsonAdaptedTag::new).toList());
+        id = source.getId();
     }
 
     /**
@@ -123,6 +125,7 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, personSocials, modelTags);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, personSocials, modelTags, id);
     }
 }
