@@ -116,7 +116,7 @@ public class AddressBookTest {
 
     @Test
     public void hasRelationship_nullRelationship_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.hasRelationship((Relationship) null));
+        assertThrows(NullPointerException.class, () -> addressBook.hasRelationship(null));
     }
 
     @Test

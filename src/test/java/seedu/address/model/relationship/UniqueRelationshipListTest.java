@@ -19,7 +19,7 @@ public class UniqueRelationshipListTest {
 
     @Test
     public void contains_nullRelationship_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueRelationshipList.contains((Relationship) null));
+        assertThrows(NullPointerException.class, () -> uniqueRelationshipList.contains(null));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class UniqueRelationshipListTest {
     @Test
     public void setRelationships_nullList_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
-                uniqueRelationshipList.setRelationships((List<Relationship>) null));
+                uniqueRelationshipList.setRelationships(null));
     }
 
     @Test

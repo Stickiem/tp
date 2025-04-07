@@ -165,7 +165,7 @@ public class ModelManagerTest {
 
     @Test
     public void hasRelationship_nullRelationship_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasRelationship((Relationship) null));
+        assertThrows(NullPointerException.class, () -> modelManager.hasRelationship(null));
     }
 
     @Test
