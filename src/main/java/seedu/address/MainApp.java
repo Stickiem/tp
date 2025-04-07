@@ -179,6 +179,7 @@ public class MainApp extends Application {
         logger.info("============================ [ Stopping INcontact ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
+            storage.saveAddressBook(model.getAddressBook());
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
