@@ -345,7 +345,7 @@ Format: `findSocial KEYWORD [MORE_KEYWORDS]`
 * Only the social media handle field is searched.
 
 Examples:
-* `findSocial facebook twitter linkedin`
+* `findSocial facebook twitter linkedin` <br>
 
 ---
 
@@ -361,7 +361,7 @@ Finds persons involved in relationships where their role in any relationship con
 * For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because their role contains the keyword "Boss".
 
 **Examples**:
-* `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings.
+* `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings. <br>
 
 ---
 
@@ -372,7 +372,7 @@ Format: `findTag KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive.
 
 Examples:
-* `findTag colleague important`
+* `findTag colleague important` <br>
 
 ---
 
@@ -388,7 +388,7 @@ Sorts the address book by one or more fields.
 
 **Examples**:
 * `sort -r name phone` sorts the address book by name and phone in reverse order.
-* `sort email` sorts the address book by email.
+* `sort email` sorts the address book by email. <br>
 
 ---
 
