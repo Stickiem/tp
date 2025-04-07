@@ -34,7 +34,6 @@ public class DeleteRelationshipCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Successfully deleted relationship between %s and %s";
     public static final String MESSAGE_RELATIONSHIP_NOT_FOUND = "No relationship found with the specified details";
     public static final String MESSAGE_PERSONS_NOT_FOUND = "One or both persons could not be found";
-    public static final String MESSAGE_EMPTY_PARAMETERS = "User IDs and relationship name cannot be empty";
 
     private static final Logger logger = LogsCenter.getLogger(DeleteRelationshipCommand.class);
 
@@ -88,7 +87,7 @@ public class DeleteRelationshipCommand extends Command {
     private void validateParameters() throws CommandException {
         if (hasEmptyParameter(firstUserId) || hasEmptyParameter(secondUserId)
                 || hasEmptyParameter(relationshipName)) {
-            throw new CommandException(MESSAGE_EMPTY_PARAMETERS);
+            throw new CommandException(MESSAGE_PERSONS_NOT_FOUND);
         }
     }
 
