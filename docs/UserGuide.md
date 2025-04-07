@@ -90,12 +90,11 @@ INcontact is a **desktop app targeted towards early startup founders for managin
 
 Shows a message explaning how to access the help page.
 
+Format: `help`
+
 Examples:
 * `help`
 ![help message](images/helpMessage.png)
-
-Format: `help`
-
 
 ---
 ### Adding a person: `add`
