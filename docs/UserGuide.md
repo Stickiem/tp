@@ -98,12 +98,12 @@ Format: `help`
 ---
 ### Adding a person: `add`
 
-Adds a person to INcontact.
+Adds a person to INcontact. Duplicates are allowed.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 </div>
 
 Examples:
@@ -163,7 +163,7 @@ Format: `clear`
 ---
 ### Adding a relationship: `addRelationship`
 
-Adds a relationship to INcontact.
+Adds a relationship to INcontact. You must specify both a forward and reverse name for this relationship.
 
 Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
 
@@ -173,7 +173,7 @@ Example:
 ---
 ### Deleting a relationship: `deleteRelationship`
 
-Deletes a relationship from INcontact.
+Deletes a relationship from INcontact. Either the forward or reverse name of the relationship will suffice.
 
 Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`
 
@@ -442,18 +442,11 @@ If your changes to the data file makes its format invalid, INcontact will discar
 Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-
----
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous INcontact home folder.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -464,6 +457,9 @@ _Details coming soon ..._
 3. **Character Encoding for Find Commands**: All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected. Searching for names with special characters might return more or fewer results than expected. For best results, use standard English characters in your contact information.
 4. **Character Encoding for Sort Commands**: The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules. For predictable sorting results, use standard English characters in your contact information.
 5. **Uncommon Redo Implementation**: The `redo` command in this application differs from common redo implementations. Rather than reversing an undo action, it re-executes a specific command from your history (e.g., `redo 3` re-executes the third last command from the history list). Should use `redoList` to view your command history (up to 10 most recent commands) before using the `redo` command.
+
+## Planned enhancements
+1. **Use a simpler specifier for relationships**: Relationships currently work via specifying unique User IDs, since INcontact has a very permissive policy regarding similar or duplicate contact details. In future implementations, we will allow for specifying relationships by GUI number, as well as multistep selection (i.e. INcontact finds all matching users, and asks you to choose the specific user).
 
 --------------------------------------------------------------------------------------------------------------------
 
