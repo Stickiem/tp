@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UpdateEventLocationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -30,10 +32,12 @@ public class UpdateEventLocationCommandParser implements Parser<UpdateEventLocat
         }
         Index eventIndex = ParserUtil.parseIndex(preamble);
 
-        if (!argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
-            throw new ParseException("New location is required.");
+        List<String> locations = argMultimap.getAllValues(PREFIX_LOCATION);
+        if (locations.size() != 1) {
+            throw new ParseException("Please provide exactly one new location.");
         }
-        String newLocation = argMultimap.getValue(PREFIX_LOCATION).get();
+        String newLocation = locations.get(0);
+
         return new UpdateEventLocationCommand(eventIndex, newLocation);
     }
 }

@@ -72,7 +72,7 @@ public class DeleteRelationshipCommandTest {
                 person1.getId(), person2.getId(), "");
 
         assertThrows(CommandException.class,
-                DeleteRelationshipCommand.MESSAGE_EMPTY_PARAMETERS, () ->
+                DeleteRelationshipCommand.MESSAGE_PERSONS_NOT_FOUND, () ->
                         deleteRelationshipCommand.execute(modelStub));
     }
 

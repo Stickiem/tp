@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UpdateEventDescriptionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -30,10 +32,12 @@ public class UpdateEventDescriptionCommandParser implements Parser<UpdateEventDe
         }
         Index eventIndex = ParserUtil.parseIndex(preamble);
 
-        if (!argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
-            throw new ParseException("New description is required.");
+        List<String> descriptions = argMultimap.getAllValues(PREFIX_DESCRIPTION);
+        if (descriptions.size() != 1) {
+            throw new ParseException("Please provide exactly one new description.");
         }
-        String newDescription = argMultimap.getValue(PREFIX_DESCRIPTION).get();
+        String newDescription = descriptions.get(0);
+
         return new UpdateEventDescriptionCommand(eventIndex, newDescription);
     }
 }

@@ -358,7 +358,7 @@ Finds persons involved in relationships where their role in any relationship con
 * Only the role names in relationships are searched.
 * The search is case-insensitive.
 * **Important**: The command returns **only the person whose role** in the relationship contains the search keyword.
-* For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because only Person A's role contains the keyword "Boss".
+* For example, if Person A has a relationship "Boss" with Person B whose relationship is "Employee", searching for `findRelationship Boss` will return only Person A, because their role contains the keyword "Boss".
 
 **Examples**:
 * `findRelationship family friend` returns all persons where their role in any relationship containing "family" or "friend" as substrings. <br>
@@ -471,6 +471,10 @@ _Details coming soon ..._
 4. **Character Encoding for Sort Commands**: The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules. For predictable sorting results, use standard English characters in your contact information.
 5. **Uncommon Redo Implementation**: The `redo` command in this application differs from common redo implementations. Rather than reversing an undo action, it re-executes a specific command from your history (e.g., `redo 3` re-executes the third last command from the history list). Should use `redoList` to view your command history (up to 10 most recent commands) before using the `redo` command.
 6. **UI Feedback with redoList Command**: When executing the `redoList` command, the command input bar is not cleared and turns red (similar to when there is an error). This is expected behavior as `redoList` returns command history information through exceptions rather than standard output.
+
+## Planned enhancements
+1. **Use a simpler specifier for relationships**: Relationships currently work via specifying unique User IDs, since INcontact has a very permissive policy regarding similar or duplicate contact details. In future implementations, we will allow for specifying relationships by GUI number, as well as multistep selection (i.e. INcontact finds all matching users, and asks you to choose the specific user).
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary

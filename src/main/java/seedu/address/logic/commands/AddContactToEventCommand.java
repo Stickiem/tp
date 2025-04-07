@@ -12,7 +12,7 @@ import seedu.address.model.person.Person;
  * Adds a contact to an event in the address book.
  * <p>
  * The event is identified by its index in the filtered event list.
- * The specified contact (a Person) is added to the event’s contacts using the event's {@code addContact} method.
+ * The specified contact (a Person) is added to the event’s contacts.
  * </p>
  */
 public class AddContactToEventCommand extends Command {
@@ -25,6 +25,8 @@ public class AddContactToEventCommand extends Command {
     public static final String MESSAGE_ADD_CONTACT_SUCCESS = "Contact added to event: %1$s";
     public static final String MESSAGE_CONTACT_ALREADY_EXISTS = "This contact already exists in the event";
     public static final String MESSAGE_EVENT_NOT_FOUND = "The event index provided is invalid.";
+    public static final String MESSAGE_CONTACT_NOT_FOUND =
+            "Contact %s does not exist in the address book. Please add the contact first.";
 
     private final Index eventIndex;
     private final Person contact;
@@ -48,15 +50,20 @@ public class AddContactToEventCommand extends Command {
         if (eventIndex.getZeroBased() >= model.getFilteredEventList().size()) {
             throw new CommandException(MESSAGE_EVENT_NOT_FOUND);
         }
-        Event event = model.getFilteredEventList().get(eventIndex.getZeroBased());
+        // Check that the contact exists in the address book.
+        if (!model.hasPerson(contact)) {
+            throw new CommandException(String.format(MESSAGE_CONTACT_NOT_FOUND, contact.getName().fullName));
+        }
+        Event originalEvent = model.getFilteredEventList().get(eventIndex.getZeroBased());
         // Check if the contact already exists in the event.
-        if (event.getContacts().stream().anyMatch(p -> p.equals(contact))) {
+        if (originalEvent.getContacts().stream().anyMatch(p -> p.equals(contact))) {
             throw new CommandException(MESSAGE_CONTACT_ALREADY_EXISTS);
         }
-        event.addContact(contact);
-        // Optionally, if your Model requires explicit updating of events,
-        // call model.updateEvent(originalEvent, event) here.
-        return new CommandResult(String.format(MESSAGE_ADD_CONTACT_SUCCESS, event));
+        // Add the contact to the event.
+        originalEvent.addContact(contact);
+        // Notify the model that the event has been updated (force UI refresh).
+        model.updateEvent(originalEvent, originalEvent);
+        return new CommandResult(String.format(MESSAGE_ADD_CONTACT_SUCCESS, originalEvent));
     }
 
     @Override
@@ -64,9 +71,10 @@ public class AddContactToEventCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof AddContactToEventCommand otherCommand)) {
+        if (!(other instanceof AddContactToEventCommand)) {
             return false;
         }
+        AddContactToEventCommand otherCommand = (AddContactToEventCommand) other;
         return eventIndex.equals(otherCommand.eventIndex) && contact.equals(otherCommand.contact);
     }
 }
