@@ -54,8 +54,8 @@ public class DeleteContactFromEventCommand extends Command {
             throw new CommandException(MESSAGE_CONTACT_NOT_FOUND);
         }
         event.deleteContact(contact);
-        // Optionally, if your Model requires explicit updating of events,
-        // call model.updateEvent(originalEvent, event) here.
+
+        model.updateEvent(event, event);
         return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS, event));
     }
 

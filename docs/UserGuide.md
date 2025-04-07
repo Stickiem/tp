@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-INcontact is a **desktop app for managing business contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, INcontact can get your contact management tasks done faster than traditional GUI apps.
+INcontact is a **desktop app targeted towards early startup founders for managing business contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, INcontact can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -90,6 +90,8 @@ INcontact is a **desktop app for managing business contacts, optimized for use v
 
 Shows a message explaning how to access the help page.
 
+Examples:
+* `help`
 ![help message](images/helpMessage.png)
 
 Format: `help`
@@ -98,18 +100,20 @@ Format: `help`
 ---
 ### Adding a person: `add`
 
-Adds a person to INcontact.
+Adds a person to INcontact. Duplicates are allowed.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have any number of tags/socials (including 0). <br>
+If person have no phone, email or address, system would indicate as a "~" instead. 
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/social2 t/Investor`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/@social2 t/Investor`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Caroly Wilcox` Adds a contact with name only
+* `add n/Caroly Wilcox`
+![add person](images/addPerson.png)
 
 ---
 ### Listing all persons : `list`
@@ -117,6 +121,10 @@ Examples:
 Shows a list of all persons in INcontact.
 
 Format: `list`
+
+Examples:
+* `list`
+![list persons](images/list.png)
 
 ---
 ### Editing a person : `edit`
@@ -129,14 +137,15 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]..
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the person’s tags/socials by typing `t/` / `s/` without
+  specifying any tags/socials respectively after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 *  `edit 1 p/91234567 s/@john`
 *  `edit 1 s/@elmo` Edits the socials of the 1st person to be `@elmo`.
+![edit person](images/editPerson.png)
 
 ---
 ### Deleting a person : `delete`
@@ -151,7 +160,8 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in INcontact.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `findName Betsy` followed by `delete 1` deletes the 1st person in the results of the `findName` command.
+  ![delete person](images/deletePerson.png)
 
 ---
 ### Clearing all entries : `clear`
@@ -160,20 +170,25 @@ Clears all entries from INcontact.
 
 Format: `clear`
 
+Examples:
+* `clear`
+![clear](images/clear.png)
+
 ---
 ### Adding a relationship: `addRelationship`
 
-Adds a relationship to INcontact.
+Adds a relationship between contacts to INcontact. You must specify both a forward and reverse name for this relationship.
 
 Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
 
 Example:
-* `addRelationship u/12345678 u/87654321 fn/Boss of rn/Reports to t/Work`
+* `addRelationship u/-846010516 u/131288605 fn/Boss of rn/Reports to t/Work`
+  ![addRelationship](images/addRelationship.png)
 
 ---
 ### Deleting a relationship: `deleteRelationship`
 
-Deletes a relationship from INcontact.
+Deletes a relationship from INcontact. Either the forward or reverse name of the relationship will suffice.
 
 Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`
 
@@ -431,17 +446,23 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+INcontact data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+INcontact data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, INcontact will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the INcontact to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
+---
+
+### Find and Sort Interaction
+When using find commands (like `findName`, `findPhone`, etc.) followed by sort commands:
+- Find commands display a filtered subset of the address book based on your search criteria
+- Sort commands affect the entire address book, but only the previously filtered results will be displayed
 
 ---
 
@@ -453,7 +474,7 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous INcontact home folder.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -464,6 +485,10 @@ _Details coming soon ..._
 3. **Character Encoding for Find Commands**: All find commands (`findName`, `findPhone`, etc.) work best with standard English alphabet characters. When using special characters or non-English alphabets (such as Turkish, Chinese, etc.), search results may be unexpected. Searching for names with special characters might return more or fewer results than expected. For best results, use standard English characters in your contact information.
 4. **Character Encoding for Sort Commands**: The sort functionality works best with standard English alphabet characters. When sorting entries containing special characters or non-English alphabets, the sorting order may not follow expected language-specific rules. For predictable sorting results, use standard English characters in your contact information.
 5. **Uncommon Redo Implementation**: The `redo` command in this application differs from common redo implementations. Rather than reversing an undo action, it re-executes a specific command from your history (e.g., `redo 3` re-executes the third last command from the history list). Should use `redoList` to view your command history (up to 10 most recent commands) before using the `redo` command.
+6. **UI Feedback with redoList Command**: When executing the `redoList` command, the command input bar is not cleared and turns red (similar to when there is an error). This is expected behavior as `redoList` returns command history information through exceptions rather than standard output.
+
+## Planned enhancements
+1. **Use a simpler specifier for relationships**: Relationships currently work via specifying unique User IDs, since INcontact has a very permissive policy regarding similar or duplicate contact details. In future implementations, we will allow for specifying relationships by GUI number, as well as multistep selection (i.e. INcontact finds all matching users, and asks you to choose the specific user).
 
 --------------------------------------------------------------------------------------------------------------------
 

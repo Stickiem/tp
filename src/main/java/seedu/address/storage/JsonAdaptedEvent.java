@@ -100,6 +100,10 @@ class JsonAdaptedEvent {
             contactsList.add(p);
         }
 
-        return new Event(name, parsedDate, location, description, modelTags, contactsList);
+        if (this.id == null || this.id.isEmpty()) {
+            return new Event(name, parsedDate, location, description, modelTags, contactsList);
+        } else {
+            return new Event(id, name, parsedDate, location, description, modelTags, contactsList);
+        }
     }
 }
