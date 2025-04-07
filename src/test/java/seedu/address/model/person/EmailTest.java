@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 
 public class EmailTest {
 
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Email(null));
+    }
 
     @Test
     public void constructor_invalidEmail_throwsIllegalArgumentException() {
