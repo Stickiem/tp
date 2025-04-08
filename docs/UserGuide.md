@@ -230,8 +230,9 @@ Adds an event to INcontact.
 Format: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`
 
 Examples:
-* `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance c/John Doe c/Jane Smith`
+* `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance c/Alex Yeoh c/Bernice Yu`
 * `addEvent en/Tech Conference d/2025-06-02`
+![addEvent](images/addEvent.png)
 
 ---
 ### Deleting an event: `deleteEvent`
@@ -241,7 +242,8 @@ Deletes an event from INcontact.
 Format: `deleteEvent u/EVENT_ID`
 
 Example:
-* `deleteEvent u/98765432`
+* `deleteEvent u/00000001`
+![deleteEvent](images/deleteEvent.png)
 
 ---
 ### Updating an event description: `updateEventDesc`
@@ -251,7 +253,8 @@ Updates the description of an event.
 Format: `updateEventDesc INDEX desc/NEW_DESCRIPTION`
 
 Example:
-* `updateEventDesc 1 desc/New description for the event`
+* `updateEventDesc 1 desc/Good Time`
+![updateEventDesc](images/updateEventDesc.png)
 
 ---
 ### Updating an event time: `updateEventDate`
@@ -263,7 +266,7 @@ Updates the date of an event.
 
 **Example:**
 * `updateEventDate 1 d/2025-03-15T09:30`
-
+![updateEventDate command](images/updateEventDate_command.png)
 ---
 ### Updating an event location: `updateEventLoc`
 
@@ -274,6 +277,7 @@ Updates the location of an event.
 
 **Example:**
 * `updateEventLoc 1 l/Conference Room`
+![updateEventLoc](images/updateEventLoc.png)
 
 ---
 ### Adding an event tag: `addEventTag`
@@ -282,18 +286,28 @@ Adds a tag to an event.
 
 Format: `addEventTag INDEX t/TAG_NAME`
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+System only registers one tag, adding multiple, it will take the last one, e.g. "addEventTag 1 t/Finance t/Meeting" would only register the "Meeting" tag.
+</div>
+
 Example:
 * `addEventTag 1 t/Finance`
+![addEventTag](images/addEventTag.png)
 
 ---
 ### Deleting an event tag: `deleteEventTag`
 
 Deletes a tag from an event.
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+System only registers one tag, deleting multiple, it will take the last one, e.g. "deleteEventTag 1 t/Finance t/Meeting" would only register the "Meeting" tag.
+</div>
+
 Format: `deleteEventTag INDEX t/TAG_NAME`
 
 Example:
 * `deleteEventTag 1 t/Finance`
+![deleteEventTag](images/deleteEventTag.png)
 
 ---
 ### Adding an event contact: `addEventContact`
@@ -302,18 +316,28 @@ Adds a contact to an event.
 
 Format: `addEventContact INDEX c/CONTACT_NAME`
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+System only registers one contact, adding multiple, it will take the last one, e.g. "addEventContact 1 c/Alex Yeoh c/Bernice Yu" would only register the "Bernice Yu" contact.
+</div>
+
 Example:
-* `addEventContact 1 c/John Doe`
+* `addEventContact 1 c/Alex Yeoh`
+![addEventContact](images/addEventContact.png)
 
 ---
 ### Deleting an event contact: `deleteEventContact`
 
 Deletes a contact from an event.
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+System only registers one contact, deleting multiple, it will take the last one, e.g. "deleteEventContact 1 c/Alex Yeoh c/Bernice Yu" would only register the "Bernice Yu" contact.
+</div>
+
 Format: `deleteEventContact INDEX c/CONTACT_NAME`
 
 Example:
-* `deleteEventContact 1 c/John Doe`
+* `deleteEventContact 1 c/Alex Yeoh`
+![deleteEventContact](images/deleteEventContact.png)
 
 ---
 
