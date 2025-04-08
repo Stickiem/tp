@@ -90,9 +90,9 @@ INcontact is a **desktop app targeted towards early startup founders for managin
 
 Shows a message explaning how to access the help page.
 
-Format: `help`
+**Format**: `help`
 
-Examples:
+**Example**:
 * `help`
 ![help message](images/helpMessage.png)
 
@@ -101,14 +101,14 @@ Examples:
 
 Adds a person to INcontact. Duplicates are allowed.
 
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
+**Format**: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags/socials (including 0). <br>
 If person have no phone, email or address, system would indicate as a "~" instead. 
 </div>
 
-Examples:
+**Example**:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/@social1 s/@social2 t/Investor`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Caroly Wilcox`
@@ -119,9 +119,9 @@ Examples:
 
 Shows a list of all persons in INcontact.
 
-Format: `list`
+**Format**: `list`
 
-Examples:
+**Example**:
 * `list`
 ![list persons](images/list.png)
 
@@ -130,7 +130,7 @@ Examples:
 
 Edits an existing person in INcontact.
 
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
+**Format**: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]... [t/TAG]...`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -139,7 +139,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SOCIAL]..
 * You can remove all the person’s tags/socials by typing `t/` / `s/` without
   specifying any tags/socials respectively after it.
 
-Examples:
+**Example**:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 *  `edit 1 p/91234567 s/@john`
@@ -151,13 +151,13 @@ Examples:
 
 Deletes the specified person from INcontact.
 
-Format: `delete INDEX`
+**Format**: `delete INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+**Example**:
 * `list` followed by `delete 2` deletes the 2nd person in INcontact.
 * `findName Betsy` followed by `delete 1` deletes the 1st person in the results of the `findName` command.
   ![delete person](images/deletePerson.png)
@@ -167,9 +167,9 @@ Examples:
 
 Clears all entries from INcontact.
 
-Format: `clear`
+**Format**: `clear`
 
-Examples:
+**Example**:
 * `clear`
 ![clear](images/clear.png)
 
@@ -178,9 +178,9 @@ Examples:
 
 Adds a relationship between contacts to INcontact. You must specify both a forward and reverse name for this relationship.
 
-Format: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
+**Format**: `addRelationship u/USER_ID_1 u/USER_ID_2 fn/FORWARD_NAME rn/REVERSE_NAME [t/TAG]...`
 
-Example:
+**Example**:
 * `addRelationship u/-846010516 u/131288605 fn/Boss of rn/Reports to t/Work`
 ![addRelationship](images/addRelationship.png)
 
@@ -189,9 +189,9 @@ Example:
 
 Deletes a relationship from INcontact. Either the forward or reverse name of the relationship will suffice.
 
-Format: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`
+**Format**: `deleteRelationship u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME`
 
-Example:
+**Example**:
 * `deleteRelationship u/-846010516 u/131288605 n/Boss of`
 ![deleteRelationship](images/deleteRelationship.png)
 
@@ -204,9 +204,9 @@ Adds a relationship tag to a relationship.
 Ensure that a relationship between the two parties exists first.
 </div>
 
-Format: `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`
+**Format**: `addRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`
 
-Example:
+**Example**:
 * `addRelationshipTag u/-846010516 u/131288605 n/Boss of t/partners`
 ![addRelationshipTag](images/addRelationshipTag.png)
 
@@ -215,9 +215,9 @@ Example:
 
 Deletes a relationship tag from a relationship.
 
-Format: `deleteRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`
+**Format**: `deleteRelationshipTag u/USER_ID_1 u/USER_ID_2 n/FORWARD_NAME_OR_REVERSE_NAME t/TAG`
 
-Example:
+**Example**:
 * `deleteRelationshipTag u/-846010516 u/131288605 n/Boss of t/partners`
 ![deleteRelationshipTag](images/deleteRelationshipTag.png)
 
@@ -227,9 +227,9 @@ Example:
 
 Adds an event to INcontact.
 
-Format: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`
+**Format**: `addEvent en/EVENT_NAME d/DATE [l/LOCATION] [desc/DESCRIPTION] [t/TAG]... [c/CONTACT_NAME]...`
 
-Examples:
+**Example**:
 * `addEvent en/Annual Investor Meetup d/2025-03-15 l/Singapore desc/Networking session for investors t/Finance c/Alex Yeoh c/Bernice Yu`
 * `addEvent en/Tech Conference d/2025-06-02`
 ![addEvent](images/addEvent.png)
@@ -239,9 +239,9 @@ Examples:
 
 Deletes an event from INcontact.
 
-Format: `deleteEvent u/EVENT_ID`
+**Format**: `deleteEvent u/EVENT_ID`
 
-Example:
+**Example**:
 * `deleteEvent u/00000001`
 ![deleteEvent](images/deleteEvent.png)
 
@@ -250,9 +250,9 @@ Example:
 
 Updates the description of an event.
 
-Format: `updateEventDesc INDEX desc/NEW_DESCRIPTION`
+**Format**: `updateEventDesc INDEX desc/NEW_DESCRIPTION`
 
-Example:
+**Example**:
 * `updateEventDesc 1 desc/Good Time`
 ![updateEventDesc](images/updateEventDesc.png)
 
@@ -284,13 +284,13 @@ Updates the location of an event.
 
 Adds a tag to an event.
 
-Format: `addEventTag INDEX t/TAG_NAME`
+**Format**: `addEventTag INDEX t/TAG_NAME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 System only registers one tag, adding multiple, it will take the last one, e.g. "addEventTag 1 t/Finance t/Meeting" would only register the "Meeting" tag.
 </div>
 
-Example:
+**Example**:
 * `addEventTag 1 t/Finance`
 ![addEventTag](images/addEventTag.png)
 
@@ -303,9 +303,9 @@ Deletes a tag from an event.
 System only registers one tag, deleting multiple, it will take the last one, e.g. "deleteEventTag 1 t/Finance t/Meeting" would only register the "Meeting" tag.
 </div>
 
-Format: `deleteEventTag INDEX t/TAG_NAME`
+**Format**: `deleteEventTag INDEX t/TAG_NAME`
 
-Example:
+**Example**:
 * `deleteEventTag 1 t/Finance`
 ![deleteEventTag](images/deleteEventTag.png)
 
@@ -314,13 +314,13 @@ Example:
 
 Adds a contact to an event.
 
-Format: `addEventContact INDEX c/CONTACT_NAME`
+**Format**: `addEventContact INDEX c/CONTACT_NAME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 System only registers one contact, adding multiple, it will take the last one, e.g. "addEventContact 1 c/Alex Yeoh c/Bernice Yu" would only register the "Bernice Yu" contact.
 </div>
 
-Example:
+**Example**:
 * `addEventContact 1 c/Alex Yeoh`
 ![addEventContact](images/addEventContact.png)
 
@@ -333,9 +333,9 @@ Deletes a contact from an event.
 System only registers one contact, deleting multiple, it will take the last one, e.g. "deleteEventContact 1 c/Alex Yeoh c/Bernice Yu" would only register the "Bernice Yu" contact.
 </div>
 
-Format: `deleteEventContact INDEX c/CONTACT_NAME`
+**Format**: `deleteEventContact INDEX c/CONTACT_NAME`
 
-Example:
+**Example**:
 * `deleteEventContact 1 c/Alex Yeoh`
 ![deleteEventContact](images/deleteEventContact.png)
 
@@ -343,12 +343,12 @@ Example:
 
 ### Locating persons by name: `findName`
 Finds persons whose names contain any of the given keywords as a substring.  
-Format: `findName KEYWORD [MORE_KEYWORDS]`
+**Format**: `findName KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive. e.g., `hans` will match `Hans`
 * Only the name field is searched.
 * Persons matching at least one keyword will be returned (i.e., `OR` search). e.g., `Han Ya` will return `Hans Gruber`, `Bo Yang`
 
-Examples:
+**Example**:
 * `findName Joh` returns `john` and `John Doe`
 * `findName ale david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
@@ -357,41 +357,46 @@ Examples:
 
 ### Locating persons by phone: `findPhone`
 Finds persons whose phone numbers contain any of the given keywords as a substring.  
-Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+**Format**: `findPhone KEYWORD [MORE_KEYWORDS]`
 * Only the phone number field is searched.
 
-Examples:
-* `findPhone 123 456`
+**Example**:
+* `findPhone 874 758`
+![findPhone](images/findPhone.png)
 
 ---
 
 ### Locating persons by email: `findEmail`
 Finds persons whose emails contain any of the given keywords as a substring.  
-Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+**Format**: `findEmail KEYWORD [MORE_KEYWORDS]`
 * Only the email field is searched.
 
-Examples:
-* `findEmail example1@example.com`
+**Example**:
+* `findEmail alexyeoh@example.com`
+![findEmail](images/findEmail.png)
+
 
 ---
 
 ### Locating persons by address: `findAddress`
 Finds persons whose addresses contain any of the given keywords as a substring.  
-Format: `findAddress KEYWORD [MORE_KEYWORDS]`
+**Format**: `findAddress KEYWORD [MORE_KEYWORDS]`
 * Only the address field is searched.
 
-Examples:
-* `findAddress street avenue park`
+**Example**:
+* `findAddress lorong`
+![findAddress](images/findAddress.png)
 
 ---
 
 ### Locating persons by social: `findSocial`
 Finds persons whose social media handles contain any of the given keywords as a substring.  
-Format: `findSocial KEYWORD [MORE_KEYWORDS]`
+**Format**: `findSocial KEYWORD [MORE_KEYWORDS]`
 * Only the social media handle field is searched.
 
-Examples:
-* `findSocial facebook twitter linkedin` <br>
+**Example**:
+* `findSocial alex` <br>
+  ![findSocial](images/findSocial.png)
 
 ---
 
@@ -413,11 +418,11 @@ Finds persons involved in relationships where their role in any relationship con
 
 ### Locating persons by tag: `findTag`
 Finds persons whose tags contain any of the given keywords as a substring.  
-Format: `findTag KEYWORD [MORE_KEYWORDS]`
+**Format**: `findTag KEYWORD [MORE_KEYWORDS]`
 * Only the tags field is searched.
 * The search is case-insensitive.
 
-Examples:
+**Example**:
 * `findTag colleague important` <br>
 
 ---
@@ -471,7 +476,10 @@ Lists your command history from the current session.
 
 Exits the program.
 
-Format: `exit`
+**Format**: `exit`
+
+**Example**:
+* `exit`
 
 ---
 
