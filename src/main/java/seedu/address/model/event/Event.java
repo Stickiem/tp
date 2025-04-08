@@ -67,10 +67,10 @@ public class Event {
     }
 
     /**
-     * Private constructor used for creating an updated version of an event.
+     * Public constructor used for creating an updated version of an event.
      */
     public Event(String id, String name, LocalDateTime date, String location, String description, Set<Tag> tags,
-                  UniquePersonList contacts) {
+                 UniquePersonList contacts) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -226,6 +226,20 @@ public class Event {
         contacts.remove(person);
     }
 
+    /**
+     * Returns a comma-separated string of the full names of all contacts associated with this event.
+     * If no contacts exist, returns "None".
+     *
+     * @return a formatted string of contacts.
+     */
+    public String getContactsAsString() {
+        return getContacts().isEmpty()
+                ? "None"
+                : getContacts().stream()
+                               .map(person -> person.getName().fullName + " (ID: " + person.getId() + ")")
+                               .collect(java.util.stream.Collectors.joining(", "));
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -263,8 +277,8 @@ public class Event {
             builder.append("; Tags: ");
             tags.forEach(tag -> builder.append(tag.toString()).append(" "));
         }
-        builder.append("; Contacts: ").append(contacts.toString());
-        builder.append("; ID: ").append(id);
+        builder.append("; Contacts: ").append(getContactsAsString());
+        builder.append("; Event ID: ").append(id);
         return builder.toString();
     }
 }

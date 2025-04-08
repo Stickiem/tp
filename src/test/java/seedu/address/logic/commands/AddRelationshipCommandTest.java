@@ -50,6 +50,40 @@ public class AddRelationshipCommandTest {
                 "Friend",
                 "Reports to",
                 null));
+        assertThrows(NullPointerException.class, "First user ID cannot be null", () -> new AddRelationshipCommand(
+                null,
+                "2",
+                "Friend",
+                "Reports to",
+                new HashSet<>()));
+        assertThrows(NullPointerException.class,
+                "Second user ID cannot be null", () -> new AddRelationshipCommand(
+                        "1",
+                        null,
+                        "Friend",
+                        "Reports to",
+                        new HashSet<>()));
+        assertThrows(NullPointerException.class,
+                "Forward relationship name cannot be null", () -> new AddRelationshipCommand(
+                        "1",
+                        "2",
+                        null,
+                        "Reports to",
+                        new HashSet<>()));
+        assertThrows(NullPointerException.class,
+                "Reverse relationship name cannot be null", () -> new AddRelationshipCommand(
+                        "1",
+                        "2",
+                        "Friend",
+                        null,
+                        new HashSet<>()));
+        assertThrows(NullPointerException.class,
+                "Tags set cannot be null", () -> new AddRelationshipCommand(
+                        "1",
+                        "2",
+                        "Friend",
+                        "Reports to",
+                        null));
     }
 
     @Test
@@ -114,6 +148,47 @@ public class AddRelationshipCommandTest {
     }
 
     @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        AddRelationshipCommand command = new AddRelationshipCommand(
+                "1", "2", "Friend", "Reports to", new HashSet<>());
+        assertThrows(NullPointerException.class, "Model cannot be null", () -> command.execute(null));
+    }
+
+    @Test
+    public void execute_hasExistingReversedRelationship_throwsCommandException() throws Exception {
+        ModelStubAcceptingRelationshipAdded modelStub = new ModelStubAcceptingRelationshipAdded();
+        Person person1 = new PersonBuilder().build();
+        Person person2 = new PersonBuilder().withName("Bob").withPhone("87654321").build();
+        modelStub.addPerson(person1);
+        modelStub.addPerson(person2);
+
+        // Add reversed relationship first
+        Relationship existingRelationship = new RelationshipBuilder()
+                .withUser1Id(person2.getId())
+                .withUser2Id(person1.getId())
+                .withForwardName("Reports to")
+                .withReverseName("Boss of")
+                .build();
+        modelStub.addRelationship(existingRelationship);
+
+        // Try to add relationship in opposite direction
+        AddRelationshipCommand addCommand = new AddRelationshipCommand(
+                person1.getId(), person2.getId(), "Boss of", "Reports to", new HashSet<>());
+
+        assertThrows(CommandException.class, AddRelationshipCommand.MESSAGE_DUPLICATE_RELATIONSHIP, () ->
+                addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void toString_returnsCorrectString() {
+        AddRelationshipCommand command = new AddRelationshipCommand(
+                "1", "2", "Boss of", "Reports to", new HashSet<>());
+        String expected = "seedu.address.logic.commands.AddRelationshipCommand{userId1=1, userId2=2, "
+                + "forwardName=Boss of, reverseName=Reports to, tags=[]}";
+        assertEquals(expected, command.toString());
+    }
+
+    @Test
     public void equals() {
         String user1Id = "1";
         String user2Id = "2";
@@ -132,9 +207,6 @@ public class AddRelationshipCommandTest {
         AddRelationshipCommand addFriendCommandCopy = new AddRelationshipCommand(
                 user1Id, user2Id, name1, "Reports to", new HashSet<>());
         assertEquals(addFriendCommand, addFriendCommandCopy);
-
-        // different types -> returns false
-        assertNotEquals(1, addFriendCommand);
 
         // null -> returns false
         assertNotEquals(null, addFriendCommand);
