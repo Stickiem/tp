@@ -13,11 +13,13 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ListCommand;
@@ -85,6 +87,45 @@ public class LogicManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void getSortedFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getSortedFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void getFilteredRelationshipList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredRelationshipList().remove(0));
+    }
+
+    @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredEventList().remove(0));
+    }
+
+    @Test
+    public void getAddressBookFilePath_modifyPath_returnsCorrectPath() {
+        Path expectedPath = Paths.get("data/addressbook.json");
+        assertEquals(expectedPath, logic.getAddressBookFilePath());
+    }
+
+    @Test
+    public void getGuiSettings_modifySettings_returnsCorrectSettings() {
+        GuiSettings expectedGuiSettings = new GuiSettings();
+        assertEquals(expectedGuiSettings, logic.getGuiSettings());
+    }
+
+    @Test
+    public void setGuiSettings_nullSettings_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> logic.setGuiSettings(null));
+    }
+
+    @Test
+    public void setGuiSettings_validSettings_setsGuiSettings() {
+        GuiSettings expectedGuiSettings = new GuiSettings();
+        logic.setGuiSettings(expectedGuiSettings);
+        assertEquals(expectedGuiSettings, logic.getGuiSettings());
     }
 
     /**

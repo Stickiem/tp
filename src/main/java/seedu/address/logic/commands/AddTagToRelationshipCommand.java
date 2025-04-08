@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
+import java.util.Objects;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.relationship.Relationship;
@@ -78,5 +80,26 @@ public class AddTagToRelationshipCommand extends Command {
         model.updateRelationship(relationship, updatedRelationship);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, updatedRelationship));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof AddTagToRelationshipCommand otherCommand)) {
+            return false;
+        }
+
+        return userId1.equals(otherCommand.userId1)
+                && userId2.equals(otherCommand.userId2)
+                && relationshipName.equals(otherCommand.relationshipName)
+                && tag.equals(otherCommand.tag);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId1, userId2, relationshipName, tag);
     }
 }
